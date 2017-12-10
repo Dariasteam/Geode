@@ -6,7 +6,7 @@
 #include <random>
 
 #define TYPE int
-#define N 10
+#define N 14
 #define MIN -100
 #define MAX  100
 #define MAX_DNA_SIZE 1000
@@ -245,7 +245,7 @@ public:
       results[i][i] = inputs[i];
       used_elements[i][i] = true;
 
-      unsigned value = results[i][i];
+      unsigned value = inputs[i];
       // Calcular los axones derivados de las neuronas de entrada
       for (unsigned j = 0; j < i; j++) {
         results[i][j] = cost_matrix[i][j] * value;
@@ -289,17 +289,17 @@ public:
       std::cout << "La neurona seleccionada es " << selected_neuron << std::endl;
       std::cout << "Su valor es " << value << std::endl;
 */
-      value = 1/ (1 + std::pow (E,-value));
+      value = 1/ (1 + std::pow (E,-value)) - 0.1;
 
 //      std::cout << "Su valor normalizado es " << value << std::endl;
 
       // Calcular los axones derivados de la neurona calculada
       for (unsigned j = 0; j < selected_neuron; j++) {
-        results[selected_neuron][j] = cost_matrix[selected_neuron][j] * value;
+        results[selected_neuron][j] = cost_matrix[selected_neuron][j] * std::round(value);
         used_elements[selected_neuron][j] = true;
       }
       for (unsigned j = selected_neuron; j < size; j++) {
-        results[selected_neuron][j] = cost_matrix[selected_neuron][j] * value;
+        results[selected_neuron][j] = cost_matrix[selected_neuron][j] * std::round(value);
         used_elements[selected_neuron][j] = true;
       }
     }
@@ -457,19 +457,21 @@ void add_mutations (dna& DNA) {
   }
 }
 
-unsigned evaluate (workable_nn& w) {
+unsigned evaluate (workable_nn& w, std::vector<TYPE> input) {
   std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
   unsigned ac = 0;
 
-  std::vector<TYPE> output (3);
-  std::vector<TYPE> input  {1, 1};
+  std::vector<TYPE> output;
 
   w.calculate(input, output);
 
   unsigned v = 0;
 
-  for (auto& e : output)
-    v += e;
+  unsigned i = 1;
+  for (auto& e : output) {
+    v += e * i;
+    i++;
+  }
 
   return v;
 }
@@ -484,8 +486,8 @@ int main(int argc, char **argv) {
   random_values_generator(v1);
   random_values_generator(v2);
 
-  codified_nn parent_1 (v1, 2, 8);
-  codified_nn parent_2 (v2, 2, 8);
+  codified_nn parent_1 (v1, 4, 8);
+  codified_nn parent_2 (v2, 4, 8);
 
   dna serialized_nn_1 = parent_1.to_dna();
   dna serialized_nn_2 = parent_2.to_dna();
@@ -494,7 +496,7 @@ int main(int argc, char **argv) {
   std::vector<workable_nn> sons_wrk (12);
 
   char user_input = 1;
-   while (user_input != 'q') {
+  while (user_input != 'q') {
     sons_dna[0] = cross_dna(serialized_nn_1, serialized_nn_2);
     sons_wrk[0] = workable_nn (codified_nn(sons_dna[0]));
 
@@ -512,13 +514,14 @@ int main(int argc, char **argv) {
     }
 
     int best_index = -1;
-    int best_value = -1;
+    int best_value = 1000;
 
     unsigned i = 0;
     for (auto& nn : sons_wrk) {
-      int eval_value = evaluate(nn);
-      if (eval_value > best_value) {
-        best_value = eval_value;
+        int eval_value = evaluate(nn, {1, 1, 1, 1});
+      if (abs(eval_value - 37) < best_value) {
+        std::cout << "Distancia del candidato " << abs(eval_value - 37) << std::endl;
+        best_value = abs(eval_value - 37);
         best_index = i;
       }
       i++;
@@ -527,7 +530,27 @@ int main(int argc, char **argv) {
     std::cout << "\n\n\nFormato matricial\n\n\n" << std::flush;   
     std::cout << "Índice " << best_index << std::endl;
     sons_wrk[best_index].print();
-    std::cout << "Con un valor de " << best_value << std::endl;
+    std::cout << "Con un valor de " << evaluate(sons_wrk[best_index], {1,1,1,1}) << std::endl;
+
+
+    std::cout << evaluate(sons_wrk[best_index], {0, 0, 0, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {0, 0, 0, 1}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {0, 0, 1, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {0, 0, 1, 1}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {0, 1, 0, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {0, 1, 0, 1}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {0, 1, 1, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {0, 1, 1, 1}) << std::endl;
+
+    std::cout << evaluate(sons_wrk[best_index], {1, 0, 0, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {1, 0, 0, 1}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {1, 0, 1, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {1, 0, 1, 1}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {1, 1, 0, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {1, 1, 0, 1}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {1, 1, 1, 0}) << std::endl;
+    std::cout << evaluate(sons_wrk[best_index], {1, 1, 1, 1}) << std::endl;
+
 
     scanf("%c", &user_input);
 
