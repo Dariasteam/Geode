@@ -30,6 +30,11 @@ public:
 
   void operator= (const workable_nn& aux);
 
+  double saturate (double v) {
+    v = v / 100;
+    return v;
+  }
+
   std::vector<std::vector<TYPE>> get_cost_matrix () const { return cost_matrix; }
 
   void calculate (std::vector<double>& inputs, std::vector<double>& outputs);

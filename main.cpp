@@ -21,7 +21,7 @@ void random_values_generator (std::vector<neuron>& suc_list) {
   suc_list.resize (N);
   for (unsigned i = 0; i < N; i++) {
     // completamente conectado
-    unsigned n_connections = N;
+    unsigned n_connections = std::rand() % N;
     suc_list[i].umbral = 0;
     for (unsigned j = 0; j < n_connections; j++) {
       TYPE cost = 100 - std::rand() % 200;
@@ -45,9 +45,7 @@ dna cross_dna (dna& A, dna& B) {
   std::cout << a_size << " " << b_size << std::endl;
 
   dna S;
-  S.sequence = (char*)malloc(a_size);
-
-  memcpy(S.sequence, A.sequence, a_size);
+  S.sequence = (char*)malloc(final_size);
 
   memcpy(S.sequence, A.sequence, (a_size / 2));
   memcpy(S.sequence + (a_size / 2), B.sequence + (b_size / 2), (b_size / 2));
@@ -110,7 +108,7 @@ void add_mutations (dna& DNA) {
   // Método a nivel de bit
   for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
     for (unsigned j = 0; j < 4; j++) {
-    if (rand() % 200 < 1)
+    if (rand() % 50 < 1)
         DNA.sequence[i] ^= 1 << j;
     }
   }
@@ -167,8 +165,8 @@ int main(int argc, char **argv) {
   random_values_generator(v1);
   random_values_generator(v2);
 
-  codified_nn parent_1 (v1, 4, 3);
-  codified_nn parent_2 (v2, 4, 3);
+  codified_nn parent_1 (v1, 4, 1);
+  codified_nn parent_2 (v2, 4, 1);
 
   dna serialized_nn_1 = parent_1.to_dna();
   dna serialized_nn_2 = parent_2.to_dna();
@@ -227,7 +225,7 @@ int main(int argc, char **argv) {
                  evaluate(sons_wrk[best_index], {-1,-1,-1,-1}) << "\n" <<
                  evaluate(sons_wrk[best_index], {-1, 0, 0,-1}) << std::endl;
 
-//    scanf("%c", &user_input);
+    scanf("%c", &user_input);
 
     free(serialized_nn_2.sequence);
     free(serialized_nn_1.sequence);
