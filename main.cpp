@@ -155,15 +155,16 @@ void add_mutations (dna& DNA) {
 */
 }
 
-double evaluate (workable_nn& w, std::vector<double> input) {
-  std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
-  unsigned ac = 0;
+double evaluate_q (const dna& DNA) {
+  workable_nn w (DNA);
 
+  std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
   std::vector<double> output;
+  std::vector<double> input = {1, 1, 1, 1};
+
   w.calculate(input, output);
   double v = 0;
 
-  unsigned i = 1;
   for (auto& e : output) {
     v += e;
   }
@@ -192,21 +193,8 @@ int main(int argc, char **argv) {
     return {sequence, A.byte_sz, A.input_neurons, A.output_neurons};
   };
 
-  auto evaluate = [](const dna& DNA) -> double {
-    workable_nn w (DNA);
-    std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
-    unsigned ac = 0;
-
-    std::vector<double> output;
-    std::vector<double> input = {1, 1, 1, 1};
-    w.calculate(input, output);
-    double v = 0;
-
-    unsigned i = 1;
-    for (auto& e : output) {
-      v += e;
-    }
-    return v;
+  auto evaluate = [&](const dna& A, const dna& B) -> bool {
+    return evaluate_q (A) > evaluate_q (B);
   };
 
   auto mutate = [](dna& DNA) {
@@ -235,75 +223,16 @@ int main(int argc, char **argv) {
   dna serialized_nn_2 = parent_2.to_dna();
 
   GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 10, 2);
-  genetic.set_initial_poblation({serialized_nn_1, serialized_nn_2});
+  std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
+  genetic.set_initial_poblation(initial_candidates);
 
-  genetic.step();
-
-  /*
-  std::vector<dna> sons_dna (12);
-  std::vector<workable_nn> sons_wrk (12);
-
-  char user_input = 1;
-  while (user_input != 'q') {
-    sons_dna[0] = cross_dna(serialized_nn_1, serialized_nn_2);
-    sons_wrk[0] = workable_nn (sons_dna[0]);
-
-    sons_dna[10] = serialized_nn_1;
-    sons_dna[11] = serialized_nn_2;
-
-    sons_wrk[10] = workable_nn (sons_dna[10]);
-    sons_wrk[11] = workable_nn (sons_dna[11]);
-
-    // Generar 10 clones y aplicar mutaciones
-    for (unsigned i = 1; i < 10; i++) {
-      sons_dna[i] = sons_dna[0];
-      add_mutations(sons_dna[i]);
-      sons_wrk[i] = workable_nn (sons_dna[i]);
-    }
-
-    int best_index = -1;
-    double best_distance = 0.00001;
-    double optimal_value = 10.93;
-
-    unsigned i = 0;
-    unsigned counter = 0;
-    while (best_index == -1) {
-      i = 0;
-      if (++counter > 1000)
-        best_index = 0;
-      for (auto& nn : sons_wrk) {
-        double eval_value1 = evaluate(nn, { 1, 1, 1, 1});
-        double eval_value2 = evaluate(nn, {-1,-1,-1,-1});
-
-        double d2 = fabs(eval_value1) + eval_value2;
-
-
-        if (eval_value1 < best_distance && eval_value1 <= 0 && eval_value2 >= 0) {
-          best_distance = eval_value1;
-          best_index = i;
-        }
-        i++;
-      }
-    }
-
-    system("clear");
-    std::cout << "\n\n\nFormato matricial\n\n\n" << std::flush;   
-    std::cout << "Índice " << best_index << std::endl;
-    sons_wrk[best_index].print();
-    std::cout << "Con un valor de " << "\n" <<
-                 evaluate(sons_wrk[best_index], { 1, 1, 1, 1}) << "\n" <<
-                 evaluate(sons_wrk[best_index], {-1,-1,-1,-1}) << "\n" <<
-                 evaluate(sons_wrk[best_index], {-1, 0, 0,-1}) << std::endl;
-
-    scanf("%c", &user_input);
-
-    free(serialized_nn_2.sequence);
-    free(serialized_nn_1.sequence);
-
-    serialized_nn_1 = sons_wrk[std::rand() % 12].to_dna();
-    serialized_nn_2 = sons_wrk[best_index].to_dna();
+  std::string input;
+  while (input[0] != 'q') {
+    genetic.step();
+    std::cout << "'q' para salir, otro para continuar" << std::endl;
+    std::cin >> input;
   }
-  */
+  std::cout << "He terminado todos los pasos" << std::endl;
 
   return 0;
 }

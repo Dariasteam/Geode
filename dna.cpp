@@ -1,7 +1,7 @@
 #include "dna.h"
 
 dna::~dna() {
-  free (sequence);
+  //free (sequence);
 }
 
 void dna::operator=(const dna &aux) {
