@@ -1,5 +1,84 @@
 #include "workable_nn.h"
 
+/* Construye una red a partir de una matriz de costes
+ */
+workable_nn::workable_nn(std::vector<std::vector<std::pair<bool, TYPE> > > cost,
+                         unsigned input, unsigned output) :
+  input_neurons (input),
+  output_neurons (output)
+{
+  unsigned size = cost.size();
+
+  cost_matrix.resize(size);
+  graph_matrix.resize(size);
+
+  for (unsigned i = 0; i < size; i++) {
+    cost_matrix[i].resize(size);
+    graph_matrix[i].resize(size);
+    for (unsigned j = 0; j < size; j++) {
+      graph_matrix[i][j] = cost[i][j].first;
+      cost_matrix[i][j] = cost[i][j].second;
+    }
+  }
+}
+
+/* Construye una red a partir de una adn
+ * */
+workable_nn::workable_nn (const dna& DNA)  :
+  input_neurons (DNA.input_neurons),
+  output_neurons (DNA.output_neurons)
+{
+  unsigned index = 0;
+  const char* seq = DNA.sequence;
+
+  unsigned size;
+  get_mem(&size, index, seq, sizeof(size));
+
+  cost_matrix.resize(size);
+  graph_matrix.resize(size);
+
+  for (unsigned i = 0; i < size; i++) {
+    cost_matrix[i].resize(size);
+    graph_matrix[i].resize(size);
+    for (unsigned j = 0; j < size; j++) {
+      bool b;
+      get_mem(&b, index, seq, sizeof(b));
+      graph_matrix[i][j] = b;
+      get_mem(&cost_matrix[i][j], index, seq, sizeof(TYPE));
+    }
+  }  
+}
+
+void workable_nn::get_mem (void* mem, unsigned& index, const char* seq, size_t size) {
+  memcpy(mem, seq + index, size);
+  index += size;
+}
+
+void workable_nn::copy_mem (char* seq, unsigned& index, const void* mem, size_t size) {
+  memcpy(seq + index, mem, size);
+  index += size;
+}
+
+dna workable_nn::to_dna() {
+  unsigned n_bytes = (std::pow(cost_matrix.size(), 2)  * (sizeof(TYPE) + sizeof(bool))) +
+                      sizeof(unsigned);
+
+  char* sequence = (char*)malloc(n_bytes);
+  unsigned index = 0;
+
+  unsigned c = cost_matrix.size();
+  copy_mem(sequence, index, &c, sizeof(c));
+
+  for (unsigned i = 0; i < cost_matrix.size(); i++) {
+    for (unsigned j = 0; j < cost_matrix.size(); j++) {
+      bool b = graph_matrix[i][j];
+      copy_mem(sequence, index, &b, sizeof(b));
+      copy_mem(sequence, index, &cost_matrix[i][j], sizeof(TYPE));
+    }
+  }
+
+  return {sequence, n_bytes, input_neurons, output_neurons};
+}
 
 workable_nn::workable_nn(const workable_nn &aux) :
   cost_matrix (aux.cost_matrix),

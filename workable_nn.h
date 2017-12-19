@@ -24,21 +24,27 @@ private:
   unsigned output_neurons;
 public:
   workable_nn () {}
-
+  workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
+                                                                            unsigned ouput);
   workable_nn (const workable_nn& aux);
   workable_nn (const codified_nn& nn);
 
+  workable_nn (const dna& DNA);
+
   void operator= (const workable_nn& aux);
 
+  void get_mem (void* mem, unsigned& index, const char* seq, size_t size);
+  void copy_mem (char* seq, unsigned& index, const void* mem, size_t size);
+
+  dna to_dna ();
+
   double saturate (double v) {
-    v = v / 100;
+    v = v / 128;
     return v;
   }
 
   std::vector<std::vector<TYPE>> get_cost_matrix () const { return cost_matrix; }
-
   void calculate (std::vector<double>& inputs, std::vector<double>& outputs);
-
   void print () const;
 };
 

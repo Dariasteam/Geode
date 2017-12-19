@@ -7,10 +7,12 @@ SOURCES += main.cpp \
     codified_nn.cpp \
     workable_nn.cpp \
     neuron.cpp \
-    dna.cpp
+    dna.cpp \
+    geneticalgorithm.cpp
 
 HEADERS += \
     codified_nn.h \
     workable_nn.h \
     neuron.h \
-    dna.h
+    dna.h \
+    geneticalgorithm.h

@@ -104,16 +104,16 @@ dna codified_nn::to_dna() {
   copy_mem(sequence, index, &byte_size, sizeof(byte_size));
 
   for (unsigned i = 0; i < sz; i++) {
-      aux_u = sucesors_list[i].umbral;
+    aux_u = sucesors_list[i].umbral;
+    copy_mem(sequence, index, &aux_u, sizeof(aux_u));
+    aux_sz = sucesors_list[i].list.size();
+    copy_mem(sequence, index, &aux_sz, sizeof(aux_sz));
+    for (unsigned j = 0; j < aux_sz; j++) {
+      aux_u = sucesors_list[i].list[j].first;
       copy_mem(sequence, index, &aux_u, sizeof(aux_u));
-      aux_sz = sucesors_list[i].list.size();
-      copy_mem(sequence, index, &aux_sz, sizeof(aux_sz));
-      for (unsigned j = 0; j < aux_sz; j++) {
-          aux_u = sucesors_list[i].list[j].first;
-          copy_mem(sequence, index, &aux_u, sizeof(aux_u));
-          aux_t = sucesors_list[i].list[j].second;
-          copy_mem(sequence, index, &aux_t, sizeof(aux_t));
-        }
+      aux_t = sucesors_list[i].list[j].second;
+      copy_mem(sequence, index, &aux_t, sizeof(aux_t));
     }
-  return {sequence, byte_size, input_neurons, output_neurons};
+  }
+  //return {sequence, byte_size, input_neurons, output_neurons};
 }
