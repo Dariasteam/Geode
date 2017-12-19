@@ -6,6 +6,7 @@
 #include <future>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
 template <class T>
 class GeneticAlgorithm {
@@ -14,8 +15,9 @@ private:
   std::vector <T> best_candidates;  // mejores candidatos de una generación
 
   std::function<T(T&, T&)> op_cross;
-  std::function<void(T&)> op_mutate;
-  std::function<bool(const T&, const T&)> op_evaluate;
+  std::function<void(T&)> op_mutate;  
+
+  std::function<double(const T&)> op_evaluate;
 
   unsigned poblation_size;          // tamaño de las poblaciones generadas
   unsigned candidates_size;         // cantidad de individuos seleccionados
@@ -60,20 +62,24 @@ private:
 
   // evalúa toda la población y la ordena en base a la función de fitness
   void evaluate_poblation () {
-    //std::sort (poblation.begin(), poblation.end(), op_evaluate);
+    auto comparator = [&](const T& A, const T& B) {
+      return op_evaluate (A) > op_evaluate (B);
+    };
+
+    std::sort (poblation.begin(), poblation.end(), comparator);
   }
 
   // copia los mejores elementos de la población al vector de candidatos
   void generate_next_candidates () {
+    best_candidates.resize(0);
     std::copy (poblation.begin(), poblation.begin() + candidates_size, std::back_inserter(best_candidates));
   }
 
 public:
-
   explicit GeneticAlgorithm(
       std::function<T(T&, T&)> operator_cross,
       std::function<void(T&)> operator_mutate,
-      std::function<bool(const T&, const T&)> operator_evaluator,
+      std::function<double(const T&)> operator_evaluator,
       unsigned poblation_s,
       unsigned candidates_s
       ) :
@@ -104,6 +110,14 @@ public:
       while (best_candidates.size() < candidates_size)  // introducir candidatos aleatorios
         best_candidates.push_back(i_poblation[std::rand() % i_poblation.size()]);
     }
+  }
+
+  void print_best () {
+    std::cout << "Mejores candidatos y sus puntuaciones \n";
+    for (auto& candidate : best_candidates) {
+      std::cout << op_evaluate(candidate) << "\n";
+    }
+    std::cout << std::flush;
   }
 };
 

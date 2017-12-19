@@ -193,8 +193,20 @@ int main(int argc, char **argv) {
     return {sequence, A.byte_sz, A.input_neurons, A.output_neurons};
   };
 
-  auto evaluate = [&](const dna& A, const dna& B) -> bool {
-    return evaluate_q (A) > evaluate_q (B);
+  auto evaluate = [&](const dna& DNA) -> double {
+    workable_nn w (DNA);
+
+    std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
+    std::vector<double> output;
+    std::vector<double> input = {1, 1, 1, 1};
+
+    w.calculate(input, output);
+    double v = 0;
+
+    for (auto& e : output) {
+      v += e;
+    }
+    return v;
   };
 
   auto mutate = [](dna& DNA) {
@@ -226,11 +238,12 @@ int main(int argc, char **argv) {
   std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
   genetic.set_initial_poblation(initial_candidates);
 
-  std::string input;
-  while (input[0] != 'q') {
+  char input;
+  while (input != 'q') {
     genetic.step();
+    genetic.print_best();
     std::cout << "'q' para salir, otro para continuar" << std::endl;
-    std::cin >> input;
+    scanf("%c", &input);
   }
   std::cout << "He terminado todos los pasos" << std::endl;
 
