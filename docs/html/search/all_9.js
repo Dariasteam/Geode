@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['to_5fdna',['to_dna',['../classworkable__nn.html#ac3b3b6cba9904aae43d9c73d03c54da7',1,'workable_nn']]]
+  ['workable_5fnn',['workable_nn',['../classworkable__nn.html',1,'workable_nn'],['../classworkable__nn.html#aa0312cef8caec14f79b74947bc99781a',1,'workable_nn::workable_nn()']]]
 ];

@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "bcdginopstw",
-  1: "cdgnw",
+  0: "bcdgiopstw",
+  1: "dgw",
   2: "cgpstw",
   3: "bios"
 };

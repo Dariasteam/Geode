@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dna',['dna',['../structdna.html',1,'']]]
+  ['geneticalgorithm',['GeneticAlgorithm',['../class_genetic_algorithm.html',1,'']]]
 ];
