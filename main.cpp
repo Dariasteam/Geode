@@ -8,13 +8,10 @@
 #include <functional>
 
 #include "workable_nn.h"
-#include "codified_nn.h"
 #include "geneticalgorithm.h"
 
 #define TYPE short
 #define N 10
-#define NORMALIZE_NUMBER double(100)
-#define E 2.71828182845
 
 /* Generador de números aleatorios para el grafo
  * */
@@ -44,12 +41,29 @@ void random_values_generator (std::vector<std::vector<std::pair<bool, TYPE>>>& c
     cost[i].resize(N);
     cost[i][i] = {false, 0};
     iterate_avoiding_index([&](unsigned j){
-      cost[i][j] = random(15);
+      cost[i][j] = random(0);
     }, 0, i, N);
   }
 }
 
-dna cross_dna (dna& A, dna& B) {
+double evaluate_q (const dna& DNA, std::vector<double> input) {
+  workable_nn w (DNA);
+
+  std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
+  std::vector<double> output;
+
+  w.calculate(input, output);
+  double v = 0;
+
+  for (auto& e : output) {
+    v += e;
+  }
+
+  std::cout << v << " \n";
+  return v;
+}
+
+dna cross (const dna& A, const dna& B) {
   unsigned a_size;
   unsigned b_size;
 
@@ -68,159 +82,73 @@ dna cross_dna (dna& A, dna& B) {
   return {sequence, A.byte_sz, A.input_neurons, A.output_neurons};
 }
 
-void add_mutations (dna& DNA) {
-  unsigned old_sz = DNA.byte_sz;
-//  memcpy(&old_sz, DNA.sequence, sizeof(old_sz));
-  unsigned new_sz = old_sz;
-/*
-  if (rand() % 12 < 1) {
-    new_sz += (rand() % 10 - 5);
-    // ajusta el mínimo de neuronas a al menos las de entrada y salida
-    if (new_sz < (DNA.input_neurons + DNA.output_neurons))
-      new_sz += (DNA.input_neurons + DNA.output_neurons) - new_sz + 1;
-
-    char* sequence = (char*)malloc(new_sz);
-    memcpy(sequence, DNA.sequence, std::min(new_sz, old_sz));
-
-    free (DNA.sequence);
-    DNA.sequence = sequence;
-
-    memcpy(DNA.sequence, &new_sz, sizeof(new_sz));
-  }
-*/
-  unsigned first_index;
-  unsigned second_index;
-
-  first_index = old_sz;
-  /*
-  if (new_sz > old_sz)
-
-  else
-    first_index = new_sz;
-  */
-
-//  second_index = new_sz;
-  // TODO Aparentemente los mejores resultados los da el método a nivel de bit
-
-  // Genera mutaciones para el genoma ya existente
-  // Método numérico
-  /*
-  for (unsigned i = sizeof(TYPE); i < first_index; i+=sizeof(old_sz)) {
-    int a = 100 - std::rand() % 200;
-    int b;
-    memcpy(&b, DNA.sequence + i, sizeof(TYPE));
-    b += a;    
-    if (b < -100)
-      b = -100;
-    else if (b > 100)
-      b = 100;
-    memcpy(DNA.sequence + i, &b, sizeof(TYPE));
-  }
-  */
-  // Método a nivel de bit 
-
-  for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
-    if (rand() % 100 < 1) {
-      DNA.sequence[i] ^= 1;
-      i+=sizeof(bool) + 1;
-      for (unsigned j = 0; j < 2; j++) {
-        DNA.sequence[i] ^= 1 << j;
-      }
-    }
-  }
-
-/*
-  // Genera la nueva información
-  // Método numético
-  for (unsigned i = first_index; i < second_index; i+=sizeof(old_sz)) {
-    int a = 2 - std::rand() % 4;
-    int b;
-    memcpy(&b, DNA.sequence + i, sizeof(TYPE));
-    b += a;
-    if (b < -100)
-      b = -100;
-    else if (b > 100)
-      b = 100;
-    memcpy(DNA.sequence + i, &b, sizeof(TYPE));
-  }
-*/
-  // Método a nivel de bit
-/*
-  for (unsigned i = first_index; i < second_index; i+=sizeof(TYPE)) {
-    for (unsigned j = 0; j < 3; j++)
-      DNA.sequence[i] ^= (rand() % 7 < 1) << j;
-    for (unsigned j = 4; j < sizeof(TYPE); j++)
-      DNA.sequence[i] &= 0 << j;
-  }
-*/
-}
-
-double evaluate_q (const dna& DNA) {
+double evaluate (const dna& DNA) {
   workable_nn w (DNA);
 
   std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
   std::vector<double> output;
-  std::vector<double> input = {1, 1, 1, 1};
+  std::vector<double> input_a = { 1, 1, 1, 1};
+  std::vector<double> input_b = {-1,-1,-1,-1};
 
-  w.calculate(input, output);
-  double v = 0;
+  double v1 = 0;
+  double v2 = 0;
 
-  for (auto& e : output) {
-    v += e;
+  w.calculate(input_a, output);
+  for (auto& e : output)
+    v1 += e;
+
+  w.calculate(input_b, output);
+  for (auto& e : output)
+    v2 += e;    
+
+  //std::cout << w.get_n_axons() << "\n";
+
+  if ((v1 > 0 && v2 > 0) || (v1 < 0 && v2 < 0))
+    return fabs(fabs(v1) - v2) ;
+  else
+    return fabs(v1) + fabs(v2) ;
+}
+
+void mutate (dna& DNA) {
+  unsigned first_index = DNA.byte_sz;
+  for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
+    if (rand() % 50 < 1) {
+      DNA.sequence[i] ^= 1;
+      i+=sizeof(bool);
+      DNA.sequence[i] ^= 1;
+      for (unsigned j = 0; j < sizeof(TYPE); j++) {
+        for (unsigned k = 0; k < 8; k++) {
+          if (rand() % 8 < 1)
+            DNA.sequence[i+k] ^= 1 << k;
+        }
+      }
+    } else {
+      i+=sizeof(bool);
+    }
   }
-  return v;
+}
+
+void evaluate_current (dna DNA) {
+  evaluate_q(DNA, { 1, 1, 1, 1});
+  evaluate_q(DNA, {-1,-1,-1,-1});
+  evaluate_q(DNA, {-1, 1, 1,-1});
+  evaluate_q(DNA, { 1,-1,-1, 1});
+  evaluate_q(DNA, { 1,.1,.1, 1});
+  evaluate_q(DNA, {.1,.1,.1,.1});
+
+  // Evaluar qué peso está resultando más determinante
+
+  evaluate_q(DNA, { 1,.1,.1,.1});
+  evaluate_q(DNA, {.1, 1,.1,.1});
+  evaluate_q(DNA, {.1,.1, 1,.1});
+  evaluate_q(DNA, {.1,.1,.1, 1});
+
+  workable_nn w (DNA);
+  w.print();
 }
 
 int main(int argc, char **argv) {
   srand(time(nullptr));
-
-  auto cross = [](dna& A, dna& B) -> dna{
-    unsigned a_size;
-    unsigned b_size;
-
-    memcpy(&a_size, A.sequence, sizeof(a_size));
-    memcpy(&b_size, B.sequence, sizeof(b_size));
-
-    unsigned final_size = (a_size / 2) + (b_size / 2);
-    std::cout << a_size << " " << b_size << std::endl;
-
-    char* sequence = (char*)malloc((A.byte_sz / 2) + (B.byte_sz / 2));
-
-    memcpy(sequence, A.sequence, (A.byte_sz / 2));
-    memcpy(sequence + (A.byte_sz / 2), B.sequence + (B.byte_sz / 2), (B.byte_sz / 2));
-    memcpy(sequence, &final_size, sizeof(final_size));
-
-    return {sequence, A.byte_sz, A.input_neurons, A.output_neurons};
-  };
-
-  auto evaluate = [&](const dna& DNA) -> double {
-    workable_nn w (DNA);
-
-    std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
-    std::vector<double> output;
-    std::vector<double> input = {1, 1, 1, 1};
-
-    w.calculate(input, output);
-    double v = 0;
-
-    for (auto& e : output) {
-      v += e;
-    }
-    return v;
-  };
-
-  auto mutate = [](dna& DNA) {
-    unsigned first_index = DNA.byte_sz;
-    for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
-      if (rand() % 100 < 1) {
-        DNA.sequence[i] ^= 1;
-        i+=sizeof(bool) + 1;
-        for (unsigned j = 0; j < 2; j++) {
-          DNA.sequence[i] ^= 1 << j;
-        }
-      }
-    }
-  };
 
   std::vector<std::vector<std::pair<bool, TYPE>>> v1;
   std::vector<std::vector<std::pair<bool, TYPE>>> v2;
@@ -228,24 +156,29 @@ int main(int argc, char **argv) {
   random_values_generator(v1);
   random_values_generator(v2);
 
-  workable_nn parent_1 (v1, 4, 2);
-  workable_nn parent_2 (v2, 4, 2);
+  workable_nn parent_1 (v1, 4, 1);
+  workable_nn parent_2 (v2, 4, 1);
 
   dna serialized_nn_1 = parent_1.to_dna();
   dna serialized_nn_2 = parent_2.to_dna();
 
-  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 10, 2);
+  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 80, 10);
   std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
-  genetic.set_initial_poblation(initial_candidates);
+  genetic.set_initial_poblation(initial_candidates); 
 
-  char input;
+  char input = 'a';
   while (input != 'q') {
     genetic.step();
     genetic.print_best();
-    std::cout << "'q' para salir, otro para continuar" << std::endl;
+    std::cout << "'e' para ver el estado actual\n" <<
+                 "'q' para salir\n" <<
+                 "[Enter] para continuar" << std::endl;
     scanf("%c", &input);
+    if (input == 'e') {
+      evaluate_current (genetic.get_best_candidates()[0]);
+      scanf("%c", &input);
+    }
   }
-  std::cout << "He terminado todos los pasos" << std::endl;
-
+  std::cout << "He terminado todos los pasos" << std::endl;    
   return 0;
 }

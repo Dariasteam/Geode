@@ -42,6 +42,8 @@ private:
 
     for (auto& promise : promises)
       promise.get();
+
+    poblation.push_back(best_candidates[0]);
   }
 
   // muta toda la población de forma concurrente
@@ -65,7 +67,6 @@ private:
     auto comparator = [&](const T& A, const T& B) {
       return op_evaluate (A) > op_evaluate (B);
     };
-
     std::sort (poblation.begin(), poblation.end(), comparator);
   }
 
@@ -76,6 +77,8 @@ private:
   }
 
 public:
+  inline std::vector<T> get_best_candidates () { return best_candidates; }
+
   explicit GeneticAlgorithm(
       std::function<T(T&, T&)> operator_cross,
       std::function<void(T&)> operator_mutate,
@@ -107,17 +110,20 @@ public:
       std::copy(i_poblation.begin(), i_poblation.end() - diff_size, std::back_inserter(best_candidates));
     } else {                // hay menos o igual candidatos de los que se requiere
       best_candidates = i_poblation;
-      while (best_candidates.size() < candidates_size)  // introducir candidatos aleatorios
-        best_candidates.push_back(i_poblation[std::rand() % i_poblation.size()]);
+      while (best_candidates.size() < candidates_size) // introducir candidatos aleatorios
+        best_candidates.emplace_back(i_poblation[std::rand() % i_poblation.size()]);
     }
   }
 
   void print_best () {
-    std::cout << "Mejores candidatos y sus puntuaciones \n";
+    //std::cout << "Mejores candidatos y sus puntuaciones \n";
+    std::cout << op_evaluate(best_candidates[0]) << "\n";
+    /*
     for (auto& candidate : best_candidates) {
       std::cout << op_evaluate(candidate) << "\n";
     }
     std::cout << std::flush;
+    */
   }
 };
 

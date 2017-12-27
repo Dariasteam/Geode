@@ -72,7 +72,7 @@ dna workable_nn::to_dna() {
   for (unsigned i = 0; i < cost_matrix.size(); i++) {
     for (unsigned j = 0; j < cost_matrix.size(); j++) {
       bool b = graph_matrix[i][j];
-      copy_mem(sequence, index, &b, sizeof(b));
+      copy_mem(sequence, index, &b, sizeof(bool));
       copy_mem(sequence, index, &cost_matrix[i][j], sizeof(TYPE));
     }
   }
@@ -164,45 +164,29 @@ void workable_nn::calculate(std::vector<double> &inputs, std::vector<double> &ou
       unsigned ac (0);
 
       for (unsigned i = input_neurons; i < size; i++) {
-          value = 0;
-          ac = 0;
-          if (!used_elements[i][i]) {
-              selected_neuron = i;
-              for (unsigned j = 0; j < i; j++) {
-                  if (graph_matrix[j][i]) {
-                      if (used_elements[j][i]) {
-                          // El axón de entrada está disponible
-                          value += results[j][i];
-                          ac++;
-                        } else if (cost_matrix[j][i] != 0) {
-                          // El axón de entrada aún no ha sido calculado
-                          value = 0;
-                          selected_neuron = -1;
-                          break;
-                        }
-                    }
-                }
-              for (unsigned j = i + 1; j < size; j++) {
-                  if (graph_matrix[j][i]) {
-                      if (used_elements[j][i]) {
-                          // El axón de entrada está disponible
-                          value += results[j][i];
-                          ac++;
-                        } else if (cost_matrix[j][i] != 0) {
-                          // El axón de entrada aún no ha sido calculado
-                          value = 0;
-                          selected_neuron = -1;
-                          break;
-                        }
-                    }
-                }
-
-
-              // Tenemos una neurona con todos sus predecesores calculados
-              if (selected_neuron != -1)
+        value = 0;
+        ac = 0;
+        if (!used_elements[i][i]) {
+          selected_neuron = i;
+          for (unsigned j = 0; j < i; j++) {
+            if (graph_matrix[j][i]) {
+              if (used_elements[j][i]) {
+                // El axón de entrada está disponible
+                value += results[j][i];
+                ac++;
+              } else if (cost_matrix[j][i] != 0) {
+                // El axón de entrada aún no ha sido calculado
+                value = 0;
+                selected_neuron = -1;
                 break;
+              }
             }
+          }
+          // Tenemos una neurona con todos sus predecesores calculados
+          if (selected_neuron != -1)
+            break;
         }
+      }
 
       // No hay más neuronas calculables
       if (selected_neuron == -1)
@@ -239,7 +223,7 @@ void workable_nn::calculate(std::vector<double> &inputs, std::vector<double> &ou
   // Recoger los valores de las neuronas de salida
   outputs.resize(0);
 
-  for (unsigned i = input_neurons; i < output_neurons + input_neurons; i++)
+  for (unsigned i = cost_matrix.size() - output_neurons; i < cost_matrix.size(); i++)
     outputs.push_back(std::tanh(results[i][i]));
 }
 

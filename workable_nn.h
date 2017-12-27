@@ -2,10 +2,13 @@
 #define WORKABLE_NN_H
 
 #include <math.h>
+#include <limits>
 
 #include "neuron.h"
 #include "dna.h"
 #include "codified_nn.h"
+
+#define E 2.71828182845
 
 /* Clase que representa una red neuronal en formato lista de sucesores para
  * su codificación como genoma en binario.
@@ -21,7 +24,8 @@ private:
   std::vector<std::vector<TYPE>> cost_matrix;  // contiene los valores de lso elementos
   std::vector<std::vector<bool>> graph_matrix; // determina qué elementos pertenecen al grafo
   unsigned input_neurons;
-  unsigned output_neurons;
+  unsigned output_neurons;  
+
 public:
   workable_nn () {}
   workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
@@ -38,9 +42,20 @@ public:
 
   dna to_dna ();
 
-  double saturate (double v) {
-    v = v / 128;
+  double saturate (double v) const {
+    v = v / std::numeric_limits<short>::max() ;
     return v;
+  }
+
+  unsigned get_n_axons () const {
+    unsigned n_axons = 0;
+    unsigned size = graph_matrix.size();
+    for (unsigned i = 0; i < size; i++) {
+      for (unsigned j = 0; j < size; j++) {
+        n_axons += graph_matrix[i][j];
+      }
+    }
+    return n_axons;
   }
 
   std::vector<std::vector<TYPE>> get_cost_matrix () const { return cost_matrix; }

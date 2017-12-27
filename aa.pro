@@ -6,15 +6,13 @@ QMAKE_CXXFLAGS += -pthread
 QMAKE_CFLAGS += -pthread
 LIBS += -pthread
 
-SOURCES += main.cpp \
-    codified_nn.cpp \
+SOURCES += main.cpp \    
     workable_nn.cpp \
     neuron.cpp \
     dna.cpp \
     geneticalgorithm.cpp
 
-HEADERS += \
-    codified_nn.h \
+HEADERS += \    
     workable_nn.h \
     neuron.h \
     dna.h \

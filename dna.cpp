@@ -1,11 +1,11 @@
 #include "dna.h"
 
 dna::~dna() {
-  //free (sequence);
+  if (sequence != nullptr)
+    free (sequence);
 }
 
-void dna::operator=(const dna &aux) {
-  unsigned size;
+void dna::operator=(const dna &aux) {  
   input_neurons = aux.input_neurons;
   output_neurons = aux.output_neurons;
 

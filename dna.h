@@ -12,18 +12,23 @@ struct dna {
   unsigned input_neurons;
   unsigned output_neurons;
 
-  ~dna ();
-  void operator= (const dna& aux);
+  dna () :
+    sequence (nullptr)
+  {}
 
-  //dna () {}
-/*
-  dna (char* seq, unsigned s, unsigned i, unsigned o) :
-    sequence (seq),
-    byte_sz (s),
+  dna (const dna& DNA) {
+    operator =(DNA);
+  }
+
+  dna (char* s, unsigned b, unsigned i, unsigned o) :
+    sequence (s),
+    byte_sz (b),
     input_neurons (i),
     output_neurons (o)
   {}
-  */
+
+  ~dna ();
+  void operator= (const dna& aux);
 };
 
 #endif // DNA_H
