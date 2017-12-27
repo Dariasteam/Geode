@@ -7,13 +7,12 @@ QMAKE_CFLAGS += -pthread
 LIBS += -pthread
 
 SOURCES += main.cpp \    
-    workable_nn.cpp \
-    neuron.cpp \
-    dna.cpp \
-    geneticalgorithm.cpp
+    neural_network/workable_nn.cpp \
+    neural_network/neuron.cpp \
+    neural_network/dna.cpp \
 
 HEADERS += \    
-    workable_nn.h \
-    neuron.h \
-    dna.h \
-    geneticalgorithm.h
+    neural_network/workable_nn.h \
+    neural_network/neuron.h \
+    neural_network/dna.h \
+    genetic_algorithm/geneticalgorithm.h
