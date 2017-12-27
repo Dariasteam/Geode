@@ -8,11 +8,9 @@ LIBS += -pthread
 
 SOURCES += main.cpp \    
     neural_network/workable_nn.cpp \
-    neural_network/neuron.cpp \
     neural_network/dna.cpp \
 
 HEADERS += \    
-    neural_network/workable_nn.h \
-    neural_network/neuron.h \
+    neural_network/workable_nn.h \    
     neural_network/dna.h \
     genetic_algorithm/geneticalgorithm.h

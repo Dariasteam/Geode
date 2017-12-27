@@ -4,48 +4,60 @@
 #include <math.h>
 #include <limits>
 
-#include "neuron.h"
 #include "dna.h"
 #include "codified_nn.h"
 
 #define E 2.71828182845
 
-/* Clase que representa una red neuronal en formato lista de sucesores para
- * su codificación como genoma en binario.
- *
- * Las primeras input_neurons + output_neurons neuronas son fijas y representan
- * respectivamente las neuronas de entrada y de salida en ese orden.
- *
- * La suma de estos dos numeros es por tanto el tamaño mínimo de la red
- * */
-
+/**
+ * @brief Representa una red neuronal en formato matriz de costes.
+ */
 class workable_nn {
 private:
-  std::vector<std::vector<TYPE>> cost_matrix;  // contiene los valores de lso elementos
-  std::vector<std::vector<bool>> graph_matrix; // determina qué elementos pertenecen al grafo
+  /* Matriz de costes que representa para cada elemento ij el peso de un
+   * axón que conecte la neurona i con la j o en el caso de i = j el umbral de la neurona. */
+  std::vector<std::vector<TYPE>> cost_matrix;
+
+  /* Matriz que representa la existencia o no de un axón que conecta cada neurona i
+   * con una j. El caso de i = j no afecta, una neurona siempre existe. */
+  std::vector<std::vector<bool>> graph_matrix;
+
+  /*Número de neuronas de entrada, las neuronas desde 0 hasta #input_neurons
+   * se consideran neuronas de entrada. Primeras #input_neurons neuronas. */
   unsigned input_neurons;
+
+  /* Número de neuronas de entrada, las neuronas desde 0 hasta #output_neurons
+   * se consideran neuronas de entrada. Primeras #output_neurons neuronas. */
   unsigned output_neurons;  
-
-public:
-  workable_nn () {}
-  workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
-                                                                            unsigned ouput);
-  workable_nn (const workable_nn& aux);
-  workable_nn (const codified_nn& nn);
-
-  workable_nn (const dna& DNA);
-
-  void operator= (const workable_nn& aux);
 
   void get_mem (void* mem, unsigned& index, const char* seq, size_t size);
   void copy_mem (char* seq, unsigned& index, const void* mem, size_t size);
-
-  dna to_dna ();
 
   double saturate (double v) const {
     v = v / std::numeric_limits<short>::max() ;
     return v;
   }
+public:
+  workable_nn () {}
+  workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
+                                                                              unsigned ouput);
+  workable_nn (const workable_nn& aux);
+  workable_nn (const codified_nn& nn);
+
+  /**
+   * @brief Genera la red neuronal a partir de un adn válido, según la
+   * codificación contemplada en #dna
+   * @param adn empleado para la construcción
+   */
+  workable_nn (const dna& DNA);
+
+  /**
+   * @brief Genera un adn que codifique la información de la red neuronal contenida
+   * @return Adn con la información de la red neuronal.
+   */
+  dna to_dna ();
+
+  void operator= (const workable_nn& aux);       
 
   unsigned get_n_axons () const {
     unsigned n_axons = 0;
@@ -59,7 +71,17 @@ public:
   }
 
   std::vector<std::vector<TYPE>> get_cost_matrix () const { return cost_matrix; }
+
+  /**
+   * @brief Calcula la respuesta de la red neuronal ante una entrada
+   * @param Datos con los que se alimenta a las neuronas de entrada
+   * @param Contendrá los resultados de las neuronas de salida tras la operación
+   */
   void calculate (std::vector<double>& inputs, std::vector<double>& outputs);
+
+  /**
+   * @brief Imprime la red neuronal como matriz de costes
+   */
   void print () const;
 };
 

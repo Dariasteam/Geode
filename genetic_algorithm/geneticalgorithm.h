@@ -8,7 +8,17 @@
 #include <cmath>
 #include <iostream>
 
+
 template <class T>
+/**
+ * @brief Framework parametrizado para el manejo de algoritmos genéticos.
+ * Este sistema trata de abstraer al programador de los procesos relacionados
+ * con el algoritmo realizando las operaciones de cruce, mutación y evaluación
+ * por él según sea conveniente.
+ *
+ * El programador debe proporcionar no obstante 3 funciones que definan
+ * estos operadores para los individuos de tipo #T con los que se emplearán.
+ */
 class GeneticAlgorithm {
 private:
   std::vector <T> poblation;        // población generada en cada iteración
@@ -76,9 +86,17 @@ private:
     std::copy (poblation.begin(), poblation.begin() + candidates_size, std::back_inserter(best_candidates));
   }
 
-public:
+public:  
   inline std::vector<T> get_best_candidates () { return best_candidates; }
 
+  /**
+   * @brief Constructor del algoritmo genético
+   * @param Función lambda que expecifica de qué manera han de cruzarse los genomas de individuos #T
+   * @param Función lambda que expecifica de qué manera han de mutarse los genomas de individuos #T
+   * @param Función lambda que expecifica de qué manera han de compararse (función fitness) los genomas de individuos #T
+   * @param Tamaño de la población generada en cada iteración por medio de cruces
+   * @param Tamaño de la muestra seleccionada por la función evaluadora.
+   */
   explicit GeneticAlgorithm(
       std::function<T(T&, T&)> operator_cross,
       std::function<void(T&)> operator_mutate,
@@ -96,6 +114,11 @@ public:
         ratio_cand_pobl = std::round(double(poblation_size) / candidates_size);
       }
 
+  /**
+   * @brief Avanza un paso en la simulación. El proceso a seguir es:
+   * Generar nueva población → mutarla → evaluarla
+   * @return
+   */
   bool step () {
     generate_next_poblation();
     mutate_poblation();
@@ -104,6 +127,12 @@ public:
     return true;
   }
 
+  /**
+   * @brief Establece la población inicial de la simulación. En caso de ser de un
+   * tamaño diferente al especificado en #GeneticAlgorithm se generan / rechazan
+   * individuos hasta hacerlo coincidir.
+   * @param Población inicial
+   */
   void set_initial_poblation (std::vector<T>& i_poblation) {
     int diff_size = i_poblation.size() - candidates_size;
     if (diff_size > 0) {    // hay más candidatos de los que se requiere
@@ -115,6 +144,9 @@ public:
     }
   }
 
+  /**
+   * @brief Imprime los mejores candidatos junto a sus evaluaciones
+   */
   void print_best () {
     //std::cout << "Mejores candidatos y sus puntuaciones \n";
     std::cout << op_evaluate(best_candidates[0]) << "\n";
