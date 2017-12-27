@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Vida artificial: workable_nn Class Reference</title>
+<title>Vida Artificial: workable_nn Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Vida artificial
+   <div id="projectname">Vida Artificial
    </div>
-   <div id="projectbrief">Proyecto para la asignatura sistemas inteligentes</div>
+   <div id="projectbrief">Proyecto para la asignatura Sistemas Inteligentes</div>
   </td>
  </tr>
  </tbody>
@@ -87,55 +87,313 @@ $(document).ready(function(){initNavTree('classworkable__nn.html','');});
 <div class="title">workable_nn Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Representa una red neuronal en formato matriz de costes.  
+ <a href="classworkable__nn.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="workable__nn_8h_source.html">workable_nn.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9113c222bd234f941d458f6238d113b4"><td class="memItemLeft" align="right" valign="top"><a id="a9113c222bd234f941d458f6238d113b4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>workable_nn</b> (std::vector&lt; std::vector&lt; std::pair&lt; bool, TYPE &gt;&gt;&gt; cost_matrix, unsigned input, unsigned ouput)</td></tr>
+<tr class="memitem:a37c8a4ab2fad705882e899c937bb30f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#a37c8a4ab2fad705882e899c937bb30f7">workable_nn</a> ()</td></tr>
+<tr class="separator:a37c8a4ab2fad705882e899c937bb30f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9113c222bd234f941d458f6238d113b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#a9113c222bd234f941d458f6238d113b4">workable_nn</a> (std::vector&lt; std::vector&lt; std::pair&lt; bool, <a class="el" href="workable__nn_8h.html#a5a392548f2df67370cb15d2a5d75cd7b">TYPE</a> &gt;&gt;&gt; cost_matrix, unsigned input, unsigned ouput)</td></tr>
 <tr class="separator:a9113c222bd234f941d458f6238d113b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6335e96e7e78318e08be195cf6b5f31"><td class="memItemLeft" align="right" valign="top"><a id="aa6335e96e7e78318e08be195cf6b5f31"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>workable_nn</b> (const <a class="el" href="classworkable__nn.html">workable_nn</a> &amp;aux)</td></tr>
+<tr class="memitem:aa6335e96e7e78318e08be195cf6b5f31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#aa6335e96e7e78318e08be195cf6b5f31">workable_nn</a> (const <a class="el" href="classworkable__nn.html">workable_nn</a> &amp;aux)</td></tr>
 <tr class="separator:aa6335e96e7e78318e08be195cf6b5f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcaf4e838d23023afdd2154f220dea06"><td class="memItemLeft" align="right" valign="top"><a id="afcaf4e838d23023afdd2154f220dea06"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>workable_nn</b> (const <a class="el" href="classcodified__nn.html">codified_nn</a> &amp;nn)</td></tr>
-<tr class="separator:afcaf4e838d23023afdd2154f220dea06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0312cef8caec14f79b74947bc99781a"><td class="memItemLeft" align="right" valign="top"><a id="aa0312cef8caec14f79b74947bc99781a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>workable_nn</b> (const <a class="el" href="structdna.html">dna</a> &amp;DNA)</td></tr>
+<tr class="memitem:aa0312cef8caec14f79b74947bc99781a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#aa0312cef8caec14f79b74947bc99781a">workable_nn</a> (const <a class="el" href="structdna.html">dna</a> &amp;DNA)</td></tr>
+<tr class="memdesc:aa0312cef8caec14f79b74947bc99781a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genera la red neuronal a partir de un adn válido, según la codificación contemplada en <a class="el" href="structdna.html" title="Estructura que representa un genoma de red neuronal. ">dna</a>.  <a href="#aa0312cef8caec14f79b74947bc99781a">More...</a><br /></td></tr>
 <tr class="separator:aa0312cef8caec14f79b74947bc99781a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff96f5c5954ea9d3af2f79185e5a6f6b"><td class="memItemLeft" align="right" valign="top"><a id="aff96f5c5954ea9d3af2f79185e5a6f6b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classworkable__nn.html">workable_nn</a> &amp;aux)</td></tr>
-<tr class="separator:aff96f5c5954ea9d3af2f79185e5a6f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a126de52f5f23b8c099643ddf568ce746"><td class="memItemLeft" align="right" valign="top"><a id="a126de52f5f23b8c099643ddf568ce746"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>get_mem</b> (void *mem, unsigned &amp;index, const char *seq, size_t size)</td></tr>
-<tr class="separator:a126de52f5f23b8c099643ddf568ce746"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77d1c103d282e5e08ae446aad4610cae"><td class="memItemLeft" align="right" valign="top"><a id="a77d1c103d282e5e08ae446aad4610cae"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>copy_mem</b> (char *seq, unsigned &amp;index, const void *mem, size_t size)</td></tr>
-<tr class="separator:a77d1c103d282e5e08ae446aad4610cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3b3b6cba9904aae43d9c73d03c54da7"><td class="memItemLeft" align="right" valign="top"><a id="ac3b3b6cba9904aae43d9c73d03c54da7"></a>
-<a class="el" href="structdna.html">dna</a>&#160;</td><td class="memItemRight" valign="bottom"><b>to_dna</b> ()</td></tr>
+<tr class="memitem:ac3b3b6cba9904aae43d9c73d03c54da7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdna.html">dna</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#ac3b3b6cba9904aae43d9c73d03c54da7">to_dna</a> ()</td></tr>
+<tr class="memdesc:ac3b3b6cba9904aae43d9c73d03c54da7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genera un adn que codifique la información de la red neuronal contenida.  <a href="#ac3b3b6cba9904aae43d9c73d03c54da7">More...</a><br /></td></tr>
 <tr class="separator:ac3b3b6cba9904aae43d9c73d03c54da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a67a517cb92e05f177b7207a2e64c4d"><td class="memItemLeft" align="right" valign="top"><a id="a8a67a517cb92e05f177b7207a2e64c4d"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>saturate</b> (double v) const</td></tr>
-<tr class="separator:a8a67a517cb92e05f177b7207a2e64c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0eac616c44e425bdc1af614f4872540b"><td class="memItemLeft" align="right" valign="top"><a id="a0eac616c44e425bdc1af614f4872540b"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>get_n_axons</b> () const</td></tr>
+<tr class="memitem:aff96f5c5954ea9d3af2f79185e5a6f6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#aff96f5c5954ea9d3af2f79185e5a6f6b">operator=</a> (const <a class="el" href="classworkable__nn.html">workable_nn</a> &amp;aux)</td></tr>
+<tr class="separator:aff96f5c5954ea9d3af2f79185e5a6f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eac616c44e425bdc1af614f4872540b"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#a0eac616c44e425bdc1af614f4872540b">get_n_axons</a> () const</td></tr>
 <tr class="separator:a0eac616c44e425bdc1af614f4872540b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeba6ff1aaa0451278ae5147f562797aa"><td class="memItemLeft" align="right" valign="top"><a id="aeba6ff1aaa0451278ae5147f562797aa"></a>
-std::vector&lt; std::vector&lt; TYPE &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_cost_matrix</b> () const</td></tr>
+<tr class="memitem:aeba6ff1aaa0451278ae5147f562797aa"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; <a class="el" href="workable__nn_8h.html#a5a392548f2df67370cb15d2a5d75cd7b">TYPE</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#aeba6ff1aaa0451278ae5147f562797aa">get_cost_matrix</a> () const</td></tr>
 <tr class="separator:aeba6ff1aaa0451278ae5147f562797aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7acc1f9db39d385b098e5b76036dd911"><td class="memItemLeft" align="right" valign="top"><a id="a7acc1f9db39d385b098e5b76036dd911"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>calculate</b> (std::vector&lt; double &gt; &amp;inputs, std::vector&lt; double &gt; &amp;outputs)</td></tr>
+<tr class="memitem:a7acc1f9db39d385b098e5b76036dd911"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#a7acc1f9db39d385b098e5b76036dd911">calculate</a> (std::vector&lt; double &gt; &amp;inputs, std::vector&lt; double &gt; &amp;outputs)</td></tr>
+<tr class="memdesc:a7acc1f9db39d385b098e5b76036dd911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula la respuesta de la red neuronal ante una entrada.  <a href="#a7acc1f9db39d385b098e5b76036dd911">More...</a><br /></td></tr>
 <tr class="separator:a7acc1f9db39d385b098e5b76036dd911"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf7f637f5ce150adcb94638052dfa75a"><td class="memItemLeft" align="right" valign="top"><a id="aaf7f637f5ce150adcb94638052dfa75a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>print</b> () const</td></tr>
+<tr class="memitem:aaf7f637f5ce150adcb94638052dfa75a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classworkable__nn.html#aaf7f637f5ce150adcb94638052dfa75a">print</a> () const</td></tr>
+<tr class="memdesc:aaf7f637f5ce150adcb94638052dfa75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime la red neuronal como matriz de costes.  <a href="#aaf7f637f5ce150adcb94638052dfa75a">More...</a><br /></td></tr>
 <tr class="separator:aaf7f637f5ce150adcb94638052dfa75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="workable__nn_8h_source.html#l00022">22</a> of file <a class="el" href="workable__nn_8h_source.html">workable_nn.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
-<li>neural_network/<a class="el" href="workable__nn_8h_source.html">workable_nn.h</a></li>
-<li>neural_network/<a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a></li>
+<div class="textblock"><p>Representa una red neuronal en formato matriz de costes. </p>
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8h_source.html#l00017">17</a> of file <a class="el" href="workable__nn_8h_source.html">workable_nn.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a37c8a4ab2fad705882e899c937bb30f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37c8a4ab2fad705882e899c937bb30f7">&#9670;&nbsp;</a></span>workable_nn() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">workable_nn::workable_nn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8h_source.html#l00043">43</a> of file <a class="el" href="workable__nn_8h_source.html">workable_nn.h</a>.</p>
+
+</div>
+</div>
+<a id="a9113c222bd234f941d458f6238d113b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9113c222bd234f941d458f6238d113b4">&#9670;&nbsp;</a></span>workable_nn() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">workable_nn::workable_nn </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::pair&lt; bool, <a class="el" href="workable__nn_8h.html#a5a392548f2df67370cb15d2a5d75cd7b">TYPE</a> &gt;&gt;&gt;&#160;</td>
+          <td class="paramname"><em>cost_matrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>ouput</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa6335e96e7e78318e08be195cf6b5f31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6335e96e7e78318e08be195cf6b5f31">&#9670;&nbsp;</a></span>workable_nn() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">workable_nn::workable_nn </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classworkable__nn.html">workable_nn</a> &amp;&#160;</td>
+          <td class="paramname"><em>aux</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8cpp_source.html#l00083">83</a> of file <a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa0312cef8caec14f79b74947bc99781a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0312cef8caec14f79b74947bc99781a">&#9670;&nbsp;</a></span>workable_nn() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">workable_nn::workable_nn </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structdna.html">dna</a> &amp;&#160;</td>
+          <td class="paramname"><em>DNA</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Genera la red neuronal a partir de un adn válido, según la codificación contemplada en <a class="el" href="structdna.html" title="Estructura que representa un genoma de red neuronal. ">dna</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">adn</td><td>empleado para la construcción </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8cpp_source.html#l00027">27</a> of file <a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7acc1f9db39d385b098e5b76036dd911"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7acc1f9db39d385b098e5b76036dd911">&#9670;&nbsp;</a></span>calculate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void workable_nn::calculate </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>outputs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calcula la respuesta de la red neuronal ante una entrada. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Datos</td><td>con los que se alimenta a las neuronas de entrada </td></tr>
+    <tr><td class="paramname">Contendrá</td><td>los resultados de las neuronas de salida tras la operación </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8cpp_source.html#l00097">97</a> of file <a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aeba6ff1aaa0451278ae5147f562797aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeba6ff1aaa0451278ae5147f562797aa">&#9670;&nbsp;</a></span>get_cost_matrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;<a class="el" href="workable__nn_8h.html#a5a392548f2df67370cb15d2a5d75cd7b">TYPE</a>&gt; &gt; workable_nn::get_cost_matrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8h_source.html#l00074">74</a> of file <a class="el" href="workable__nn_8h_source.html">workable_nn.h</a>.</p>
+
+</div>
+</div>
+<a id="a0eac616c44e425bdc1af614f4872540b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eac616c44e425bdc1af614f4872540b">&#9670;&nbsp;</a></span>get_n_axons()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned workable_nn::get_n_axons </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8h_source.html#l00063">63</a> of file <a class="el" href="workable__nn_8h_source.html">workable_nn.h</a>.</p>
+
+</div>
+</div>
+<a id="aff96f5c5954ea9d3af2f79185e5a6f6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff96f5c5954ea9d3af2f79185e5a6f6b">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void workable_nn::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classworkable__nn.html">workable_nn</a> &amp;&#160;</td>
+          <td class="paramname"><em>aux</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8cpp_source.html#l00090">90</a> of file <a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aaf7f637f5ce150adcb94638052dfa75a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf7f637f5ce150adcb94638052dfa75a">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void workable_nn::print </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Imprime la red neuronal como matriz de costes. </p>
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8cpp_source.html#l00202">202</a> of file <a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac3b3b6cba9904aae43d9c73d03c54da7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3b3b6cba9904aae43d9c73d03c54da7">&#9670;&nbsp;</a></span>to_dna()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structdna.html">dna</a> workable_nn::to_dna </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Genera un adn que codifique la información de la red neuronal contenida. </p>
+<dl class="section return"><dt>Returns</dt><dd>Adn con la información de la red neuronal. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="workable__nn_8cpp_source.html#l00062">62</a> of file <a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>backend/neural_network/<a class="el" href="workable__nn_8h_source.html">workable_nn.h</a></li>
+<li>backend/neural_network/<a class="el" href="workable__nn_8cpp_source.html">workable_nn.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

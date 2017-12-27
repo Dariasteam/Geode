@@ -11,6 +11,7 @@ test:
 
 doc:
 	doxygen
+	mv docs/html/* docs
 
 clean:
 	rm -rf backend/*.o example

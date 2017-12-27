@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['workable_5fnn',['workable_nn',['../classworkable__nn.html',1,'']]]
+  ['n',['N',['../main_8cpp.html#a0240ac851181b84ac374872dc5434ee4',1,'main.cpp']]],
+  ['neuron',['neuron',['../structneuron.html',1,'']]],
+  ['neuron_2eh',['neuron.h',['../neuron_8h.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['geneticalgorithm',['GeneticAlgorithm',['../class_genetic_algorithm.html',1,'']]]
+  ['neuron',['neuron',['../structneuron.html',1,'']]]
 ];

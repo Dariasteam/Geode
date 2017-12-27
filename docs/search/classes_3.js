@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['neuron',['neuron',['../structneuron.html',1,'']]]
+  ['workable_5fnn',['workable_nn',['../classworkable__nn.html',1,'']]]
 ];
