@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Vida artificial: GeneticAlgorithm&lt; T &gt; Class Template Reference</title>
+<title>Vida Artificial: GeneticAlgorithm&lt; T &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Vida artificial
+   <div id="projectname">Vida Artificial
    </div>
-   <div id="projectbrief">Proyecto para la asignatura sistemas inteligentes</div>
+   <div id="projectbrief">Proyecto para la asignatura Sistemas Inteligentes</div>
   </td>
  </tr>
  </tbody>
@@ -95,8 +95,7 @@ $(document).ready(function(){initNavTree('class_genetic_algorithm.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6ca0bbf76e60cacdd77712971dded001"><td class="memItemLeft" align="right" valign="top"><a id="a6ca0bbf76e60cacdd77712971dded001"></a>
-std::vector&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_best_candidates</b> ()</td></tr>
+<tr class="memitem:a6ca0bbf76e60cacdd77712971dded001"><td class="memItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_genetic_algorithm.html#a6ca0bbf76e60cacdd77712971dded001">get_best_candidates</a> ()</td></tr>
 <tr class="separator:a6ca0bbf76e60cacdd77712971dded001"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2257209768f74317f94be237a4dc9678"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_genetic_algorithm.html#a2257209768f74317f94be237a4dc9678">GeneticAlgorithm</a> (std::function&lt; T(T &amp;, T &amp;)&gt; operator_cross, std::function&lt; void(T &amp;)&gt; operator_mutate, std::function&lt; double(const T &amp;)&gt; operator_evaluator, unsigned poblation_s, unsigned candidates_s)</td></tr>
 <tr class="memdesc:a2257209768f74317f94be237a4dc9678"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor del algoritmo genético.  <a href="#a2257209768f74317f94be237a4dc9678">More...</a><br /></td></tr>
@@ -107,9 +106,8 @@ std::vector&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get
 <tr class="memitem:ac2e3c9ae6bf6bcc1ad8403848f2da16b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_genetic_algorithm.html#ac2e3c9ae6bf6bcc1ad8403848f2da16b">set_initial_poblation</a> (std::vector&lt; T &gt; &amp;i_poblation)</td></tr>
 <tr class="memdesc:ac2e3c9ae6bf6bcc1ad8403848f2da16b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establece la población inicial de la simulación. En caso de ser de un tamaño diferente al especificado en <a class="el" href="class_genetic_algorithm.html" title="Framework parametrizado para el manejo de algoritmos genéticos. Este sistema trata de abstraer al pro...">GeneticAlgorithm</a> se generan / rechazan individuos hasta hacerlo coincidir.  <a href="#ac2e3c9ae6bf6bcc1ad8403848f2da16b">More...</a><br /></td></tr>
 <tr class="separator:ac2e3c9ae6bf6bcc1ad8403848f2da16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a062f45c41d1f652e2f1794a06e8ba161"><td class="memItemLeft" align="right" valign="top"><a id="a062f45c41d1f652e2f1794a06e8ba161"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_genetic_algorithm.html#a062f45c41d1f652e2f1794a06e8ba161">print_best</a> ()</td></tr>
-<tr class="memdesc:a062f45c41d1f652e2f1794a06e8ba161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime los mejores candidatos junto a sus evaluaciones. <br /></td></tr>
+<tr class="memitem:a062f45c41d1f652e2f1794a06e8ba161"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_genetic_algorithm.html#a062f45c41d1f652e2f1794a06e8ba161">print_best</a> ()</td></tr>
+<tr class="memdesc:a062f45c41d1f652e2f1794a06e8ba161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imprime los mejores candidatos junto a sus evaluaciones.  <a href="#a062f45c41d1f652e2f1794a06e8ba161">More...</a><br /></td></tr>
 <tr class="separator:a062f45c41d1f652e2f1794a06e8ba161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -117,9 +115,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 class GeneticAlgorithm&lt; T &gt;</h3>
 
 <p>Framework parametrizado para el manejo de algoritmos genéticos. Este sistema trata de abstraer al programador de los procesos relacionados con el algoritmo realizando las operaciones de cruce, mutación y evaluación por él según sea conveniente. </p>
-<p>El programador debe proporcionar no obstante 3 funciones que definan estos operadores para los individuos de tipo #T con los que se emplearán. </p>
+<p>El programador debe proporcionar no obstante 3 funciones que definan estos operadores para los individuos de tipo #T con los que se emplearán.</p>
+<p>La generación de población y su mutación se realiza de forma concurrente, asignándole un hilo a cada individuo. </p>
 
-<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00022">22</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00025">25</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2257209768f74317f94be237a4dc9678"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2257209768f74317f94be237a4dc9678">&#9670;&nbsp;</a></span>GeneticAlgorithm()</h2>
@@ -187,11 +186,71 @@ template&lt;class T&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00100">100</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00103">103</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6ca0bbf76e60cacdd77712971dded001"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ca0bbf76e60cacdd77712971dded001">&#9670;&nbsp;</a></span>get_best_candidates()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;T&gt; <a class="el" href="class_genetic_algorithm.html">GeneticAlgorithm</a>&lt; T &gt;::get_best_candidates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00093">93</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
+
+</div>
+</div>
+<a id="a062f45c41d1f652e2f1794a06e8ba161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a062f45c41d1f652e2f1794a06e8ba161">&#9670;&nbsp;</a></span>print_best()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_genetic_algorithm.html">GeneticAlgorithm</a>&lt; T &gt;::print_best </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Imprime los mejores candidatos junto a sus evaluaciones. </p>
+
+<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00153">153</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
+
+</div>
+</div>
 <a id="ac2e3c9ae6bf6bcc1ad8403848f2da16b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac2e3c9ae6bf6bcc1ad8403848f2da16b">&#9670;&nbsp;</a></span>set_initial_poblation()</h2>
 
@@ -226,7 +285,7 @@ template&lt;class T&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00136">136</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00139">139</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
 
 </div>
 </div>
@@ -258,12 +317,12 @@ template&lt;class T&gt; </div>
 <p>Avanza un paso en la simulación. El proceso a seguir es: Generar nueva población → mutarla → evaluarla. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00122">122</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geneticalgorithm_8h_source.html#l00125">125</a> of file <a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>genetic_algorithm/<a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a></li>
+<li>backend/genetic_algorithm/<a class="el" href="geneticalgorithm_8h_source.html">geneticalgorithm.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

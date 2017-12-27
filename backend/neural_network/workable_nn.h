@@ -3,10 +3,12 @@
 
 #include <math.h>
 #include <limits>
+#include <vector>
+#include <iostream>
 
 #include "dna.h"
-#include "codified_nn.h"
 
+#define TYPE short
 #define E 2.71828182845
 
 /**
@@ -41,8 +43,7 @@ public:
   workable_nn () {}
   workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
                                                                               unsigned ouput);
-  workable_nn (const workable_nn& aux);
-  workable_nn (const codified_nn& nn);
+  workable_nn (const workable_nn& aux);  
 
   /**
    * @brief Genera la red neuronal a partir de un adn válido, según la

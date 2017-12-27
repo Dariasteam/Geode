@@ -87,34 +87,6 @@ workable_nn::workable_nn(const workable_nn &aux) :
   graph_matrix (aux.graph_matrix)
 {}
 
-workable_nn::workable_nn(const codified_nn &nn) :
-  input_neurons (nn.get_input_neurons()),
-  output_neurons (nn.get_output_neurons())
-{
-
-  std::vector<neuron> aux_nn = nn.get_content();
-  unsigned size = aux_nn.size();
-
-  cost_matrix.resize (size);
-  graph_matrix.resize (size);
-  for (unsigned i = 0; i < size; i++) {
-
-    cost_matrix[i].resize (size);
-    graph_matrix[i].resize (size);
-
-    graph_matrix[i][i] = true;
-    cost_matrix[i][i] = aux_nn[i].umbral;
-
-    for (auto& element : aux_nn[i].list) {
-      unsigned connected_n = element.first;
-      if (connected_n >= size)
-        break;
-      cost_matrix[i][connected_n] = element.second;
-      graph_matrix[i][connected_n] = true;
-    }
-  }
-}
-
 void workable_nn::operator=(const workable_nn &aux) {
   cost_matrix = aux.get_cost_matrix();
   input_neurons = aux.input_neurons;

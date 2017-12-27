@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['output_5fneurons',['output_neurons',['../structdna.html#a8939224e5ff137b49f031dfb649b2068',1,'dna']]]
+  ['list',['list',['../structneuron.html#a8b8fde3925560e47d286dd61fa7883a8',1,'neuron']]]
 ];

@@ -3,7 +3,6 @@ var classworkable__nn =
     [ "workable_nn", "classworkable__nn.html#a37c8a4ab2fad705882e899c937bb30f7", null ],
     [ "workable_nn", "classworkable__nn.html#a9113c222bd234f941d458f6238d113b4", null ],
     [ "workable_nn", "classworkable__nn.html#aa6335e96e7e78318e08be195cf6b5f31", null ],
-    [ "workable_nn", "classworkable__nn.html#afcaf4e838d23023afdd2154f220dea06", null ],
     [ "workable_nn", "classworkable__nn.html#aa0312cef8caec14f79b74947bc99781a", null ],
     [ "calculate", "classworkable__nn.html#a7acc1f9db39d385b098e5b76036dd911", null ],
     [ "get_cost_matrix", "classworkable__nn.html#aeba6ff1aaa0451278ae5147f562797aa", null ],

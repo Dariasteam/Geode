@@ -10,7 +10,6 @@
 #include "neural_network/workable_nn.h"
 #include "genetic_algorithm/geneticalgorithm.h"
 
-#define TYPE short
 #define N 10
 
 /* Generador de números aleatorios para el grafo

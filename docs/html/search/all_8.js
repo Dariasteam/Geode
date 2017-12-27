@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['to_5fdna',['to_dna',['../classworkable__nn.html#ac3b3b6cba9904aae43d9c73d03c54da7',1,'workable_nn']]]
+  ['n',['N',['../main_8cpp.html#a0240ac851181b84ac374872dc5434ee4',1,'main.cpp']]],
+  ['neuron',['neuron',['../structneuron.html',1,'']]],
+  ['neuron_2eh',['neuron.h',['../neuron_8h.html',1,'']]]
 ];

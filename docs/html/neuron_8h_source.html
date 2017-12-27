@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Vida artificial: neural_network/neuron.h Source File</title>
+<title>Vida Artificial: backend/neural_network/neuron.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Vida artificial
+   <div id="projectname">Vida Artificial
    </div>
-   <div id="projectbrief">Proyecto para la asignatura sistemas inteligentes</div>
+   <div id="projectbrief">Proyecto para la asignatura Sistemas Inteligentes</div>
   </td>
  </tr>
  </tbody>
@@ -84,13 +84,15 @@ $(document).ready(function(){initNavTree('neuron_8h_source.html','');});
 <div class="title">neuron.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef NEURON_H</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define NEURON_H</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define TYPE short</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structneuron.html">    8</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structneuron.html">neuron</a> {</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  <span class="keywordtype">unsigned</span> umbral;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  std::vector&lt;std::pair&lt;unsigned, TYPE&gt;&gt; list;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;};</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#endif // NEURON_H</span></div><div class="ttc" id="structneuron_html"><div class="ttname"><a href="structneuron.html">neuron</a></div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00008">neuron.h:8</a></div></div>
+<a href="neuron_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef NEURON_H</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define NEURON_H</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="neuron_8h.html#a5a392548f2df67370cb15d2a5d75cd7b">    4</a></span>&#160;<span class="preprocessor">#define TYPE short</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structneuron.html">    8</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structneuron.html">neuron</a> {</div><div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structneuron.html#afebe6c0de0dff9f02090f7e39653bc0c">    9</a></span>&#160;  <span class="keywordtype">unsigned</span> <a class="code" href="structneuron.html#afebe6c0de0dff9f02090f7e39653bc0c">umbral</a>;</div><div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="structneuron.html#a8b8fde3925560e47d286dd61fa7883a8">   10</a></span>&#160;  std::vector&lt;std::pair&lt;unsigned, TYPE&gt;&gt; <a class="code" href="structneuron.html#a8b8fde3925560e47d286dd61fa7883a8">list</a>;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;};</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#endif // NEURON_H</span></div><div class="ttc" id="structneuron_html_a8b8fde3925560e47d286dd61fa7883a8"><div class="ttname"><a href="structneuron.html#a8b8fde3925560e47d286dd61fa7883a8">neuron::list</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; unsigned, TYPE &gt; &gt; list</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00010">neuron.h:10</a></div></div>
+<div class="ttc" id="structneuron_html"><div class="ttname"><a href="structneuron.html">neuron</a></div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00008">neuron.h:8</a></div></div>
+<div class="ttc" id="structneuron_html_afebe6c0de0dff9f02090f7e39653bc0c"><div class="ttname"><a href="structneuron.html#afebe6c0de0dff9f02090f7e39653bc0c">neuron::umbral</a></div><div class="ttdeci">unsigned umbral</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00009">neuron.h:9</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_f7bb5f466c5eb8e08afd8d1f834f13e5.html">neural_network</a></li><li class="navelem"><b>neuron.h</b></li>
+    <li class="navelem"><a class="el" href="dir_8c739bbef76d64b22d6b0911c526dd76.html">backend</a></li><li class="navelem"><a class="el" href="dir_00c277495ad6401885297625576c4516.html">neural_network</a></li><li class="navelem"><a class="el" href="neuron_8h.html">neuron.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>

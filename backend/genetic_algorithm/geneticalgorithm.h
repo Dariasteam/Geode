@@ -18,6 +18,9 @@ template <class T>
  *
  * El programador debe proporcionar no obstante 3 funciones que definan
  * estos operadores para los individuos de tipo #T con los que se emplearán.
+ *
+ * La generación de población y su mutación se realiza de forma concurrente,
+ * asignándole un hilo a cada individuo.
  */
 class GeneticAlgorithm {
 private:
