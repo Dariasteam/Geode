@@ -1,1 +1,6 @@
 *.out
+Makefile
+*.pro.user
+example
+.qmake.stash
+*.o
