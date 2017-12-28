@@ -4,3 +4,4 @@ backend/Makefile
 example
 .qmake.stash
 *.o
+frontend/SimpleLibrary

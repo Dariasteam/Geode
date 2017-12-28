@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://test_script.gd" type="Script" id=1]
+[ext_resource path="res://vakacaminar0000.png" type="Texture" id=2]
+
+[node name="Node2D" type="Node2D" index="0"]
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="." index="0"]
+
+position = Vector2( 366.416, 297.826 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
+
+[node name="Sprite" type="Sprite" parent="KinematicBody2D" index="0"]
+
+position = Vector2( 7.32092, 2.34374 )
+texture = ExtResource( 2 )
+
+
