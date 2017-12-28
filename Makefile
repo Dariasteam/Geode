@@ -10,8 +10,9 @@ test:
 	mv backend/example .
 
 doc:
+	rm -rf docs/*
 	doxygen
-	mv docs/html/* docs
+	mv docs/html/* docs/
 
 clean:
 	rm -rf backend/*.o example

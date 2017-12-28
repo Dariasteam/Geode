@@ -48,13 +48,13 @@ public:
   /**
    * @brief Genera la red neuronal a partir de un adn válido, según la
    * codificación contemplada en #dna
-   * @param adn empleado para la construcción
+   * @param dna adn empleado para la construcción
    */
   workable_nn (const dna& DNA);
 
   /**
    * @brief Genera un adn que codifique la información de la red neuronal contenida
-   * @return Adn con la información de la red neuronal.
+   * @return dna Adn con la información de la red neuronal.
    */
   dna to_dna ();
 
@@ -75,8 +75,8 @@ public:
 
   /**
    * @brief Calcula la respuesta de la red neuronal ante una entrada
-   * @param Datos con los que se alimenta a las neuronas de entrada
-   * @param Contendrá los resultados de las neuronas de salida tras la operación
+   * @param inputs Datos con los que se alimenta a las neuronas de entrada
+   * @param outputs Contendrá los resultados de las neuronas de salida tras la operación
    */
   void calculate (std::vector<double>& inputs, std::vector<double>& outputs);
 

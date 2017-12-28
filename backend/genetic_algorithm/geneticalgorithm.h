@@ -94,11 +94,11 @@ public:
 
   /**
    * @brief Constructor del algoritmo genético
-   * @param Función lambda que expecifica de qué manera han de cruzarse los genomas de individuos #T
-   * @param Función lambda que expecifica de qué manera han de mutarse los genomas de individuos #T
-   * @param Función lambda que expecifica de qué manera han de compararse (función fitness) los genomas de individuos #T
-   * @param Tamaño de la población generada en cada iteración por medio de cruces
-   * @param Tamaño de la muestra seleccionada por la función evaluadora.
+   * @param operator_cross Función lambda que expecifica de qué manera han de cruzarse los genomas de individuos #T
+   * @param operator_mutate Función lambda que expecifica de qué manera han de mutarse los genomas de individuos #T
+   * @param operator_evalautor Función lambda que expecifica de qué manera han de compararse (función fitness) los genomas de individuos #T
+   * @param poblation_s Tamaño de la población generada en cada iteración por medio de cruces
+   * @param candidates_s Tamaño de la muestra seleccionada por la función evaluadora.
    */
   explicit GeneticAlgorithm(
       std::function<T(T&, T&)> operator_cross,
@@ -131,10 +131,43 @@ public:
   }
 
   /**
+   * @brief Avanza medio paso en la simulación (genera población y la muta)
+   * Posteriormente se debe llamar a #set_external_evaluations para realizar
+   * las dos últimas fases
+   */
+  void semi_step () {
+    generate_next_poblation();
+    mutate_poblation();
+  }
+
+  /**
+   * @brief Establece una puntuación externa a cada elemento de la población y
+   * extrae los mejores candidatos.
+   * @param evaluations vector de puntuaciones
+   */
+  void set_external_evaluations (std::vector<double> evaluations) {
+    std::vector<std::pair<T, double>> aux (poblation_size);
+    for (unsigned i = 0; i < poblation_size; i++)
+      aux[i] = {poblation[i], evaluations[i]};
+
+    auto comparator = [&](const std::pair<T, double>& A, const std::pair<T, double>& B) {
+      return A.second > B.second;
+    };
+    std::sort (aux.begin(), aux.end(), comparator);
+
+    poblation.clear();
+    poblation.resize(poblation_size);
+
+    for (unsigned i = 0; i < poblation_size; i++)
+      poblation[i] = aux[i].first;
+    generate_next_candidates();
+  }
+
+  /**
    * @brief Establece la población inicial de la simulación. En caso de ser de un
    * tamaño diferente al especificado en #GeneticAlgorithm se generan / rechazan
    * individuos hasta hacerlo coincidir.
-   * @param Población inicial
+   * @param i_poblation Población inicial
    */
   void set_initial_poblation (std::vector<T>& i_poblation) {
     int diff_size = i_poblation.size() - candidates_size;

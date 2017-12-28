@@ -161,14 +161,15 @@ int main(int argc, char **argv) {
   dna serialized_nn_1 = parent_1.to_dna();
   dna serialized_nn_2 = parent_2.to_dna();
 
-  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 80, 10);
+  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 4, 2);
   std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
   genetic.set_initial_poblation(initial_candidates); 
 
   char input = 'a';
   while (input != 'q') {
-    genetic.step();
-    genetic.print_best();
+    genetic.semi_step();
+    genetic.set_external_evaluations({100, 0, 0, 50});
+    genetic.print_best();    
     std::cout << "'e' para ver el estado actual\n" <<
                  "'q' para salir\n" <<
                  "[Enter] para continuar" << std::endl;
