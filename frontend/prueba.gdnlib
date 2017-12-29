@@ -1,5 +1,0 @@
-[general]
-
-singleton=false
-load_once=false
-symbol_prefix="godot_"

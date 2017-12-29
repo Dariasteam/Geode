@@ -42,7 +42,7 @@ private:
 public:
   workable_nn () {}
   workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
-                                                                              unsigned ouput);
+                                                                            unsigned ouput);
   workable_nn (const workable_nn& aux);
 
   /**

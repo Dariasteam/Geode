@@ -1,16 +1,16 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://controller.gd" type="Script" id=1]
+[ext_resource path="res://genetic_controller.gd" type="Script" id=1]
 [ext_resource path="res://bird.png" type="Texture" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://aaaa.res" type="TileSet" id=4]
+[ext_resource path="res://agent_controller.gd" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 34.067
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Genetic_Controller" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -69,25 +69,8 @@ bounce = 0.0
 build_mode = 0
 polygon = PoolVector2Array( 342.959, -132.527, 470.652, -132.527, 418.834, 133.962, 76.6788, 108.725, -7.73222, -34.4724, -9.23955, -164.104, 175.129, 5.36285, 198.398, -41.1746, 248.578, -80.7094 )
 
-[node name="TileMap" type="TileMap" parent="." index="3"]
+[node name="Agent" type="Node2D" parent="." index="3"]
 
-mode = 0
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 64, 64 )
-cell_quadrant_size = 16
-cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-cell_half_offset = 2
-cell_tile_origin = 0
-cell_y_sort = false
-cell_clip_uv = false
-collision_use_kinematic = false
-collision_friction = 1.0
-collision_bounce = 0.0
-collision_layer = 1
-collision_mask = 1
-occluder_light_mask = 1
-format = 1
-tile_data = PoolIntArray(  )
-_sections_unfolded = [ "Cell" ]
+script = ExtResource( 4 )
 
 

@@ -1,3 +1,4 @@
+
 #ifndef GENETICALGORITHM_H
 #define GENETICALGORITHM_H
 
@@ -155,7 +156,7 @@ public:
     for (unsigned i = 0; i < poblation_size; i++)
       aux[i] = {poblation[i], evaluations[i]};
 
-    auto comparator = [&](const std::pair<T, double>& A, const std::pair<T, double>& B) {
+    auto comparator = [](std::pair<T, double>& A, std::pair<T, double>& B) {
       return A.second > B.second;
     };
     std::sort (aux.begin(), aux.end(), comparator);
@@ -163,11 +164,14 @@ public:
     poblation.clear();
     poblation.resize(poblation_size);
 
-    for (unsigned i = 0; i < poblation_size; i++)
+    for (unsigned i = 0; i < poblation_size - 3; i++)
       poblation[i] = aux[i].first;
+
+    for (unsigned i = 0; i < 3; i++)
+      poblation[poblation_size - 3 + i] = best_candidates[i];
+
     generate_next_candidates();
   }
-
 
 
   /**

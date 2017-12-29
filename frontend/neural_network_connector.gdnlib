@@ -1,0 +1,13 @@
+[entry]
+
+X11.64="res://SimpleLibrary/lib/libneuralnetwork.so"
+
+[dependencies]
+
+X11.64=[  ]
+
+[general]
+
+singleton=false
+load_once=false
+symbol_prefix="godot_"
