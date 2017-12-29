@@ -65,8 +65,8 @@ struct dna {
     output_neurons (o)
   {}
 
-  ~dna () {}
-  void operator= (const dna& aux) {}
+  ~dna ();
+  void operator= (const dna& aux);
 };
 
 #endif // DNA_H

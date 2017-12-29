@@ -16,13 +16,72 @@
 
 using namespace godot;
 
+dna cross (const dna& A, const dna& B) {
+  unsigned a_size;
+  unsigned b_size;
+
+  memcpy(&a_size, A.sequence, sizeof(a_size));
+  memcpy(&b_size, B.sequence, sizeof(b_size));
+
+  unsigned final_size = (a_size / 2) + (b_size / 2);
+  std::cout << a_size << " " << b_size << std::endl;
+
+  char* sequence = (char*)malloc((A.byte_sz / 2) + (B.byte_sz / 2));
+
+  memcpy(sequence, A.sequence, (A.byte_sz / 2));
+  memcpy(sequence + (A.byte_sz / 2), B.sequence + (B.byte_sz / 2), (B.byte_sz / 2));
+  memcpy(sequence, &final_size, sizeof(final_size));
+
+  return {sequence, A.byte_sz, A.input_neurons, A.output_neurons};
+}
+
+double evaluate (const dna& DNA) {
+  workable_nn w (DNA);
+
+  std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
+  std::vector<double> output;
+  std::vector<double> input_a = { 1, 1, 1, 1};
+  std::vector<double> input_b = {-1,-1,-1,-1};
+
+  double v1 = 0;
+  double v2 = 0;
+
+  w.calculate(input_a, output);
+  for (auto& e : output)
+    v1 += e;
+
+  w.calculate(input_b, output);
+  for (auto& e : output)
+    v2 += e;
+
+  if ((v1 > 0 && v2 > 0) || (v1 < 0 && v2 < 0))
+    return fabs(fabs(v1) - v2) ;
+  else
+    return fabs(v1) + fabs(v2) ;
+}
+
+void mutate (dna& DNA) {
+  unsigned first_index = DNA.byte_sz;
+  for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
+    if (rand() % 50 < 1) {
+      DNA.sequence[i] ^= 1;
+      i+=sizeof(bool);
+      DNA.sequence[i] ^= 1;
+      for (unsigned j = 0; j < sizeof(TYPE); j++) {
+        for (unsigned k = 0; k < 8; k++) {
+          if (rand() % 8 < 1)
+            DNA.sequence[i+k] ^= 1 << k;
+        }
+      }
+    } else {
+      i+=sizeof(bool);
+    }
+  }
+}
+
 class NeuralNetwork : public GodotScript<Node2D> {
   GODOT_CLASS(NeuralNetwork);
 private:
-
-  std::function <dna (dna& i, dna& u)> aa = [](dna& i, dna& u){ return i; };
-  std::function <void (dna& i)> bb = [](dna& i){};
-  std::function <double (const dna&)> cc = [](const dna& a){ return 2;};
 
   GeneticAlgorithm<dna> genetic;
 
@@ -55,14 +114,13 @@ private:
 public:
 
   NeuralNetwork() :
-    genetic (aa, bb, cc, 10, 10)
+    genetic (cross, mutate, evaluate, 10, 10)
     {
     Godot::print("Algoritmo genético construido");
   }
 
   void semi_step (void) {
     genetic.semi_step();
-    Godot::print ("Avanzado medio paso");
   }
 
   void set_evaluations (Array a_evaluations) {
@@ -91,6 +149,7 @@ public:
 
     std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
     genetic.set_initial_poblation(initial_candidates);
+    Godot::print ("Población inicial generada");
   }
 
   Array get_poblation () {
@@ -108,12 +167,11 @@ public:
       auto v1 = aux_nn.get_cost_matrix ();
       auto v2 = aux_nn.get_graph_matrix ();
 
-      a_cost = matrix_cost_to_array (v1);
-      a_cost = matrix_graph_to_array (v2);
-
-      a_poblation.push_back(a_cost);
-      a_poblation.push_back(a_graph);
+      a_poblation.push_back(matrix_graph_to_array (v2));
+      a_poblation.push_back(matrix_cost_to_array (v1));
     }
+
+    genetic.print_best();
 
     return a_poblation;
   }

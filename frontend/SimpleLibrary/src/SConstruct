@@ -1,0 +1,61 @@
+#!python
+import os
+
+
+# To compile your game code you need to run
+# `scons p=linux` to compile for linux
+# `scons p=windows` to compile for windows
+
+# on linux you can optionally use `use_llvm=yes` to use clang instead of gcc
+
+# Mac/Android will come soon as well. (help is appreciated :D)
+
+
+
+# FILL ME
+project_name = "neural"
+
+env = Environment()
+
+if ARGUMENTS.get("use_llvm", "no") == "yes":
+    env["CXX"] = "clang++"
+
+
+platform = ARGUMENTS.get("p", "linux")
+
+def add_sources(sources, dir):
+    for f in os.listdir(dir):
+        if f.endswith(".cpp"):
+            sources.append(dir + "/" + f)
+
+if platform == "linux":
+    env.Append(CCFLAGS = ['-g','-O3', '-std=c++14'])
+    env.Append(LINKFLAGS = ['-Wl,-R,\'$$ORIGIN\''])
+
+env.Append(CPPPATH=['../include1'])
+
+env.Append(LIBS=['godot_cpp_core', 'godot_cpp_bindings'])
+env.Append(LIBPATH=["../lib"])
+
+if platform == "windows":
+    # for 32 bit you need change this name here.
+    env.Append(LIBS=['godot.windows.opt.tools.64'])
+
+# # sources has all the paths to files that should be compiled
+# # I usually have one init.cpp at the top of the source tree.
+# sources = ["init.cpp"]
+
+sources = ["dna.cpp", "workable_nn.cpp", "genetic_connector.cpp"]
+
+# # add_sources adds all files that have a .cpp extension from the path that is the second parameter
+# # for example: to add all .cpp files in the folder "tower" you'd write
+# add_sources(sources, "tower")
+
+# # the same works for nested folders
+# add_sources(sources, "stages/game")
+
+
+library = env.SharedLibrary(target=('../lib/' + project_name), source=sources)
+Default(library)
+
+

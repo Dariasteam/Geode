@@ -191,14 +191,13 @@ public:
    * @brief Imprime los mejores candidatos junto a sus evaluaciones
    */
   void print_best () {
-    //std::cout << "Mejores candidatos y sus puntuaciones \n";
-    std::cout << op_evaluate(best_candidates[0]) << "\n";
-    /*
+    std::cout << "Mejores candidatos y sus puntuaciones \n";
+
     for (auto& candidate : best_candidates) {
       std::cout << op_evaluate(candidate) << "\n";
     }
     std::cout << std::flush;
-    */
+
   }
 };
 
