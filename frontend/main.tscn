@@ -1,23 +1,93 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://test_script.gd" type="Script" id=1]
-[ext_resource path="res://vakacaminar0000.png" type="Texture" id=2]
+[ext_resource path="res://controller.gd" type="Script" id=1]
+[ext_resource path="res://bird.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://aaaa.res" type="TileSet" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 34.067
 
 [node name="Node2D" type="Node2D" index="0"]
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="." index="0"]
+script = ExtResource( 1 )
 
-position = Vector2( 366.416, 297.826 )
+[node name="bird" type="Sprite" parent="." index="0"]
+
+position = Vector2( 593.064, 693.172 )
+rotation = 1.02227
+texture = ExtResource( 2 )
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." index="1"]
+
+editor/display_folded = true
+position = Vector2( 499.953, 12.4756 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-collision/safe_margin = 0.08
-script = ExtResource( 1 )
-_sections_unfolded = [ "Pause" ]
+mode = 0
+mass = 100.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
 
-[node name="Sprite" type="Sprite" parent="KinematicBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" index="0"]
 
-position = Vector2( 7.32092, 2.34374 )
-texture = ExtResource( 2 )
+position = Vector2( 0, 5.88074 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="RigidBody2D" index="1"]
+
+position = Vector2( -0.143555, 6.18854 )
+texture = ExtResource( 3 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
+
+position = Vector2( 159.425, 466.679 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 342.959, -132.527, 470.652, -132.527, 418.834, 133.962, 76.6788, 108.725, -7.73222, -34.4724, -9.23955, -164.104, 175.129, 5.36285, 198.398, -41.1746, 248.578, -80.7094 )
+
+[node name="TileMap" type="TileMap" parent="." index="3"]
+
+mode = 0
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+_sections_unfolded = [ "Cell" ]
 
 

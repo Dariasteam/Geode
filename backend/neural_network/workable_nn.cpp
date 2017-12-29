@@ -97,7 +97,7 @@ void workable_nn::operator=(const workable_nn &aux) {
 void workable_nn::calculate(std::vector<double> &inputs, std::vector<double> &outputs) {
   unsigned size = cost_matrix.size();
 
-  // Matrix auxliar para comprobar cuándo puede calcularse la siguiente neurona
+  // MatriZ auxiliar para comprobar cuándo puede calcularse la siguiente neurona
   std::vector<std::vector<bool>> used_elements (size);
   for (auto& row : used_elements)
     row.resize (size);
@@ -164,31 +164,26 @@ void workable_nn::calculate(std::vector<double> &inputs, std::vector<double> &ou
       if (selected_neuron == -1)
         break;
 
-      //   std::cout << "La neurona seleccionada es " << selected_neuron << std::endl;
-      //      std::cout << "Su valor es " << value << std::endl;
-
-      value = (value != 0) ? std::tanh(value / ac) : 0;
-
-      //      std::cout << "Su valor normalizado es " << value << std::endl;
+      value = (value != 0) ? std::tanh(value / ac) : 0;     
 
       used_elements[selected_neuron][selected_neuron] = true;
       results[selected_neuron][selected_neuron] = value;
 
       // Calcular los axones derivados de la neurona calculada
       for (unsigned j = 0; j < selected_neuron; j++) {
-          if (graph_matrix[selected_neuron][j]) {
-              double aux = value * saturate(cost_matrix[selected_neuron][j]);
-              results[selected_neuron][j] = aux;
-              used_elements[selected_neuron][j] = true;
-            }
+        if (graph_matrix[selected_neuron][j]) {
+          double aux = value * saturate(cost_matrix[selected_neuron][j]);
+          results[selected_neuron][j] = aux;
+          used_elements[selected_neuron][j] = true;
         }
+      }
       for (unsigned j = selected_neuron + 1; j < size; j++) {
-          if (graph_matrix[selected_neuron][j]) {
-              double aux = value * saturate(cost_matrix[selected_neuron][j]);
-              results[selected_neuron][j] = aux;
-              used_elements[selected_neuron][j] = true;
-            }
+        if (graph_matrix[selected_neuron][j]) {
+          double aux = value * saturate(cost_matrix[selected_neuron][j]);
+          results[selected_neuron][j] = aux;
+          used_elements[selected_neuron][j] = true;
         }
+      }
 
     }
 

@@ -3,11 +3,3 @@
 singleton=false
 load_once=false
 symbol_prefix="godot_"
-
-[entry]
-
-X11.64="res://SimpleLibrary/lib/libtest.so"
-
-[dependencies]
-
-X11.64=[  ]

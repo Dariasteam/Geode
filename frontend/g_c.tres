@@ -1,0 +1,6 @@
+[gd_resource type="GDNativeLibrary" format=2]
+
+[resource]
+
+symbol_prefix = "godot_"
+
