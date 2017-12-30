@@ -10,33 +10,46 @@ radius = 39.4387
 
 [node name="Controller" type="Node2D" index="0"]
 
-position = Vector2( 524.068, 260.431 )
+position = Vector2( 293.583, 285.483 )
+rotation = 3.13963
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Material", "Visibility" ]
 
 [node name="Timer" type="Timer" parent="." index="1"]
 
 process_mode = 1
-wait_time = 3.0
+wait_time = 0.01
 one_shot = true
-autostart = true
+autostart = false
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
+[node name="RigidBody2D" type="RigidBody2D" parent="." index="2"]
 
 position = Vector2( -0.896179, 2.18491 )
-input_pickable = false
+input_pickable = true
 collision_layer = 0
-collision_mask = 2
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
+collision_mask = 1
+mode = 0
+mass = 1.02041e-05
 friction = 1.0
 bounce = 0.0
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 1
+contact_monitor = true
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
 _sections_unfolded = [ "Collision", "Pickable" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" index="0"]
 
 shape = SubResource( 1 )
 
@@ -47,7 +60,7 @@ shape = SubResource( 1 )
 position = Vector2( 1.54968, -0.581146 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 500, -300 )
+cast_to = Vector2( 140, 140 )
 collision_mask = 1
 _sections_unfolded = [ "Transform", "Z" ]
 
@@ -56,17 +69,20 @@ _sections_unfolded = [ "Transform", "Z" ]
 position = Vector2( -1.74341, -1.16229 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( -500, -350 )
+cast_to = Vector2( -140, 140 )
 collision_mask = 1
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 [node name="ray_c" type="RayCast2D" parent="Raycast" index="2"]
 
 position = Vector2( 0, 4.26166 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 0, 600 )
+cast_to = Vector2( 0, 200 )
 collision_mask = 1
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_entered"]
 
 

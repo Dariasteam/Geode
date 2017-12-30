@@ -56,7 +56,7 @@ private:
     for (auto& promise : promises)
       promise.get();
 
-    poblation.push_back(best_candidates[0]);
+    //poblation.push_back(best_candidates[0]);
   }
 
   // muta toda la población de forma concurrente

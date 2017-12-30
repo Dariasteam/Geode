@@ -9,14 +9,6 @@
 
 position = Vector2( 641.52, 436.609 )
 
-[node name="CollisionShape2D" parent="Controller/StaticBody2D" index="0"]
-
-disabled = true
-
-[node name="ray_a" parent="Controller/Raycast" index="0"]
-
-_sections_unfolded = [ "Transform", "Z" ]
-
 [node name="Map" parent="." index="1" instance=ExtResource( 2 )]
 
 

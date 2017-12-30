@@ -1,15 +1,14 @@
 [gd_scene format=2]
 
-[node name="Map" type="Node2D"]
+[node name="Map" type="Node2D" index="0"]
 
-editor/display_folded = true
 position = Vector2( 171.837, 19.5954 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
 
 input_pickable = true
 collision_layer = 1
-collision_mask = 1
+collision_mask = 0
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
@@ -19,14 +18,15 @@ _sections_unfolded = [ "Collision", "Pickable" ]
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( 398.819, 58.5709, 341.54, 141.475, 305.364, 198.754, 264.666, 277.135, 249.592, 340.444, 228.489, 400.737, 261.651, 453.494, 340.033, 474.597, 441.024, 474.597, 558.597, 470.075, 662.603, 497.207, 661.096, 587.647, 92.8287, 534.891, 92.8287, 61.5856 )
+polygon = PoolVector2Array( 844.992, -19.8112, 775.654, 20.887, -41.3248, 20.887, -113.677, 106.805, -121.214, 477.611, -8.16331, 546.949, 133.527, 542.427, 207.386, 450.479, 234.519, 448.972, 341.54, 542.427, 489.259, 542.427, 569.148, 461.031, 605.324, 352.502, 698.779, 340.443, 787.713, 290.701, 778.669, 20.887, 852.528, -18.3038, 846.499, 583.125, -170.956, 578.603, -169.449, -15.2891 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." index="1"]
 
+position = Vector2( -397.938, 28.6395 )
 input_pickable = true
 collision_layer = 1
-collision_mask = 1
+collision_mask = 0
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
@@ -36,6 +36,6 @@ _sections_unfolded = [ "Collision", "Pickable" ]
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2" index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( 511.869, 167.099, 505.84, 209.305, 444.039, 310.297, 413.892, 334.414, 422.936, 363.054, 475.693, 367.576, 557.09, 354.01, 671.648, 385.664, 686.721, 152.026 )
+polygon = PoolVector2Array( 658.081, 124.894, 523.928, 124.894, 453.083, 120.372, 409.37, 145.996, 403.341, 296.73, 294.812, 304.267, 294.812, 326.877, 406.355, 347.98, 481.722, 381.141, 575.177, 304.267, 667.125, 302.76, 745.507, 366.068, 840.469, 355.517, 864.587, 227.393, 970.101, 177.65, 1013.81, 130.923, 864.587, 121.879, 728.926, 112.835 )
 
 

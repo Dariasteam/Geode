@@ -59,7 +59,7 @@ double evaluate (const dna& DNA) {
 void mutate (dna& DNA) {
   unsigned first_index = DNA.byte_sz;
   for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
-    if (rand() % 50 < 1) {
+    if (rand() % 70 < 1) {
       DNA.sequence[i] ^= 1;
       i+=sizeof(bool);
       DNA.sequence[i] ^= 1;
@@ -110,7 +110,7 @@ private:
 public:
 
   GeneticConnector() :
-  genetic (cross, mutate, evaluate, 10, 10)
+  genetic (cross, mutate, evaluate, 50, 10)
   {
     Godot::print("Algoritmo genético construido");
   }
@@ -130,16 +130,8 @@ public:
   }
 
   void generate_initial_poblation () {
-    std::vector<std::vector<std::pair<bool, short>>> v = {
-      {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
-      {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
-      {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
-      {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
-      {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
-    };
-
-    workable_nn parent_1 (v, 4, 1);
-    workable_nn parent_2 (v, 4, 1);
+    workable_nn parent_1 (14, 3, 2);
+    workable_nn parent_2 (14, 3, 2);
 
     dna serialized_nn_1 = parent_1.to_dna();
     dna serialized_nn_2 = parent_2.to_dna();

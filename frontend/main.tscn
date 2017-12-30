@@ -5,11 +5,11 @@
 
 [node name="Genetic_Controller" type="Node2D" index="0"]
 
+position = Vector2( -177.866, 0 )
 script = ExtResource( 1 )
 
 [node name="Map" parent="." index="0" instance=ExtResource( 2 )]
 
-editor/display_folded = false
+position = Vector2( 349.703, 16.5807 )
 
 
-[editable path="Map"]

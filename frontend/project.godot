@@ -14,6 +14,10 @@ config/name="Bindings"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+settings/fps/force_fps=60
+
 [gdnative]
 
 singletons=[  ]
@@ -23,3 +27,8 @@ singletons=[  ]
 ui_right=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":15,"pressure":0.0,"pressed":false,"script":null)
  ]
+
+[rendering]
+
+quality/intended_usage/framebuffer_allocation=1
+threads/thread_model=2
