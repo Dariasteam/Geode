@@ -1,0 +1,41 @@
+[gd_scene format=2]
+
+[node name="Map" type="Node2D"]
+
+editor/display_folded = true
+position = Vector2( 171.837, 19.5954 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
+
+input_pickable = true
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+_sections_unfolded = [ "Collision", "Pickable" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 398.819, 58.5709, 341.54, 141.475, 305.364, 198.754, 264.666, 277.135, 249.592, 340.444, 228.489, 400.737, 261.651, 453.494, 340.033, 474.597, 441.024, 474.597, 558.597, 470.075, 662.603, 497.207, 661.096, 587.647, 92.8287, 534.891, 92.8287, 61.5856 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." index="1"]
+
+input_pickable = true
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+_sections_unfolded = [ "Collision", "Pickable" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 511.869, 167.099, 505.84, 209.305, 444.039, 310.297, 413.892, 334.414, 422.936, 363.054, 475.693, 367.576, 557.09, 354.01, 671.648, 385.664, 686.721, 152.026 )
+
+

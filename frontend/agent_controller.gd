@@ -2,7 +2,7 @@ extends Node2D
 
 func _ready():
 	
-	var neural_network = load("res://neural_network_connector.gdns").new();	
+	var neural_network = load("res://neural_network_connector.gdns").new();
 			
 	# Matriz del grafo de la red neuronal
 	var g = [
