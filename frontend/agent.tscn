@@ -57,29 +57,30 @@ shape = SubResource( 1 )
 
 [node name="ray_a" type="RayCast2D" parent="Raycast" index="0"]
 
-position = Vector2( 1.54968, -0.581146 )
+position = Vector2( 29, 29 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 140, 140 )
+cast_to = Vector2( 25, 25 )
 collision_mask = 1
 _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="ray_b" type="RayCast2D" parent="Raycast" index="1"]
 
-position = Vector2( -1.74341, -1.16229 )
+position = Vector2( -29, 29 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( -140, 140 )
+cast_to = Vector2( -25, 25 )
 collision_mask = 1
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 [node name="ray_c" type="RayCast2D" parent="Raycast" index="2"]
 
-position = Vector2( 0, 4.26166 )
+position = Vector2( 0, 40 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 0, 200 )
+cast_to = Vector2( 0, 33 )
 collision_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 

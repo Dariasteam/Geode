@@ -17,23 +17,30 @@ func _physics_process(delta):
 	
 	var inputs = []
 	
-	if ($Raycast/ray_a.is_colliding()):
-		var distance = $Raycast/ray_a.get_collision_point().distance_to(pos)
-		inputs.push_back(distance / 10)
-	else:
-		inputs.push_back(-1)
+	# Recoger todos los valores de los sensores
+	for item in $Raycast.get_children():
+		if (item.is_colliding()):
+			var distance = item.get_collision_point().distance_to(item.global_position)
+								
+			var mid_distance = item.cast_to.length() / 2
+								
+			if (distance > mid_distance):				
+				distance = (distance - mid_distance) / mid_distance * - 1				
+			else:				
+				distance = (distance / mid_distance)
 		
-	if ($Raycast/ray_b.is_colliding()):
-		var distance = $Raycast/ray_b.get_collision_point().distance_to(pos)		
-		inputs.push_back(distance / 10)
-	else:
-		inputs.push_back(-1)
+			var color_g = max(255 * -distance , 1)
+			var color_b = max(255 * distance , 1)
+				
+			
+			item.modulate = Color(0, color_g, color_b)
+			
+			inputs.push_back(max(distance, -1))
+		else:		
+			item.modulate = Color(0, 255, 0)
+			inputs.push_back(-1)
 		
-	if ($Raycast/ray_c.is_colliding()):
-		var distance = $Raycast/ray_c.get_collision_point().distance_to(pos)		
-		inputs.push_back(distance / 10)
-	else:
-		inputs.push_back(-1)
+	#print (inputs)
 	
 	var outputs = neural_network.evaluate(inputs)
 	
@@ -43,11 +50,11 @@ func _physics_process(delta):
 	spin += outputs[0]	
 	
 	rotate(outputs[0])
-	move_local_y(outputs[1])
-	puntuation += pow(abs(outputs[1]), 2)
+	move_local_y(outputs[1] * 10)
+	puntuation += outputs[1] * 8
 	
 func _ready():
-	$Timer.set_wait_time(60)
+	$Timer.set_wait_time(20)
 	$Timer.start()
 	set_physics_process(true)
 	

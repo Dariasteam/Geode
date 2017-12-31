@@ -56,23 +56,27 @@ private:
     for (auto& promise : promises)
       promise.get();
 
-    //poblation.push_back(best_candidates[0]);
   }
 
   // muta toda la población de forma concurrente
+  // Los dos mejores candidatos se vuelven a introducir sin mutaciones
+  // para no perder los avances
   void mutate_poblation () {
-    std::vector<std::future<void>> promises (poblation_size - 1);
+    std::vector<std::future<void>> promises (poblation_size - 2);
 
     // función a aplicar sobre cada elemento
     auto async_function = ([&](unsigned index){
       op_mutate(poblation[index]);
     });
 
-    for (unsigned i = 0; i < poblation_size - 1; i++)
+    for (unsigned i = 0; i < poblation_size - 2; i++)
       promises[i] = std::async(async_function, i);
 
     for (auto& promise : promises)
       promise.get();
+
+    poblation[poblation_size - 2] = best_candidates[0];
+    poblation[poblation_size - 1] = best_candidates[1];
   }
 
   // evalúa toda la población y la ordena en base a la función de fitness
@@ -164,11 +168,8 @@ public:
     poblation.clear();
     poblation.resize(poblation_size);
 
-    for (unsigned i = 0; i < poblation_size - 3; i++)
+    for (unsigned i = 0; i < poblation_size; i++)
       poblation[i] = aux[i].first;
-
-    for (unsigned i = 0; i < 3; i++)
-      poblation[poblation_size - 3 + i] = best_candidates[i];
 
     generate_next_candidates();
   }
