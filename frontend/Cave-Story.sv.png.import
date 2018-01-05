@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/Cave-Story.sv.png-7f02ffa37f34e08845ac9e8273d4ae35.stex"
 
 [deps]
 
-source_file="res://icon.png"
-source_md5="60b48a95e047a1324978781ed03781bc"
+source_file="res://Cave-Story.sv.png"
+source_md5="d67965389843baf17bcfd38de9febdc7"
 
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
-dest_md5="e5d5ad648e3d3468943bd86c367532c6"
+dest_files=[ "res://.import/Cave-Story.sv.png-7f02ffa37f34e08845ac9e8273d4ae35.stex" ]
+dest_md5="315319c8d090631f43d096806bd3731d"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

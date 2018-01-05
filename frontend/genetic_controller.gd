@@ -1,24 +1,30 @@
 extends Node2D
 
 onready var genetic_connector = load("res://genetic_connector.gdns").new();
+onready var text_label = get_parent().get_node("Text")
+onready var plotter = get_parent().get_node("Plot")
+
 var agent_scene = preload("res://agent.tscn")
+
 
 var neural_poblation
 var agents_death = 0
 var scores = []
 var agents_alive = []
 
+var best_value = 0
+var generation = 0
+var last_best_generation = 0
+
 func agent_inform_death(index, score):
-	agents_death += 1
-	# print (index, " ha muerto con una puntuación de ", score)
+	agents_death += 1	
 	scores[index] = score;	
 	if (agents_death == agents_alive.size()):
 		agents_death = 0	
 		for i in range(agents_alive.size()):
 			agents_alive[i].queue_free()
 		agents_alive.clear()
-		
-		print ("Todo el mundo está muerto")		
+				
 		prepare_next_single_simulation()
 		start_single_simulation()
 		
@@ -32,8 +38,7 @@ func generate_poblation(raw_poblation):
 	return neural_networks
 
 # Instancia agentes y comienza una simulación con ellos
-func start_single_simulation():	
-	print ("Simulando")
+func start_single_simulation():		
 	var raw_poblation = genetic_connector.get_poblation()
 	neural_poblation = generate_poblation(raw_poblation)
 	
@@ -51,11 +56,23 @@ func start_single_simulation():
 	
 # Emplea el algoritmo genétco para preparar la siguietne simulacion
 func prepare_next_single_simulation():	
-	# establece las evaluaciones y selecciona a los mejores
-	genetic_connector.set_evaluations(scores);	
 	
+	# establece las evaluaciones y selecciona a los mejores
+	genetic_connector.set_evaluations(scores);
+		
 	scores.sort()
-	print (scores[-1])
+	
+	if (scores[-1] > best_value):
+		best_value = scores[-1] + 0.0001
+		last_best_generation = generation
+	
+	var text = str("Generation: ", "%2d" % generation, " | Best score: ", "%2.3f" % best_value, " since generation: ", "%2d" % last_best_generation)
+	plotter.add_entry(best_value)
+	
+	print (text)
+	text_label.set_text(text)
+	
+	generation += 1
 	
 	# cruza y muta
 	genetic_connector.semi_step();
@@ -64,6 +81,9 @@ func _ready():
 	genetic_connector.generate_initial_poblation()	
 	## cruza y muta
 	genetic_connector.semi_step();
+	
+	var text = str("Generation: ", "%2d" % 0, " | Best score: ", "%2.3f" % 0, " since generation: ", "%2d" %0)		
+	text_label.set_text(text)
 	
 	start_single_simulation()
 	

@@ -5,6 +5,7 @@
 #include <limits>
 #include <vector>
 #include <iostream>
+#include <functional>
 
 #include "dna.h"
 
@@ -38,6 +39,17 @@ private:
   double saturate (double v) const {
     v = v / std::numeric_limits<short>::max() ;
     return v;
+  }
+
+  /* Iterador genérico para aplicar a toda una fila una operación excepto
+   * al elemento index. Desde begin hasta end
+   * */
+  void iterate_avoiding_index (std::function<void(unsigned)> func, unsigned begin,
+                               unsigned index, unsigned end) {
+    for (unsigned k = begin; k < index; k++)
+      func(k);
+    for (unsigned k = index + 1; k < end; k++)
+      func(k);
   }
 public:
   workable_nn () {}
