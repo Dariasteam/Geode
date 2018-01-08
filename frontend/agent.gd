@@ -59,7 +59,7 @@ func _physics_process(delta):
 	spin += outputs[0]	
 	
 	rotate(outputs[0])
-	move_local_y(outputs[1] * 20) 
+	move_local_y(outputs[1] * 100) 
 	score += outputs[1]
 	
 func _ready():

@@ -69,9 +69,7 @@ func prepare_next_single_simulation():
 	var mean = 0
 	for element in scores:
 		mean += element
-	mean /= scores.size()
-	
-	print (mean)
+	mean /= scores.size()	
 	
 	var text = str("Generation: ", "%2d" % generation, "\nBest score: ", "%2.3f" % best_value, "\nSince generation: ", "%2d" % last_best_generation)
 	
