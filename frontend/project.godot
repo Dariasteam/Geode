@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="Bindings"
-run/main_scene="res://main.tscn"
+run/main_scene="res://Map_2.tscn"
 config/icon="res://icon.png"
 
 [debug]

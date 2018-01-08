@@ -2,7 +2,7 @@ extends Node2D
 
 onready var genetic_connector = load("res://genetic_connector.gdns").new();
 onready var text_label = get_parent().get_node("Text")
-onready var plotter = get_parent().get_node("Plot")
+onready var plotter = get_parent().get_node("PlotPanel")
 
 var agent_scene = preload("res://agent.tscn")
 
@@ -66,8 +66,16 @@ func prepare_next_single_simulation():
 		best_value = scores[-1] + 0.0001
 		last_best_generation = generation
 	
-	var text = str("Generation: ", "%2d" % generation, " | Best score: ", "%2.3f" % best_value, " since generation: ", "%2d" % last_best_generation)
-	plotter.add_entry(best_value)
+	var mean = 0
+	for element in scores:
+		mean += element
+	mean /= scores.size()
+	
+	print (mean)
+	
+	var text = str("Generation: ", "%2d" % generation, "\nBest score: ", "%2.3f" % best_value, "\nSince generation: ", "%2d" % last_best_generation)
+	
+	plotter.add_entry([best_value, mean, scores[0]])
 	
 	print (text)
 	text_label.set_text(text)
@@ -82,7 +90,7 @@ func _ready():
 	## cruza y muta
 	genetic_connector.semi_step();
 	
-	var text = str("Generation: ", "%2d" % 0, " | Best score: ", "%2.3f" % 0, " since generation: ", "%2d" %0)		
+	var text = str("Generation: ", "%2d" % 0, "\nBest score: ", "%2.3f" % 0, "\nSince generation: ", "%2d" %0)		
 	text_label.set_text(text)
 	
 	start_single_simulation()

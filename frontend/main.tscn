@@ -3,7 +3,7 @@
 [ext_resource path="res://genetic_controller.gd" type="Script" id=1]
 [ext_resource path="res://Map.tscn" type="PackedScene" id=2]
 
-[node name="Genetic_Controller" type="Node2D"]
+[node name="Genetic_Controller" type="Node2D" index="0"]
 
 position = Vector2( -177.866, 0 )
 script = ExtResource( 1 )

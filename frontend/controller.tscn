@@ -1,41 +1,22 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Cave-Story.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://genetic_controller.gd" type="Script" id=2]
+[ext_resource path="res://genetic_controller.gd" type="Script" id=1]
+[ext_resource path="res://plot.gd" type="Script" id=2]
+[ext_resource path="res://Cave-Story.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 100
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [node name="Node2D" type="Node2D"]
 
 position = Vector2( -53.8332, 118.69 )
 
-[node name="Text" type="Label" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = -48.0
-margin_top = 960.0
-margin_right = -8.0
-margin_bottom = 1054.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-custom_fonts/font = SubResource( 1 )
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Hint", "Rect", "Size Flags", "custom_fonts" ]
-
-[node name="Time" type="Label" parent="." index="1"]
+[node name="Time" type="Label" parent="." index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -51,8 +32,50 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="AgentInstancer" type="Node2D" parent="." index="2"]
+[node name="AgentInstancer" type="Node2D" parent="." index="1"]
 
+script = ExtResource( 1 )
+
+[node name="PlotPanel" type="Panel" parent="." index="2"]
+
+modulate = Color( 1, 1, 1, 0.878471 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 62.0
+margin_top = 236.0
+margin_right = 321.0
+margin_bottom = 469.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
 script = ExtResource( 2 )
+_sections_unfolded = [ "Grow Direction", "Rect", "Visibility" ]
+colorBest = Color( 0.242188, 1, 0, 1 )
+colorMean = Color( 0, 0.625, 1, 1 )
+colorWorst = Color( 1, 0, 0, 1 )
+margin = 10
+
+[node name="Text" type="Label" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 474.0
+margin_top = 826.0
+margin_right = 514.0
+margin_bottom = 889.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 1 )
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Hint", "Rect", "Size Flags", "custom_fonts" ]
 
 

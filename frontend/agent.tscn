@@ -51,10 +51,11 @@ _sections_unfolded = [ "Collision", "Pickable" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D" index="0"]
 
+visible = false
 scale = Vector2( 2, 2 )
 build_mode = 0
 polygon = PoolVector2Array( 22.688, 25.1927, 16.6802, 29.181, -14.8197, 29.1191, -20.8109, 24.6074, -20.7, -31.8925, -17.6941, -34.8866, 18.3058, -34.816, 22.798, -30.8071 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="Raycast" type="Node2D" parent="." index="3"]
 
