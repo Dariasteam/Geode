@@ -3,9 +3,9 @@ extends Node2D
 onready var genetic_connector = load("res://genetic_connector.gdns").new();
 onready var text_label = get_parent().get_node("Text")
 onready var plotter = get_parent().get_node("PlotPanel")
+onready var viewer  = get_parent().get_node("NeuralPanel")
 
 var agent_scene = preload("res://agent.tscn")
-
 
 var neural_poblation
 var agents_death = 0
@@ -43,15 +43,16 @@ func start_single_simulation():
 	neural_poblation = generate_poblation(raw_poblation)
 	
 	scores.resize(neural_poblation.size())	
-	
+	viewer.set_network([raw_poblation[0], raw_poblation[1]], 3, 2)
+		
 	for i in range(neural_poblation.size()):
 		# Añade un agente y le envia su neural_network
 		var aux_agent = agent_scene.instance()
 		aux_agent.set_neural_network(neural_poblation[i], i)
 		aux_agent.connect("dead",self,"agent_inform_death")
 		agents_alive.push_back(aux_agent)
-		add_child(aux_agent)
-	
+		add_child(aux_agent)	
+		
 	neural_poblation.clear()
 	
 # Emplea el algoritmo genétco para preparar la siguietne simulacion
@@ -61,6 +62,8 @@ func prepare_next_single_simulation():
 	genetic_connector.set_evaluations(scores);
 		
 	scores.sort()
+	
+	
 	
 	if (scores[-1] > best_value):
 		best_value = scores[-1] + 0.0001
@@ -74,6 +77,7 @@ func prepare_next_single_simulation():
 	var text = str("Generation: ", "%2d" % generation, "\nBest score: ", "%2.3f" % best_value, "\nSince generation: ", "%2d" % last_best_generation)
 	
 	plotter.add_entry([best_value, mean, scores[0]])
+	
 	
 	print (text)
 	text_label.set_text(text)
