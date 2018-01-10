@@ -5,6 +5,7 @@ onready var text_label = get_parent().get_node("Buttons/GridContainer/TextOvervi
 onready var statistic_plotter = get_parent().get_node("PlotPanel")
 onready var net_viewer  = get_parent().get_node("NeuralPanel")
 onready var score_tree  = get_parent().get_node("ScorePanel")
+onready var agent_name  = get_parent().get_node("Buttons/GridContainer/LineEditAgentName")
 
 export var agent_scene = preload("res://agent.tscn")
 
@@ -123,7 +124,7 @@ func stop_simulation ():
 func save():	
 	var file = File.new()
 	if (scores.size() > 1):
-		file.open("agent.dat", file.WRITE)
+		file.open(str(agent_name.text, ".dat"), file.WRITE)
 		var i = score_tree.currently_selected;
 		file.store_var([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]])
 		file.close()
@@ -133,18 +134,19 @@ func save():
 
 func load():
 	var file = File.new()
-	file.open("agent.dat", file.READ)
-	var content = file.get_var()
-	file.close()
-	print ("Agent loaded")
-	net_viewer.set_network(content, 3, 2)
+	if (agent_name.text != ""):
+		file.open(str(agent_name.text, ".dat"), file.READ)
+		var content = file.get_var()
+		file.close()
+		print ("Agent loaded")
 	
-	var aux_network = load("res://neural_network_connector.gdns").new();
-	aux_network.set_content (content[0], content[1], 3, 2)
-	var aux_agent = agent_scene.instance()
-	aux_agent.set_neural_network(aux_network, 0, agent_lifetime)
-	add_child(aux_agent)
-	return content
+		net_viewer.set_network(content, 3, 2)
+		var aux_network = load("res://neural_network_connector.gdns").new();
+		aux_network.set_content (content[0], content[1], 3, 2)
+		var aux_agent = agent_scene.instance()
+		aux_agent.set_neural_network(aux_network, 0, agent_lifetime)
+		add_child(aux_agent)
+		return content
 
 func set_time (new_time):
 	agent_lifetime = new_time
