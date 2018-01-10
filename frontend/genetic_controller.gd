@@ -1,11 +1,12 @@
 extends Node2D
 
 onready var genetic_connector = load("res://genetic_connector.gdns").new();
-onready var text_label = get_parent().get_node("Text")
-onready var plotter = get_parent().get_node("PlotPanel")
-onready var viewer  = get_parent().get_node("NeuralPanel")
+onready var text_label = get_parent().get_node("Buttons/GridContainer/TextOverview")
+onready var statistic_plotter = get_parent().get_node("PlotPanel")
+onready var net_viewer  = get_parent().get_node("NeuralPanel")
+onready var score_tree  = get_parent().get_node("ScorePanel")
 
-var agent_scene = preload("res://agent.tscn")
+export var agent_scene = preload("res://agent.tscn")
 
 var neural_poblation
 var agents_death = 0
@@ -69,6 +70,9 @@ func prepare_next_single_simulation():
 	# establece las evaluaciones y selecciona a los mejores
 	genetic_connector.set_evaluations(scores);
 	
+	# Informa al representador de puntuaciones
+	score_tree.update_scores(scores)
+	
 	# Crea un vector de [puntuaciones, redes_neuronales] para poder acceder 
 	# a cada red en función del valor obtenido
 	for i in scores.size():
@@ -84,11 +88,11 @@ func prepare_next_single_simulation():
 	for element in scores:
 		mean += element[0]
 	mean /= scores.size()	
-	
+		
 	var text = str("Generation: ", "%2d" % generation, "\nBest score: ", "%2.3f" % best_value, "\nSince generation: ", "%2d" % last_best_generation)
 	
-	viewer.set_network([scores[-1][1], scores[-1][2]], 3, 2)
-	plotter.add_entry([best_value, mean, scores[0][0]])
+	net_viewer.set_network([scores[-1][1], scores[-1][2]], 3, 2)
+	statistic_plotter.add_entry([best_value, mean, scores[0][0]])
 		
 	print (text)
 	text_label.set_text(text)	
@@ -98,37 +102,12 @@ func prepare_next_single_simulation():
 	genetic_connector.semi_step();
 
 func _ready():
+	score_tree.connect("set_net", self, "view_net_at")
 	pass
-
-func save():	
-	var file = File.new()
-	if (scores.size() > 1):
-		file.open("agent.dat", file.WRITE)
-		file.store_var([scores[-1][1], scores[-1][2]])
-		file.close()
-		print ("Agent saved")
-	else:
-		print ("There is no agent to save")
-
-func load():
-	var file = File.new()
-	file.open("agent.dat", file.READ)
-	var content = file.get_var()
-	file.close()
-	print ("Agent loaded")
-	viewer.set_network(content, 3, 2)
 	
-	var aux_network = load("res://neural_network_connector.gdns").new();
-	aux_network.set_content (content[0], content[1], 3, 2)
-	var aux_agent = agent_scene.instance()
-	aux_agent.set_neural_network(aux_network, 0, agent_lifetime)
-	add_child(aux_agent)
-	return content
-
-func set_time (new_time):
-	agent_lifetime = new_time
+func start_simulation ():	
+	score_tree.set_n_agents(50)
 	
-func start_simulation ():
 	simulating = true
 	genetic_connector.generate_initial_poblation()	
 	genetic_connector.semi_step();	# cruza y muta
@@ -140,6 +119,39 @@ func start_simulation ():
 func stop_simulation ():
 	simulating = false
 	pass
+
+func save():	
+	var file = File.new()
+	if (scores.size() > 1):
+		file.open("agent.dat", file.WRITE)
+		var i = score_tree.currently_selected;
+		file.store_var([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]])
+		file.close()
+		print ("Agent saved")
+	else:
+		print ("There is no agent to save")
+
+func load():
+	var file = File.new()
+	file.open("agent.dat", file.READ)
+	var content = file.get_var()
+	file.close()
+	print ("Agent loaded")
+	net_viewer.set_network(content, 3, 2)
+	
+	var aux_network = load("res://neural_network_connector.gdns").new();
+	aux_network.set_content (content[0], content[1], 3, 2)
+	var aux_agent = agent_scene.instance()
+	aux_agent.set_neural_network(aux_network, 0, agent_lifetime)
+	add_child(aux_agent)
+	return content
+
+func set_time (new_time):
+	agent_lifetime = new_time
+	
+func view_net_at(i):
+	if (typeof(scores[(-i)-1]) == TYPE_ARRAY):
+		net_viewer.set_network([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]], 3, 2)
 
 # ordena en base a el primer elemento del array, se usa para ordenar los arrays de
 # [puntuaciones, redes neuronales]

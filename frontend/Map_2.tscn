@@ -3,7 +3,7 @@
 [ext_resource path="res://controller.tscn" type="PackedScene" id=1]
 [ext_resource path="res://terrain.png" type="Texture" id=2]
 
-[node name="Map" type="Node2D"]
+[node name="Map" type="Node2D" index="0"]
 
 position = Vector2( 171.837, 19.5954 )
 __meta__ = {
@@ -56,7 +56,14 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 position = Vector2( -51.837, 410.405 )
 
-[node name="PlotPanel" parent="Node2D" index="2"]
+[node name="ScorePanel" parent="Node2D" index="2"]
+
+margin_left = 1318.0
+margin_top = 190.0
+margin_right = 1593.0
+margin_bottom = 425.0
+
+[node name="PlotPanel" parent="Node2D" index="3"]
 
 modulate = Color( 1, 1, 1, 0.723765 )
 margin_left = -162.0

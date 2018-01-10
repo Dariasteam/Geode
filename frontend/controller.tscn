@@ -1,18 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://genetic_controller.gd" type="Script" id=1]
-[ext_resource path="res://plot.gd" type="Script" id=2]
-[ext_resource path="res://Cave-Story.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://nn_representation.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Buttons.gd" type="Script" id=5]
-
-[sub_resource type="DynamicFont" id=1]
-
-size = 100
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 3 )
-_sections_unfolded = [ "Font", "Settings" ]
+[ext_resource path="res://agent.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ScorePanel.gd" type="Script" id=3]
+[ext_resource path="res://plot.gd" type="Script" id=4]
+[ext_resource path="res://nn_representation.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Buttons.gd" type="Script" id=6]
 
 [node name="Node2D" type="Node2D" index="0"]
 
@@ -38,8 +31,29 @@ max_lines_visible = -1
 
 position = Vector2( 430.497, 221.542 )
 script = ExtResource( 1 )
+agent_scene = ExtResource( 2 )
 
-[node name="PlotPanel" type="Panel" parent="." index="2"]
+[node name="ScorePanel" type="Tree" parent="." index="2"]
+
+modulate = Color( 1, 1, 1, 0.66298 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 353.0
+margin_top = 70.0
+margin_right = 514.0
+margin_bottom = 207.0
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 3 )
+_sections_unfolded = [ "Rect", "Visibility" ]
+
+[node name="PlotPanel" type="Panel" parent="." index="3"]
 
 modulate = Color( 1, 1, 1, 0.878471 )
 anchor_left = 0.0
@@ -53,34 +67,14 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = ExtResource( 2 )
+script = ExtResource( 4 )
 _sections_unfolded = [ "Grow Direction", "Rect", "Visibility" ]
 colorBest = Color( 0.242188, 1, 0, 1 )
 colorMean = Color( 0, 0.625, 1, 1 )
 colorWorst = Color( 1, 0, 0, 1 )
 margin = 10
 
-[node name="Text" type="Label" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 474.0
-margin_top = 826.0
-margin_right = 514.0
-margin_bottom = 889.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-custom_fonts/font = SubResource( 1 )
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Hint", "Rect", "Size Flags", "custom_fonts" ]
-
-[node name="NeuralPanel" parent="." index="4" instance=ExtResource( 4 )]
+[node name="NeuralPanel" parent="." index="4" instance=ExtResource( 5 )]
 
 modulate = Color( 1, 1, 1, 0.823216 )
 margin_left = 762.0
@@ -147,7 +141,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="GridContainer" type="GridContainer" parent="Buttons" index="0"]
 
@@ -155,8 +149,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 412.0
-margin_bottom = 124.0
+margin_left = 26.0
+margin_top = -35.0
+margin_right = 438.0
+margin_bottom = 89.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
 size_flags_horizontal = 2
@@ -170,7 +166,7 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 150.0
+margin_right = 154.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
@@ -190,8 +186,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 154.0
-margin_right = 324.0
+margin_left = 158.0
+margin_right = 328.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
@@ -211,8 +207,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 328.0
-margin_right = 408.0
+margin_left = 332.0
+margin_right = 412.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
@@ -233,7 +229,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
-margin_right = 150.0
+margin_right = 154.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 150, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -258,9 +254,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 154.0
+margin_left = 158.0
 margin_top = 24.0
-margin_right = 324.0
+margin_right = 328.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 170, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -278,6 +274,42 @@ editable = true
 prefix = "Lifetime:"
 suffix = "seconds"
 _sections_unfolded = [ "Rect" ]
+
+[node name="Panel" type="Panel" parent="Buttons/GridContainer" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 332.0
+margin_top = 24.0
+margin_right = 412.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="TextOverview" type="Label" parent="Buttons/GridContainer" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 81.0
+margin_right = 154.0
+margin_bottom = 95.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Material", "Rect", "Visibility", "custom_colors", "custom_constants", "custom_fonts" ]
+
+[connection signal="cell_selected" from="ScorePanel" to="ScorePanel" method="_on_ScorePanel_cell_selected"]
 
 [connection signal="pressed" from="Buttons/GridContainer/ButtonPlayStop" to="Buttons" method="_on_ButtonPlayStop_pressed"]
 

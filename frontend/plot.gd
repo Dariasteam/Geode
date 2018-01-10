@@ -50,3 +50,4 @@ func _draw():
 func _ready():	
 	add_entry([0, 0, 0])
 	add_entry([0, 0, 0])
+

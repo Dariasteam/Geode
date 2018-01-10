@@ -3,10 +3,11 @@
 [ext_resource path="res://agent.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 
-[node name="Controller" type="Node2D"]
+[node name="Controller" type="Node2D" index="0"]
 
 position = Vector2( 293.583, 285.483 )
 rotation = 3.14159
+scale = Vector2( 2, 2 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
