@@ -12,7 +12,7 @@ __meta__ = {
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
 
-position = Vector2( 174.202, 4.23477 )
+position = Vector2( 188.163, 20.4046 )
 scale = Vector2( 2, 2 )
 input_pickable = true
 collision_layer = 1
@@ -32,7 +32,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." index="1"]
 
-position = Vector2( 174.202, 4.23477 )
+position = Vector2( 188.163, 20.4046 )
 scale = Vector2( 2, 2 )
 input_pickable = true
 collision_layer = 1
@@ -58,17 +58,48 @@ position = Vector2( -51.837, 410.405 )
 
 [node name="PlotPanel" parent="Node2D" index="2"]
 
+modulate = Color( 1, 1, 1, 0.723765 )
 margin_left = -162.0
 margin_top = 660.0
-margin_right = 418.0
+margin_right = 368.0
 margin_bottom = 1160.0
 
 [node name="NeuralPanel" parent="Node2D" index="4"]
 
-margin_left = 1348.0
-margin_top = 720.0
+modulate = Color( 1, 1, 1, 0.806627 )
+margin_left = 1318.0
+margin_top = 680.0
 margin_right = 1868.0
 margin_bottom = 1172.0
+
+[node name="NeuralPanelLabel" parent="Node2D" index="5"]
+
+margin_left = 1318.0
+margin_top = 680.0
+margin_right = 1433.0
+margin_bottom = 695.0
+rect_scale = Vector2( 2, 2 )
+_sections_unfolded = [ "BBCode", "Rect" ]
+
+[node name="PlotPanelLabel" parent="Node2D" index="6"]
+
+margin_left = -142.0
+margin_top = 690.0
+margin_right = -12.0
+margin_bottom = 705.0
+rect_scale = Vector2( 2, 2 )
+bbcode_text = "[color=lime]Best[/color]  [color=aqua]Mean[/color]  [color=red]Worst[/color]"
+_sections_unfolded = [ "BBCode", "Hint", "Rect" ]
+
+[node name="Buttons" parent="Node2D" index="7"]
+
+editor/display_folded = true
+margin_left = 378.0
+margin_top = 1020.0
+margin_right = 418.0
+margin_bottom = 1060.0
+rect_scale = Vector2( 2, 2 )
+_sections_unfolded = [ "Rect" ]
 
 [node name="Camera2D" type="Camera2D" parent="." index="3"]
 
@@ -96,7 +127,7 @@ editor_draw_drag_margin = false
 
 [node name="Sprite" type="Sprite" parent="." index="4"]
 
-position = Vector2( 849.573, 574.032 )
+position = Vector2( 858.163, 590.405 )
 scale = Vector2( 2.26954, 2.28064 )
 z = -1
 texture = ExtResource( 2 )

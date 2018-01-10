@@ -9,10 +9,11 @@ var spin = 0
 var score = 0
 var alive = true
 
-func set_neural_network(nn, i):
+# red neuronal, índice, tiempo de vida
+func set_neural_network(nn, i, life_time):
 	neural_network = nn
 	index = i
-	$Timer.set_wait_time(4)
+	$Timer.set_wait_time(life_time)
 	$Timer.start()	
 	set_physics_process(true)
 
@@ -34,7 +35,8 @@ func _physics_process(delta):
 								
 			var mid_distance = item.cast_to.length() / 2
 			
-			item.modulate = Color(1, distance / mid_distance * 2 * 255, 1)
+			var color_value = (distance - mid_distance) / mid_distance
+			item.set_modulate(Color(1 - color_value, 1 + color_value, 1 + color_value))
 								
 			if (distance > mid_distance):				
 				distance = (distance - mid_distance) / mid_distance * - 1				
@@ -47,7 +49,7 @@ func _physics_process(delta):
 			inputs.push_back(max(distance, -1))
 			
 		else:		
-			item.modulate = Color(1, 1, 1)
+			item.modulate = Color(0, 1, 1)
 			inputs.push_back(-1)
 			
 			

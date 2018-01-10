@@ -2,7 +2,7 @@
 
 [ext_resource path="res://nn_representation.gd" type="Script" id=1]
 
-[node name="Panel" type="Panel"]
+[node name="Panel" type="Panel" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0

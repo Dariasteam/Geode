@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://genetic_controller.gd" type="Script" id=1]
 [ext_resource path="res://plot.gd" type="Script" id=2]
 [ext_resource path="res://Cave-Story.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://nn_representation.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Buttons.gd" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -13,7 +14,7 @@ use_filter = true
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -87,5 +88,205 @@ margin_top = 367.0
 margin_right = 1023.0
 margin_bottom = 599.0
 _sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="NeuralPanelLabel" type="RichTextLabel" parent="." index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 762.0
+margin_top = 366.0
+margin_right = 877.0
+margin_bottom = 381.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = true
+bbcode_text = "[color=yellow]Inputs[/color]  [color=fuchsia]Outputs[/color]"
+visible_characters = -1
+percent_visible = 1.0
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
+[node name="PlotPanelLabel" type="RichTextLabel" parent="." index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1.0
+margin_top = 367.0
+margin_right = 128.0
+margin_bottom = 382.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = true
+bbcode_text = "[color=lime]Best[/color]  [color=aqua]Mean[/color] [color=red]Worst[/color]"
+visible_characters = -1
+percent_visible = 1.0
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
+[node name="Buttons" type="Control" parent="." index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 268.0
+margin_top = 505.0
+margin_right = 308.0
+margin_bottom = 545.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 5 )
+
+[node name="GridContainer" type="GridContainer" parent="Buttons" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 412.0
+margin_bottom = 124.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 1
+size_flags_horizontal = 2
+size_flags_vertical = 2
+columns = 3
+_sections_unfolded = [ "Grow Direction", "Margin", "Rect", "Size Flags" ]
+
+[node name="ButtonPlayStop" type="Button" parent="Buttons/GridContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 150.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Star simulation"
+flat = false
+align = 1
+
+[node name="ButtonLoadAgent" type="Button" parent="Buttons/GridContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 154.0
+margin_right = 324.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Load agent"
+flat = false
+align = 1
+
+[node name="ButtonSaveAgent" type="Button" parent="Buttons/GridContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 328.0
+margin_right = 408.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Save agent"
+flat = false
+align = 1
+
+[node name="SpinBoxMutationRate" type="SpinBox" parent="Buttons/GridContainer" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 24.0
+margin_right = 150.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 150, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 1.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 5.0
+exp_edit = false
+rounded = true
+editable = true
+prefix = "Mutation rate:"
+suffix = "%"
+_sections_unfolded = [ "Rect" ]
+
+[node name="SpinBoxLifeTime" type="SpinBox" parent="Buttons/GridContainer" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 154.0
+margin_top = 24.0
+margin_right = 324.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 170, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 1.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 4.0
+exp_edit = false
+rounded = true
+editable = true
+prefix = "Lifetime:"
+suffix = "seconds"
+_sections_unfolded = [ "Rect" ]
+
+[connection signal="pressed" from="Buttons/GridContainer/ButtonPlayStop" to="Buttons" method="_on_ButtonPlayStop_pressed"]
+
+[connection signal="button_down" from="Buttons/GridContainer/ButtonLoadAgent" to="Buttons" method="_on_ButtonLoadAgent_button_down"]
+
+[connection signal="pressed" from="Buttons/GridContainer/ButtonSaveAgent" to="Buttons" method="_on_ButtonSaveAgent_pressed"]
+
+[connection signal="value_changed" from="Buttons/GridContainer/SpinBoxMutationRate" to="Buttons" method="_on_SpinBoxMutationRate_value_changed"]
+
+[connection signal="value_changed" from="Buttons/GridContainer/SpinBoxLifeTime" to="Buttons" method="_on_SpinBoxLifeTime_value_changed"]
 
 
