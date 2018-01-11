@@ -54,7 +54,8 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="AgentInstancer" parent="Node2D" index="1"]
 
-position = Vector2( -51.837, 410.405 )
+position = Vector2( -51.837, 600.405 )
+rotation = 0.000899414
 
 [node name="ScorePanel" parent="Node2D" index="2"]
 
@@ -100,13 +101,26 @@ _sections_unfolded = [ "BBCode", "Hint", "Rect" ]
 
 [node name="Buttons" parent="Node2D" index="7"]
 
-editor/display_folded = true
 margin_left = 378.0
 margin_top = 1020.0
 margin_right = 418.0
 margin_bottom = 1060.0
 rect_scale = Vector2( 2, 2 )
 _sections_unfolded = [ "Rect" ]
+
+[node name="TextOverview" parent="Node2D/Buttons" index="0"]
+
+margin_left = 605.0
+margin_top = -495.0
+margin_right = 857.0
+margin_bottom = -481.0
+
+[node name="GridContainer" parent="Node2D/Buttons" index="1"]
+
+margin_left = 0.0
+margin_top = -10.0
+margin_right = 530.0
+margin_bottom = 114.0
 
 [node name="Camera2D" type="Camera2D" parent="." index="3"]
 

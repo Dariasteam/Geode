@@ -119,6 +119,10 @@ public:
     genetic.semi_step();
   }
 
+  void set_genetic_parameters (unsigned poblation_size, unsigned candidates_size) {
+    genetic.set_poblation_parameters (poblation_size, candidates_size);
+  }
+
   void set_evaluations (Array a_evaluations) {
     unsigned size = a_evaluations.size();
     std::vector <double> evaluations (size);
@@ -129,9 +133,10 @@ public:
     genetic.set_external_evaluations(evaluations);
   }
 
-  void generate_initial_poblation () {
-    workable_nn parent_1 (14, 3, 2);
-    workable_nn parent_2 (14, 3, 2);
+  void generate_initial_poblation (unsigned n_neurons, unsigned n_inputs,
+                                   unsigned n_outputs) {
+    workable_nn parent_1 (n_neurons, n_inputs, n_outputs);
+    workable_nn parent_2 (n_neurons, n_inputs, n_outputs);
 
     dna serialized_nn_1 = parent_1.to_dna();
     dna serialized_nn_2 = parent_2.to_dna();
@@ -167,6 +172,7 @@ public:
     register_method("get_poblation",  &GeneticConnector::get_poblation);
     register_method("set_evaluations", &GeneticConnector::set_evaluations);
     register_method("generate_initial_poblation",&GeneticConnector::generate_initial_poblation);
+    register_method("set_genetic_parameters",&GeneticConnector::set_genetic_parameters);
 
     /**
      * How to register exports like gdscript

@@ -11,6 +11,8 @@ onready var simulating = false
 
 onready var mutation_rate = 5
 
+signal udpdate_genetic_parameters
+
 func _ready():
 	$GridContainer/SpinBoxMutationRate.set_value(mutation_rate)
 
@@ -37,3 +39,16 @@ func _on_ButtonSaveAgent_pressed():
 
 func _on_ButtonLoadAgent_button_down():
 	controller.load()
+
+
+func _on_SpinBoxPoblationSize_value_changed( value ):
+	if (value < $GridContainer/SpinBoxCandidatesSize.value):
+		$GridContainer/SpinBoxPoblationSize.set_value(value + 2)
+	emit_signal("udpdate_genetic_parameters", $GridContainer/SpinBoxPoblationSize.value, $GridContainer/SpinBoxCandidatesSize.value)
+
+
+func _on_SpinBoxCandidatesSize_value_changed( value ):
+	if (value > $GridContainer/SpinBoxPoblationSize.value):
+		$GridContainer/SpinBoxCandidatesSize.set_value(value - 2)
+	emit_signal("udpdate_genetic_parameters", $GridContainer/SpinBoxPoblationSize.value, $GridContainer/SpinBoxCandidatesSize.value)
+

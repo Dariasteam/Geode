@@ -133,26 +133,47 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 268.0
-margin_top = 505.0
-margin_right = 308.0
-margin_bottom = 545.0
+margin_left = 242.0
+margin_top = 504.0
+margin_right = 282.0
+margin_bottom = 544.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 6 )
 
-[node name="GridContainer" type="GridContainer" parent="Buttons" index="0"]
+[node name="TextOverview" type="Label" parent="Buttons" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 26.0
-margin_top = -35.0
-margin_right = 438.0
-margin_bottom = 89.0
+margin_top = 60.0
+margin_right = 278.0
+margin_bottom = 74.0
+rect_min_size = Vector2( 200, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Material", "Rect", "Visibility", "custom_colors", "custom_constants", "custom_fonts" ]
+
+[node name="GridContainer" type="GridContainer" parent="Buttons" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = -31.0
+margin_right = 550.0
+margin_bottom = 93.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
 size_flags_horizontal = 2
@@ -166,7 +187,7 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 150.0
+margin_right = 170.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
@@ -186,8 +207,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 154.0
-margin_right = 324.0
+margin_left = 174.0
+margin_right = 344.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
@@ -207,8 +228,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 328.0
-margin_right = 428.0
+margin_left = 348.0
+margin_right = 468.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
@@ -229,7 +250,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
-margin_right = 150.0
+margin_right = 170.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 150, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -254,9 +275,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 154.0
+margin_left = 174.0
 margin_top = 24.0
-margin_right = 324.0
+margin_right = 344.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 170, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -281,9 +302,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 328.0
+margin_left = 348.0
 margin_top = 24.0
-margin_right = 428.0
+margin_right = 468.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 100, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -298,24 +319,85 @@ caret_blink_speed = 0.65
 context_menu_enabled = true
 _sections_unfolded = [ "Placeholder", "Rect" ]
 
-[node name="TextOverview" type="Label" parent="Buttons/GridContainer" index="6"]
+[node name="SpinBoxPoblationSize" type="SpinBox" parent="Buttons/GridContainer" index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 81.0
-margin_right = 150.0
-margin_bottom = 95.0
+margin_top = 52.0
+margin_right = 170.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 170, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Margin", "Material", "Rect", "Visibility", "custom_colors", "custom_constants", "custom_fonts" ]
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 4.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 50.0
+exp_edit = false
+rounded = true
+editable = true
+prefix = "Poblation:"
+suffix = "agents"
+_sections_unfolded = [ "Rect" ]
+
+[node name="SpinBoxCandidatesSize" type="SpinBox" parent="Buttons/GridContainer" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 174.0
+margin_top = 52.0
+margin_right = 344.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 170, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 2.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 15.0
+exp_edit = false
+rounded = true
+editable = true
+prefix = "Candidates:"
+suffix = "agents"
+_sections_unfolded = [ "Rect" ]
+
+[node name="SpinBoxNeuronSize" type="SpinBox" parent="Buttons/GridContainer" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 52.0
+margin_right = 468.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 120, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 6.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 6.0
+exp_edit = false
+rounded = true
+editable = true
+prefix = "Neurons:"
+suffix = ""
+_sections_unfolded = [ "Rect" ]
 
 [connection signal="cell_selected" from="ScorePanel" to="ScorePanel" method="_on_ScorePanel_cell_selected"]
 
@@ -328,5 +410,11 @@ _sections_unfolded = [ "Margin", "Material", "Rect", "Visibility", "custom_color
 [connection signal="value_changed" from="Buttons/GridContainer/SpinBoxMutationRate" to="Buttons" method="_on_SpinBoxMutationRate_value_changed"]
 
 [connection signal="value_changed" from="Buttons/GridContainer/SpinBoxLifeTime" to="Buttons" method="_on_SpinBoxLifeTime_value_changed"]
+
+[connection signal="value_changed" from="Buttons/GridContainer/SpinBoxPoblationSize" to="Buttons" method="_on_SpinBoxPoblationSize_value_changed"]
+
+[connection signal="value_changed" from="Buttons/GridContainer/SpinBoxCandidatesSize" to="Buttons" method="_on_SpinBoxCandidatesSize_value_changed"]
+
+[connection signal="value_changed" from="Buttons/GridContainer/SpinBoxNeuronSize" to="AgentInstancer" method="_on_SpinBoxNeuronSize_value_changed"]
 
 

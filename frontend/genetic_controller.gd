@@ -1,18 +1,24 @@
 extends Node2D
 
 onready var genetic_connector = load("res://genetic_connector.gdns").new();
-onready var text_label = get_parent().get_node("Buttons/GridContainer/TextOverview")
+onready var text_label = get_parent().get_node("Buttons/TextOverview")
 onready var statistic_plotter = get_parent().get_node("PlotPanel")
 onready var net_viewer  = get_parent().get_node("NeuralPanel")
 onready var score_tree  = get_parent().get_node("ScorePanel")
 onready var agent_name  = get_parent().get_node("Buttons/GridContainer/LineEditAgentName")
+onready var buttons  = get_parent().get_node("Buttons")
 
 export var agent_scene = preload("res://agent.tscn")
+
+var inputs
+var outputs
 
 var neural_poblation
 var agents_death = 0
 var scores = []
 var agents_alive = []
+var poblation_size = 50
+var n_neurons = 14
 
 var raw_matrixes = []
 
@@ -42,7 +48,7 @@ func generate_poblation(raw_poblation):
 	var neural_networks = []
 	for i in range(raw_poblation.size() / 2):
 		var aux = load("res://neural_network_connector.gdns").new();
-		aux.set_content (raw_poblation[i * 2], raw_poblation[i * 2 + 1], 3, 2)
+		aux.set_content (raw_poblation[i * 2], raw_poblation[i * 2 + 1], inputs, outputs)
 		neural_networks.push_back(aux)
 	return neural_networks
 
@@ -92,7 +98,7 @@ func prepare_next_single_simulation():
 		
 	var text = str("Generation: ", "%2d" % generation, "\nBest score: ", "%2.3f" % best_value, "\nSince generation: ", "%2d" % last_best_generation)
 	
-	net_viewer.set_network([scores[-1][1], scores[-1][2]], 3, 2)
+	net_viewer.set_network([scores[-1][1], scores[-1][2]], inputs, outputs)
 	statistic_plotter.add_entry([best_value, mean, scores[0][0]])
 		
 	print (text)
@@ -104,13 +110,18 @@ func prepare_next_single_simulation():
 
 func _ready():
 	score_tree.connect("set_net", self, "view_net_at")
-	pass
+	buttons.connect("udpdate_genetic_parameters", self, "set_genetic_parameters")
+	var aux_agent = agent_scene.instance()
+	inputs = aux_agent.inputs
+	outputs = aux_agent.outputs
+	aux_agent.queue_free()
 	
 func start_simulation ():	
-	score_tree.set_n_agents(50)
+	statistic_plotter.clear()
+	score_tree.set_n_agents(poblation_size)
 	
 	simulating = true
-	genetic_connector.generate_initial_poblation()	
+	genetic_connector.generate_initial_poblation(n_neurons, inputs, outputs)	
 	genetic_connector.semi_step();	# cruza y muta
 	
 	var text = str("Generation: ", "%2d" % 0, "\nBest score: ", "%2.3f" % 0, "\nSince generation: ", "%2d" %0)		
@@ -119,7 +130,13 @@ func start_simulation ():
 	
 func stop_simulation ():
 	simulating = false
-	pass
+	for child in get_children():
+		child.queue_free()
+	scores.clear()
+	agents_alive.clear()
+	best_value = 0
+	last_best_generation = 0
+	agents_death = 0
 
 func save():	
 	var file = File.new()
@@ -153,8 +170,12 @@ func set_time (new_time):
 	
 func view_net_at(i):
 	if (typeof(scores[(-i)-1]) == TYPE_ARRAY):
-		net_viewer.set_network([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]], 3, 2)
-
+		net_viewer.set_network([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]], inputs, outputs)
+		
+func set_genetic_parameters(p_s, c_s):
+	genetic_connector.set_genetic_parameters(p_s, c_s)
+	poblation_size = p_s
+	
 # ordena en base a el primer elemento del array, se usa para ordenar los arrays de
 # [puntuaciones, redes neuronales]
 class agents_sorter:
@@ -162,3 +183,6 @@ class agents_sorter:
 		if a[0] < b[0]:
 			return true
 		return false
+
+func _on_SpinBoxNeuronSize_value_changed(value):
+	n_neurons = value

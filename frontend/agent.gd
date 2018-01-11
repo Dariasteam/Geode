@@ -9,6 +9,9 @@ var spin = 0
 var score = 0
 var alive = true
 
+export(int) var inputs = 3
+export(int) var outputs = 2
+
 # red neuronal, índice, tiempo de vida
 func set_neural_network(nn, i, life_time):
 	neural_network = nn
