@@ -127,6 +127,7 @@ public:
     if (poblation_s > candidates_s) {
       poblation_size = poblation_s;
       candidates_size = candidates_s;
+      ratio_cand_pobl = std::round(double(poblation_size) / candidates_size);
     }
   }
 

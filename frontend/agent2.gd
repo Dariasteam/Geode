@@ -1,7 +1,7 @@
 extends Node2D
 
 var neural_network
-var index 
+var index
 
 signal dead
 
@@ -12,68 +12,70 @@ var alive = true
 export(int) var inputs = 3
 export(int) var outputs = 2
 
+var time_alive = 0
+
 # red neuronal, índice, tiempo de vida
 func set_neural_network(nn, i, life_time):
 	neural_network = nn
 	index = i
 	$Timer.set_wait_time(life_time)
-	$Timer.start()	
+	$Timer.start()
 	set_physics_process(true)
 
 func _physics_process(delta):
+	time_alive += 1
 	var pos = $RigidBody2D.global_position
-	
+
 	var inputs = []
-	
-	if ($Weapons/weapon.is_colliding()):		
+
+	if ($Weapons/weapon.is_colliding()):
 		var collider = $Weapons/weapon.get_collider()
 		if (collider != null):
 			collider.get_parent().die_eated()
 			eat()
-	
+
 	# Recoger todos los valores de los sensores
 	for item in $Raycast.get_children():
 		if (item.is_colliding()):
 			var distance = item.get_collision_point().distance_to(item.global_position)
-								
+
 			var mid_distance = item.cast_to.length() / 2
-			
+
 			var color_value = (distance - mid_distance) / mid_distance
 			item.set_modulate(Color(1 - color_value, 1 + color_value, 1 + color_value))
-								
-			if (distance > mid_distance):				
-				distance = (distance - mid_distance) / mid_distance * - 1				
-			else:				
+
+			if (distance > mid_distance):
+				distance = (distance - mid_distance) / mid_distance * - 1
+			else:
 				distance = (distance / mid_distance)
-											
+
 			var color_g = max(255 * -distance , 0.1)
-			var color_b = max(255 *  distance , 0.1)					
-			
+			var color_b = max(255 *  distance , 0.1)
+
 			inputs.push_back(max(distance, -1))
-			
-		else:		
+
+		else:
 			item.modulate = Color(0, 1, 1)
 			inputs.push_back(-1)
-			
-			
+
+
 	var outputs = neural_network.evaluate(inputs)
-	
-	if (abs(spin) > 10):
-		die(-255)	
-			
-	spin += outputs[0]	
-	
+
+	#if (abs(spin) > 20):
+		#die(-255)
+
+	spin += outputs[0]
+
 	rotate(outputs[0])
-	move_local_y(outputs[1] * 100) 
-	score += outputs[1]
-	
+	move_local_y(outputs[1] * 100)
+	#score += outputs[1]
+	#score 
+
 func _ready():
-	#var size = get_viewport().size
-	set_global_position(get_parent().get_global_position())
-	#set_global_position(Vector2(rand_range(80, size.x * 2 - 80), rand_range(80, size.y * 2 - 80)))	
-	#set_physics_process(false)
-	pass
-	
+	var size = get_parent().get_global_position()
+	#set_global_position(get_parent().get_global_position())
+	set_global_position(Vector2(rand_range(80, size.x * 2 - 80), rand_range(80, size.y * 2 - 80)))		
+
 func die(time):
 	if (alive):
 		alive = false
@@ -82,17 +84,17 @@ func die(time):
 		$Sprite.modulate = Color(255, 0, 0)
 		$RigidBody2D.queue_free()
 		$Weapons/weapon.set_enabled(false)
-		emit_signal("dead", index, score)
+		emit_signal("dead", index, time_alive)
 
-func _on_Timer_timeout():	
-	die(0)	
-	
-func eat():		
+func _on_Timer_timeout():
+	die(0)
+
+func eat():
 	$Timer.disconnect("timeout", self, "_on_Timer_timeout")
 	var time_left = $Timer.get_time_left()
 	score += 5
 	$Timer.stop()
-	$Timer.set_wait_time(time_left + 5)	
+	$Timer.set_wait_time(time_left + 5)
 	$Timer.connect("timeout", self, "_on_Timer_timeout")
 	$Timer.start()
 

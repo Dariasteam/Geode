@@ -1,0 +1,152 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://agent2.gd" type="Script" id=1]
+[ext_resource path="res://insect.png" type="Texture" id=2]
+
+[node name="Controller" type="Node2D"]
+
+position = Vector2( 293.583, 285.483 )
+rotation = 3.14159
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+inputs = 7
+outputs = 2
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( 0, -2 )
+rotation = 3.14159
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+
+[node name="Timer" type="Timer" parent="." index="1"]
+
+process_mode = 1
+wait_time = 0.01
+one_shot = true
+autostart = false
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." index="2" groups=[
+"agent",
+]]
+
+position = Vector2( -0.896179, 2.18491 )
+input_pickable = false
+collision_layer = 2
+collision_mask = 1
+mode = 0
+mass = 1.02041e-05
+friction = 1.0
+bounce = 0.0
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 2
+contacts_reported = 1
+contact_monitor = true
+sleeping = false
+can_sleep = false
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+_sections_unfolded = [ "Collision", "Pickable" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D" index="0"]
+
+visible = false
+build_mode = 0
+polygon = PoolVector2Array( 4.4791, 25.2981, -2.5209, 25.2981, -9.52087, 17.2981, -14.5208, 11.298, -14.5208, 1.29803, -4.52075, -34.7019, 5.47925, -34.7019, 16.4792, 1.29813, 15.4792, 12.2981, 10.4791, 17.2981 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Raycast" type="Node2D" parent="." index="3"]
+
+[node name="ray_a" type="RayCast2D" parent="Raycast" index="0"]
+
+position = Vector2( 8.11404, 24.447 )
+rotation = -0.698132
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 100 )
+collision_mask = 3
+_sections_unfolded = [ "Transform", "Visibility", "Z" ]
+
+[node name="ray_b" type="RayCast2D" parent="Raycast" index="1"]
+
+position = Vector2( -0.188965, 27.9195 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 100 )
+collision_mask = 3
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+
+[node name="ray_c" type="RayCast2D" parent="Raycast" index="2"]
+
+position = Vector2( -8.72443, 23.752 )
+rotation = 0.698132
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 100 )
+collision_mask = 3
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="ray_c2" type="RayCast2D" parent="Raycast" index="3"]
+
+position = Vector2( 5.68066, -28.8172 )
+rotation = -2.46476
+scale = Vector2( 2, 1 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 20 )
+collision_mask = 3
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="ray_c3" type="RayCast2D" parent="Raycast" index="4"]
+
+position = Vector2( -7.38907, -29.0775 )
+rotation = 2.4644
+scale = Vector2( 2, 1 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 20 )
+collision_mask = 3
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="ray_c4" type="RayCast2D" parent="Raycast" index="5"]
+
+position = Vector2( -13.8581, -1.88602 )
+rotation = 1.5708
+scale = Vector2( 2, 1 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 20 )
+collision_mask = 3
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="ray_c5" type="RayCast2D" parent="Raycast" index="6"]
+
+position = Vector2( 13.8463, -1.89645 )
+rotation = -1.5708
+scale = Vector2( 2, 1 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 20 )
+collision_mask = 3
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="Weapons" type="Node2D" parent="." index="4"]
+
+[node name="weapon" type="RayCast2D" parent="Weapons" index="0"]
+
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0.0112305, 26.9226 )
+enabled = true
+exclude_parent = false
+cast_to = Vector2( 0, 52 )
+collision_mask = 2
+_sections_unfolded = [ "Transform", "Visibility", "Z" ]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_entered"]
+
+

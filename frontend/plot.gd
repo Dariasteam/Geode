@@ -55,3 +55,8 @@ func clear():
 	best_entries.clear()
 	worst_entries.clear()
 	mean_entries.clear()
+	
+	add_entry([0, 0, 0])
+	add_entry([0, 0, 0])
+	
+	update()

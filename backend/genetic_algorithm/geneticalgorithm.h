@@ -117,6 +117,14 @@ public:
         ratio_cand_pobl = std::round(double(poblation_size) / candidates_size);
       }
 
+      void set_poblation_parameters (unsigned poblation_s, unsigned candidates_s) {
+        if (poblation_s > candidates_s) {
+          poblation_size = poblation_s;
+          candidates_size = candidates_s;
+          ratio_cand_pobl = std::round(double(poblation_size) / candidates_size);
+        }
+      }
+
   /**
    * @brief Avanza un paso en la simulación. El proceso a seguir es:
    * Generar nueva población → mutarla → evaluarla

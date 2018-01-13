@@ -3,10 +3,11 @@
 [ext_resource path="res://agent.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 
-[node name="Controller" type="Node2D"]
+[node name="Controller" type="Node2D" index="0"]
 
 position = Vector2( 293.583, 285.483 )
 rotation = 3.14159
+scale = Vector2( 2, 2 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 inputs = 3
@@ -84,6 +85,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 [node name="ray_c" type="RayCast2D" parent="Raycast" index="2"]
 
+modulate = Color( 1, 0, 0, 1 )
 position = Vector2( -17, 27 )
 rotation = 0.698132
 scale = Vector2( 2, 1 )

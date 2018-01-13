@@ -116,12 +116,12 @@ func _ready():
 	outputs = aux_agent.outputs
 	aux_agent.queue_free()
 	
-func start_simulation ():	
-	statistic_plotter.clear()
+func start_simulation ():
+	statistic_plotter.clear()	
 	score_tree.set_n_agents(poblation_size)
 	
 	simulating = true
-	genetic_connector.generate_initial_poblation(n_neurons, inputs, outputs)	
+	genetic_connector.generate_initial_poblation(n_neurons, inputs, outputs)
 	genetic_connector.semi_step();	# cruza y muta
 	
 	var text = str("Generation: ", "%2d" % 0, "\nBest score: ", "%2.3f" % 0, "\nSince generation: ", "%2d" %0)		
@@ -173,6 +173,7 @@ func view_net_at(i):
 		net_viewer.set_network([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]], inputs, outputs)
 		
 func set_genetic_parameters(p_s, c_s):
+	print (p_s, " ", c_s)
 	genetic_connector.set_genetic_parameters(p_s, c_s)
 	poblation_size = p_s
 	
