@@ -7,7 +7,7 @@
 This project aims to create a framework in Godot engine for fast creating and testing simulations of neural network agents evolved by a genetic algorithm. Logic is written in c++11 and highly uses concuency. Godot version used is 3.0 beta 2 over GNU/Linux x64.
 
 ## ¿What can it do?
-As you can see in the gif, it can simulate the beahaviour of some custom agents on a custom simulation by creating a neural network for each one. You can set a custom fitness function for eval them and a genetic algorithm will generate a new population for you when all of them die. The results of the simulation can be shown in real time not only seeing the agents living but studying its network and some basic statistics.
+As you can see in the gif, it can simulate the beahaviour of some custom agents on a custom simulation by creating a neural network for each one. You can set a custom fitness function for eval them and a genetic algorithm will generate a new population for you when all of them die. The results of the simulation can be shown in real time not only seeing the agents living but studying its network and some basic statistics. Simulation allows using an arbitry number of neurons.
 
 ## I don't know what I'm seeing on the gif
 
@@ -34,6 +34,6 @@ Currently they are not as "default abstract scenes" as they should, there are st
 - Controller: contains the genetic algorithm and all GUI showed on gif above. It has a son called "AgentInstancer" in which you must spicify your agent scene and acts as the "born point" of them.
 
 
-- Agent: receives from its intancer the information to generate its neural network and feed its entries in a `_physic_process`. Also they receive the time to be alive. Fitness function **is calculated by the agent** and passed to the genetic algorithm when it dies.
+- Agent: receives from its intancer the information to generate its neural network and feed its entries in a `_physic_process`. Also they receive the time to be alive. Fitness function **is calculated by the agent** and passed to the genetic algorithm when it dies. Also here you must specify the number of input and output neurons used.
 
 In order to create your own simulation, you only need to create a copy of agent scene and adjust it for your purposes. Create a new scene with the parameters of your simulation, add in it the controller and set the agent scene in it.
