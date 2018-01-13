@@ -9,8 +9,7 @@ This project aims to create a framework in Godot engine for fast creating and te
 ## ¿What can it do?
 As you can see in the gif, it can simulate the beahaviour of some custom agents on a custom simulation by creating a neural network for each one. You can set a custom fitness function for eval them and a genetic algorithm will generate a new population for you when all of them die. The results of the simulation can be shown in real time not only seeing the agents living but studying its network and some basic statistics.
 
-## I don't know what I'm seeing on gif
--
+## I don't know what I'm seeing on the gif
 
 - Plot panel (bottom left): shows the fitness of each generation by representing best, mean, and worst score. Its updated every new generation.
 
@@ -29,8 +28,8 @@ The project is divided in two components: backend and frontend
 - Frontend: Currently contains a copy of the backend with minimal modifications, the bindings between Godot -GDNative- and backend (both code and linux x64 binary, we are working on instruction for compiling them) and some demostration scenes.
 
 ## Using it
-We provide some scenes for handling the connections with c++ libraries buttons and visual representations (the statistic plotter and network render) so you can focus on create your agent and the environment.
-Currently they are not as "default abstract scenes" as they should, there are still some elements adjusted for our simulations.
+We provide some scenes for handling the connections with c++ libraries, buttons and visual representations (the statistic plotter and network renderer) so you can focus on create your agent and the environment.
+Currently they are not as "default abstract scenes" as they should, there are still some elements adjusted for our test simulations.
 
 - Controller: contains the genetic algorithm and all GUI showed on gif above. It has a son called "AgentInstancer" in which you must spicify your agent scene and acts as the "born point" of them.
 
