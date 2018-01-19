@@ -109,70 +109,71 @@ void workable_nn::calculate(std::vector<double> &inputs, std::vector<double> &ou
 
   // Inicializar las neuronas de entrada
   for (unsigned i = 0; i < input_neurons; i++) {
-      results[i][i] = inputs[i];
-      used_elements[i][i] = true;
+    results[i][i] = inputs[i];
+    used_elements[i][i] = true;
 
-      double value = inputs[i];
+    double value = inputs[i];
 
-      // Calcular los axones derivados de las neuronas de entrada
-      iterate_avoiding_index([&](unsigned index) -> void {
-        if (graph_matrix[i][index]) {
-          results[i][index] = value * saturate(cost_matrix[i][index]);
-          used_elements[i][index] = true;
-        }
-      }, 0, i, size);
-    }
+    // Calcular los axones derivados de las neuronas de entrada
+    iterate_avoiding_index([&](unsigned index) -> void {
+      if (graph_matrix[i][index]) {
+        results[i][index] = value * saturate(cost_matrix[i][index]);
+        used_elements[i][index] = true;
+      }
+    }, 0, i, size);
+  }
 
   // Propagar valores por las siguientes neuronas disponibles
   while (true) {
-      int selected_neuron = -1;
-      // Seleccionar la siguiente neurona cuyos predecesores estén calculados
-      double value (0);
-      unsigned ac (0);
+    int selected_neuron = -1;
+    // Seleccionar la siguiente neurona cuyos predecesores estén calculados
+    double value (0);
+    unsigned ac (0);
 
-      for (unsigned i = input_neurons; i < size; i++) {
-        value = 0;
-        ac = 0;
-        if (!used_elements[i][i]) {
-          selected_neuron = i;
-          for (unsigned j = 0; j < i; j++) {
-            if (graph_matrix[j][i]) {
-              if (used_elements[j][i]) {
-                // El axón de entrada está disponible
-                value += results[j][i];
-                ac++;
-              } else if (cost_matrix[j][i] != 0) {
-                // El axón de entrada aún no ha sido calculado
-                value = 0;
-                selected_neuron = -1;
-                break;
-              }
+    for (unsigned i = input_neurons; i < size; i++) {
+      value = 0;
+      ac = 0;
+      if (!used_elements[i][i]) {
+        selected_neuron = i;
+        for (unsigned j = 0; j < i; j++) {
+          if (graph_matrix[j][i]) {
+            if (used_elements[j][i]) {
+              // El axón de entrada está disponible
+              value += results[j][i];
+              ac++;
+            } else if (cost_matrix[j][i] != 0) {
+              // El axón de entrada aún no ha sido calculado
+              value = 0;
+              selected_neuron = -1;
+              break;
             }
           }
-          // Tenemos una neurona con todos sus predecesores calculados
-          if (selected_neuron != -1)
-            break;
         }
+        // Tenemos una neurona con todos sus predecesores calculados
+        if (selected_neuron != -1)
+          break;
       }
-
-      // No hay más neuronas calculables
-      if (selected_neuron == -1)
-        break;
-
-      value = (value != 0) ? std::tanh(value / ac) : 0;     
-
-      used_elements[selected_neuron][selected_neuron] = true;
-      results[selected_neuron][selected_neuron] = value;
-
-      // Calcular los axones derivados de la neurona calculada
-      iterate_avoiding_index([&](unsigned index) -> void {
-        if (graph_matrix[selected_neuron][index]) {
-          double aux = value * saturate(cost_matrix[selected_neuron][index]);
-          results[selected_neuron][index] = aux;
-          used_elements[selected_neuron][index] = true;
-        }
-      }, 0, selected_neuron, size);
     }
+
+    // No hay más neuronas calculables
+    if (selected_neuron == -1)
+      break;
+
+    double threshold = saturate(cost_matrix[selected_neuron][selected_neuron]);
+    value = (ac != 0) ? std::tanh(value + threshold / ac) : 0;
+
+    used_elements[selected_neuron][selected_neuron] = true;
+    results[selected_neuron][selected_neuron] = value;
+
+    // Calcular los axones derivados de la neurona calculada
+    iterate_avoiding_index([&](unsigned index) -> void {
+      if (graph_matrix[selected_neuron][index]) {
+        double aux = value * saturate(cost_matrix[selected_neuron][index]);
+        results[selected_neuron][index] = aux;
+        used_elements[selected_neuron][index] = true;
+      }
+    }, 0, selected_neuron, size);
+  }
 
   // Recoger los valores de las neuronas de salida
   outputs.resize(0);

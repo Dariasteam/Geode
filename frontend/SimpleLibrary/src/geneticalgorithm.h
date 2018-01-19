@@ -25,58 +25,73 @@ template <class T>
  */
 class GeneticAlgorithm {
 private:
-  std::vector <T> poblation;        // población generada en cada iteración
+  std::vector <T> population;        // población generada en cada iteración
   std::vector <T> best_candidates;  // mejores candidatos de una generación
 
   std::function<T(T&, T&)> op_cross;
   std::function<void(T&)> op_mutate;
   std::function<double(const T&)> op_evaluate;
 
-  unsigned poblation_size;          // tamaño de las poblaciones generadas
+  unsigned population_size;          // tamaño de las poblaciones generadas
   unsigned candidates_size;         // cantidad de individuos seleccionados
   unsigned ratio_cand_pobl;         // cantidad de copias de cada candidato
 
   // Genera toda la población de forma concurrente
-  void generate_next_poblation () {
-    poblation.clear();
-    poblation.resize(poblation_size);
+  void generate_next_population () {
+    population.clear();
+    population.resize(population_size);
 
-    std::vector<std::future<void>> promises (candidates_size);
+    // std::vector<std::future<void>> promises (candidates_size);
+
+    ratio_cand_pobl = std::floor(double(population_size) / candidates_size);
 
     // función a aplicar sobre cada elemento
     auto async_function = ([&](unsigned index) {
-      for (unsigned j = 0; j < ratio_cand_pobl; j++) {
-        poblation[(index * ratio_cand_pobl) + j] = best_candidates[index];
-      }
+      for (unsigned j = 0; j < ratio_cand_pobl; j++)
+        population[(index * ratio_cand_pobl) + j] = best_candidates[index];
     });
 
-    for (unsigned i = 0; i < candidates_size; i++)
-      promises[i] = std::async(async_function, i);
+    for (unsigned i = 0; i < candidates_size; i++) {
+      async_function (i);
+      for (unsigned j = 0; j < ratio_cand_pobl; j++)
+        std::cout << (i * ratio_cand_pobl) + j << std::endl;
 
+    }
+    //promises[i] = std::async(async_function, i);
+
+    /*
     for (auto& promise : promises)
       promise.get();
+    */
 
+    // conpensates the odd cases
+    if (population_size % candidates_size != 0)
+      population[population_size - 1] = best_candidates[0];
+/*
+    for (unsigned i = 0; i < population_size; i++)
+      population[i] = best_candidates[0];
+*/
   }
 
   // muta toda la población de forma concurrente
   // Los dos mejores candidatos se vuelven a introducir sin mutaciones
   // para no perder los avances
   void mutate_poblation () {
-    std::vector<std::future<void>> promises (poblation_size - 2);
+    std::vector<std::future<void>> promises (population_size - 2);
 
     // función a aplicar sobre cada elemento
     auto async_function = ([&](unsigned index){
-      op_mutate(poblation[index]);
+      op_mutate(population[index]);
     });
 
-    for (unsigned i = 0; i < poblation_size - 2; i++)
+    for (unsigned i = 0; i < population_size - 2; i++)
       promises[i] = std::async(async_function, i);
 
     for (auto& promise : promises)
       promise.get();
 
-    poblation[poblation_size - 2] = best_candidates[0];
-    poblation[poblation_size - 1] = best_candidates[1];
+    population[population_size - 2] = best_candidates[0];
+    population[population_size - 1] = best_candidates[1];
   }
 
   // evalúa toda la población y la ordena en base a la función de fitness
@@ -84,13 +99,13 @@ private:
     auto comparator = [&](const T& A, const T& B) {
       return op_evaluate (A) > op_evaluate (B);
     };
-    std::sort (poblation.begin(), poblation.end(), comparator);
+    std::sort (population.begin(), population.end(), comparator);
   }
 
   // copia los mejores elementos de la población al vector de candidatos
   void generate_next_candidates () {
     best_candidates.resize(0);
-    std::copy (poblation.begin(), poblation.begin() + candidates_size, std::back_inserter(best_candidates));
+    std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));
   }
 
 public:
@@ -116,18 +131,18 @@ public:
         op_mutate (operator_mutate),
         op_evaluate (operator_evaluator),
 
-        poblation_size (poblation_s),
+        population_size (poblation_s),
         candidates_size (candidates_s)
       {
         std::srand(time(nullptr));
-        ratio_cand_pobl = std::round(double(poblation_size) / candidates_size);
+        ratio_cand_pobl = std::round(double(population_size) / candidates_size);
       }
 
   void set_poblation_parameters (unsigned poblation_s, unsigned candidates_s) {
     if (poblation_s > candidates_s) {
-      poblation_size = poblation_s;
+      population_size = poblation_s;
       candidates_size = candidates_s;
-      ratio_cand_pobl = std::round(double(poblation_size) / candidates_size);
+      ratio_cand_pobl = std::round(double(population_size) / candidates_size);
     }
   }
 
@@ -137,7 +152,7 @@ public:
    * @return
    */
   bool step () {
-    generate_next_poblation();
+    generate_next_population();
     mutate_poblation();
     evaluate_poblation();
     generate_next_candidates();
@@ -150,12 +165,12 @@ public:
    * las dos últimas fases
    */
   void semi_step () {
-    generate_next_poblation();
+    generate_next_population();
     mutate_poblation();
   }
 
   std::vector<T> get_poblation () {
-    return poblation;
+    return population;
   }
 
   /**
@@ -164,20 +179,20 @@ public:
    * @param evaluations vector de puntuaciones
    */
   void set_external_evaluations (std::vector<double> evaluations) {
-    std::vector<std::pair<T, double>> aux (poblation_size);
-    for (unsigned i = 0; i < poblation_size; i++)
-      aux[i] = {poblation[i], evaluations[i]};
+    std::vector<std::pair<T, double>> aux (population_size);
+    for (unsigned i = 0; i < population_size; i++)
+      aux[i] = {population[i], evaluations[i]};
 
     auto comparator = [](std::pair<T, double>& A, std::pair<T, double>& B) {
       return A.second > B.second;
     };
     std::sort (aux.begin(), aux.end(), comparator);
 
-    poblation.clear();
-    poblation.resize(poblation_size);
+    population.clear();
+    population.resize(population_size);
 
-    for (unsigned i = 0; i < poblation_size; i++)
-      poblation[i] = aux[i].first;
+    for (unsigned i = 0; i < population_size; i++)
+      population[i] = aux[i].first;
 
     generate_next_candidates();
   }

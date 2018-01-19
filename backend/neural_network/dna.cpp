@@ -1,5 +1,7 @@
 #include "dna.h"
 
+#include <iostream>
+
 dna::~dna() {
   if (sequence != nullptr)
     free (sequence);

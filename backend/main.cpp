@@ -10,7 +10,7 @@
 #include "neural_network/workable_nn.h"
 #include "genetic_algorithm/geneticalgorithm.h"
 
-#define N 10
+#define N 20
 
 /* Generador de números aleatorios para el grafo
  * */
@@ -98,14 +98,12 @@ double evaluate (const dna& DNA) {
 
   w.calculate(input_b, output);
   for (auto& e : output)
-    v2 += e;    
-
-  //std::cout << w.get_n_axons() << "\n";
+    v2 += e;      
 
   if ((v1 > 0 && v2 > 0) || (v1 < 0 && v2 < 0))
-    return fabs(fabs(v1) - v2) ;
+    return fabs(fabs(v1) - v2);
   else
-    return fabs(v1) + fabs(v2) ;
+    return fabs(v1) + fabs(v2);
 }
 
 void mutate (dna& DNA) {
@@ -161,14 +159,14 @@ int main(int argc, char **argv) {
   dna serialized_nn_1 = parent_1.to_dna();
   dna serialized_nn_2 = parent_2.to_dna();
 
-  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 4, 2);
+  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 15, 3);
   std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
   genetic.set_initial_poblation(initial_candidates); 
 
   char input = 'a';
   while (input != 'q') {
-    genetic.semi_step();
-    genetic.set_external_evaluations({100, 0, 0, 50});
+    genetic.step();
+    /*
     genetic.print_best();    
     std::cout << "'e' para ver el estado actual\n" <<
                  "'q' para salir\n" <<
@@ -178,6 +176,7 @@ int main(int argc, char **argv) {
       evaluate_current (genetic.get_best_candidates()[0]);
       scanf("%c", &input);
     }
+    */
   }
   std::cout << "He terminado todos los pasos" << std::endl;    
   return 0;

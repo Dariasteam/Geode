@@ -10,13 +10,13 @@ config_version=3
 
 [application]
 
-config/name="Bindings"
+config/name="Geode"
 run/main_scene="res://Map_2.tscn"
 config/icon="res://icon.png"
 
 [debug]
 
-settings/fps/force_fps=60
+settings/fps/force_fps=30
 shapes/collision/shape_color=Color( 1, 1, 1, 0.839765 )
 
 [display]
