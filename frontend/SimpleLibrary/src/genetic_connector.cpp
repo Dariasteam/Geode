@@ -36,10 +36,10 @@ double evaluate (const dna& DNA) {
 
 }
 
-void mutate (dna& DNA) {
+void mutate (dna& DNA, unsigned mutation_rate) {
   unsigned first_index = DNA.byte_sz;
   for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
-    if (rand() % 70 < 1) {
+    if (rand() % 100 < mutation_rate) {
       DNA.sequence[i] ^= 1;
       i+=sizeof(bool);
       DNA.sequence[i] ^= 1;
@@ -90,7 +90,7 @@ private:
 public:
 
   GeneticConnector() :
-  genetic (cross, mutate, evaluate, 50, 10)
+  genetic (cross, mutate, evaluate, 50, 10, 5)
   {
     Godot::print("Algoritmo genético construido");
   }
@@ -99,8 +99,10 @@ public:
     genetic.semi_step();
   }
 
-  void set_genetic_parameters (unsigned poblation_size, unsigned candidates_size) {
-    genetic.set_poblation_parameters (poblation_size, candidates_size);
+  void set_genetic_parameters (unsigned poblation_size, unsigned candidates_size,
+                               unsigned mutation_rate
+  ) {
+    genetic.set_poblation_parameters (poblation_size, candidates_size, mutation_rate);
   }
 
   void set_evaluations (Array a_evaluations) {

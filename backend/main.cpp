@@ -109,7 +109,7 @@ double evaluate (const dna& DNA) {
 void mutate (dna& DNA, unsigned mutation_rate) {
   unsigned first_index = DNA.byte_sz;
   for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
-    if (rand() % mutation_rate < 1) {
+    if (rand() % 100 < mutation_rate) {
       DNA.sequence[i] ^= 1;
       i+=sizeof(bool);
       DNA.sequence[i] ^= 1;

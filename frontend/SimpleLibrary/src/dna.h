@@ -1,6 +1,8 @@
 #ifndef DNA_H
 #define DNA_H
 
+#include <memory>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -51,18 +53,23 @@ struct dna {
   unsigned output_neurons;
 
   dna () :
-    sequence (nullptr)
+  sequence (nullptr)
   {}
 
-  dna (const dna& DNA) {
-    operator =(DNA);
+  dna (const dna& DNA) :
+  input_neurons (DNA.input_neurons),
+  output_neurons (DNA.output_neurons),
+  byte_sz (DNA.byte_sz)
+  {
+    sequence = new char[DNA.byte_sz];
+    memcpy(sequence, DNA.sequence, DNA.byte_sz);
   }
 
   dna (char* s, unsigned b, unsigned i, unsigned o) :
-    sequence (s),
-    byte_sz (b),
-    input_neurons (i),
-    output_neurons (o)
+  sequence (s),
+  byte_sz (b),
+  input_neurons (i),
+  output_neurons (o)
   {}
 
   ~dna ();

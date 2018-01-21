@@ -84,6 +84,7 @@ public:
   }
 
   std::vector<std::vector<TYPE>> get_cost_matrix () const { return cost_matrix; }
+  std::vector<std::vector<bool>> get_graph_matrix () const { return graph_matrix; }
 
   /**
    * @brief Calcula la respuesta de la red neuronal ante una entrada

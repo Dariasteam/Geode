@@ -3,9 +3,9 @@
 /* Construye una red a partir de una matriz de costes
  */
 workable_nn::workable_nn(std::vector<std::vector<std::pair<bool, TYPE> > > cost,
-                         unsigned input, unsigned output) :
-  input_neurons (input),
-  output_neurons (output)
+unsigned input, unsigned output) :
+input_neurons (input),
+output_neurons (output)
 {
   unsigned size = cost.size();
 
@@ -23,10 +23,10 @@ workable_nn::workable_nn(std::vector<std::vector<std::pair<bool, TYPE> > > cost,
 }
 
 /* Construye una red a partir de una adn
- * */
+* */
 workable_nn::workable_nn (const dna& DNA)  :
-  input_neurons (DNA.input_neurons),
-  output_neurons (DNA.output_neurons)
+input_neurons (DNA.input_neurons),
+output_neurons (DNA.output_neurons)
 {
   unsigned index = 0;
   const char* seq = DNA.sequence;
@@ -46,7 +46,7 @@ workable_nn::workable_nn (const dna& DNA)  :
       graph_matrix[i][j] = b;
       get_mem(&cost_matrix[i][j], index, seq, sizeof(TYPE));
     }
-  }  
+  }
 }
 
 void workable_nn::get_mem (void* mem, unsigned& index, const char* seq, size_t size) {
@@ -61,7 +61,7 @@ void workable_nn::copy_mem (char* seq, unsigned& index, const void* mem, size_t 
 
 dna workable_nn::to_dna() {
   unsigned n_bytes = (std::pow(cost_matrix.size(), 2)  * (sizeof(TYPE) + sizeof(bool))) +
-                      sizeof(unsigned);
+  sizeof(unsigned);
 
   char* sequence = (char*)malloc(n_bytes);
   unsigned index = 0;
@@ -81,10 +81,10 @@ dna workable_nn::to_dna() {
 }
 
 workable_nn::workable_nn(const workable_nn &aux) :
-  cost_matrix (aux.cost_matrix),
-  input_neurons (aux.input_neurons),
-  output_neurons (aux.output_neurons),
-  graph_matrix (aux.graph_matrix)
+cost_matrix (aux.cost_matrix),
+input_neurons (aux.input_neurons),
+output_neurons (aux.output_neurons),
+graph_matrix (aux.graph_matrix)
 {}
 
 void workable_nn::operator=(const workable_nn &aux) {
@@ -184,10 +184,10 @@ void workable_nn::calculate(std::vector<double> &inputs, std::vector<double> &ou
 
 void workable_nn::print() const {
   for (auto& line : cost_matrix) {
-      for (auto& element : line)
-        printf("%5d", element);
-      std::cout << std::endl;
-    }
+    for (auto& element : line)
+      printf("%5d", element);
+    std::cout << std::endl;
+  }
 
   std::cout << "\n" << std::endl;
   std::cout << "Inputs" << std::endl;

@@ -4,6 +4,7 @@
 #include <math.h>
 #include <limits>
 #include <vector>
+#include <functional>
 #include <iostream>
 
 #include "dna.h"
@@ -39,10 +40,19 @@ private:
     v = v / std::numeric_limits<short>::max() ;
     return v;
   }
+
+
+  void iterate_avoiding_index (std::function<void(unsigned)> func, unsigned begin,
+                                unsigned index, unsigned end) {
+    for (unsigned k = begin; k < index; k++)
+      func(k);
+    for (unsigned k = index + 1; k < end; k++)
+      func(k);
+  }
 public:
   workable_nn () {}
   workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
-                                                                            unsigned ouput);
+               unsigned ouput);
 
   workable_nn (unsigned n_neurons, unsigned input, unsigned output) {
 

@@ -1,4 +1,3 @@
-
 #ifndef GENETICALGORITHM_H
 #define GENETICALGORITHM_H
 
@@ -29,10 +28,12 @@ private:
   std::vector <T> best_candidates;  // mejores candidatos de una generación
 
   std::function<T(T&, T&)> op_cross;
-  std::function<void(T&)> op_mutate;
+  std::function<void(T&, unsigned)> op_mutate;
   std::function<double(const T&)> op_evaluate;
 
-  unsigned population_size;          // tamaño de las poblaciones generadas
+  unsigned mutation_rate;
+
+  unsigned population_size;         // tamaño de las poblaciones generadas
   unsigned candidates_size;         // cantidad de individuos seleccionados
   unsigned ratio_cand_pobl;         // cantidad de copias de cada candidato
 
@@ -41,7 +42,7 @@ private:
     population.clear();
     population.resize(population_size);
 
-    // std::vector<std::future<void>> promises (candidates_size);
+    std::vector<std::future<void>> promises (candidates_size);
 
     ratio_cand_pobl = std::floor(double(population_size) / candidates_size);
 
@@ -51,26 +52,20 @@ private:
         population[(index * ratio_cand_pobl) + j] = best_candidates[index];
     });
 
-    for (unsigned i = 0; i < candidates_size; i++) {
-      async_function (i);
-      for (unsigned j = 0; j < ratio_cand_pobl; j++)
-        std::cout << (i * ratio_cand_pobl) + j << std::endl;
+    for (unsigned i = 0; i < candidates_size; i++)
+      promises[i] = std::async(async_function, i);
 
-    }
-    //promises[i] = std::async(async_function, i);
-
-    /*
     for (auto& promise : promises)
       promise.get();
-    */
 
     // conpensates the odd cases
-    if (population_size % candidates_size != 0)
-      population[population_size - 1] = best_candidates[0];
-/*
-    for (unsigned i = 0; i < population_size; i++)
-      population[i] = best_candidates[0];
-*/
+    unsigned rest = population_size % candidates_size;
+
+    if (rest > 0) {
+      unsigned index = candidates_size * ratio_cand_pobl;
+      for (unsigned i = 0; i < rest; i++)
+        population[index + i] = best_candidates[i];
+    }
   }
 
   // muta toda la población de forma concurrente
@@ -81,7 +76,7 @@ private:
 
     // función a aplicar sobre cada elemento
     auto async_function = ([&](unsigned index){
-      op_mutate(population[index]);
+      op_mutate(population[index], mutation_rate);
     });
 
     for (unsigned i = 0; i < population_size - 2; i++)
@@ -116,41 +111,45 @@ public:
    * @param operator_cross Función lambda que expecifica de qué manera han de cruzarse los genomas de individuos #T
    * @param operator_mutate Función lambda que expecifica de qué manera han de mutarse los genomas de individuos #T
    * @param operator_evalautor Función lambda que expecifica de qué manera han de compararse (función fitness) los genomas de individuos #T
-   * @param poblation_s Tamaño de la población generada en cada iteración por medio de cruces
+   * @param population_s Tamaño de la población generada en cada iteración por medio de cruces
    * @param candidates_s Tamaño de la muestra seleccionada por la función evaluadora.
    */
   explicit GeneticAlgorithm(
-      std::function<T(T&, T&)> operator_cross,
-      std::function<void(T&)> operator_mutate,
-      std::function<double(const T&)> operator_evaluator,
-      unsigned poblation_s,
-      unsigned candidates_s
-      ) :
+    std::function<T(T&, T&)> operator_cross,
+                            std::function<void(T&, unsigned)> operator_mutate,
+                            std::function<double(const T&)> operator_evaluator,
+                            unsigned population_s,
+                            unsigned candidates_s,
+                            unsigned mutation_r
+  ) :
 
-        op_cross (operator_cross),
-        op_mutate (operator_mutate),
-        op_evaluate (operator_evaluator),
+  op_cross (operator_cross),
+  op_mutate (operator_mutate),
+  op_evaluate (operator_evaluator),
 
-        population_size (poblation_s),
-        candidates_size (candidates_s)
-      {
-        std::srand(time(nullptr));
-        ratio_cand_pobl = std::round(double(population_size) / candidates_size);
-      }
+  population_size (population_s),
+  candidates_size (candidates_s),
+  mutation_rate (mutation_r)
+  {
+    std::srand(time(nullptr));
+    ratio_cand_pobl = std::round(double(population_size) / candidates_size);
+  }
 
-  void set_poblation_parameters (unsigned poblation_s, unsigned candidates_s) {
-    if (poblation_s > candidates_s) {
-      population_size = poblation_s;
+  void set_poblation_parameters (unsigned population_s, unsigned candidates_s,
+                                 unsigned mutation_r) {
+    mutation_rate = mutation_r;
+    if (population_s > candidates_s) {
+      population_size = population_s;
       candidates_size = candidates_s;
       ratio_cand_pobl = std::round(double(population_size) / candidates_size);
     }
   }
 
   /**
-   * @brief Avanza un paso en la simulación. El proceso a seguir es:
-   * Generar nueva población → mutarla → evaluarla
-   * @return
-   */
+  * @brief Avanza un paso en la simulación. El proceso a seguir es:
+  * Generar nueva población → mutarla → evaluarla
+  * @return
+  */
   bool step () {
     generate_next_population();
     mutate_poblation();
@@ -160,10 +159,10 @@ public:
   }
 
   /**
-   * @brief Avanza medio paso en la simulación (genera población y la muta)
-   * Posteriormente se debe llamar a #set_external_evaluations para realizar
-   * las dos últimas fases
-   */
+  * @brief Avanza medio paso en la simulación (genera población y la muta)
+  * Posteriormente se debe llamar a #set_external_evaluations para realizar
+  * las dos últimas fases
+  */
   void semi_step () {
     generate_next_population();
     mutate_poblation();
@@ -174,10 +173,10 @@ public:
   }
 
   /**
-   * @brief Establece una puntuación externa a cada elemento de la población y
-   * extrae los mejores candidatos.
-   * @param evaluations vector de puntuaciones
-   */
+  * @brief Establece una puntuación externa a cada elemento de la población y
+  * extrae los mejores candidatos.
+  * @param evaluations vector de puntuaciones
+  */
   void set_external_evaluations (std::vector<double> evaluations) {
     std::vector<std::pair<T, double>> aux (population_size);
     for (unsigned i = 0; i < population_size; i++)
@@ -199,11 +198,11 @@ public:
 
 
   /**
-   * @brief Establece la población inicial de la simulación. En caso de ser de un
-   * tamaño diferente al especificado en #GeneticAlgorithm se generan / rechazan
-   * individuos hasta hacerlo coincidir.
-   * @param i_poblation Población inicial
-   */
+  * @brief Establece la población inicial de la simulación. En caso de ser de un
+  * tamaño diferente al especificado en #GeneticAlgorithm se generan / rechazan
+  * individuos hasta hacerlo coincidir.
+  * @param i_poblation Población inicial
+  */
   void set_initial_poblation (std::vector<T>& i_poblation) {
     int diff_size = i_poblation.size() - candidates_size;
     if (diff_size > 0) {    // hay más candidatos de los que se requiere
@@ -216,8 +215,8 @@ public:
   }
 
   /**
-   * @brief Imprime los mejores candidatos junto a sus evaluaciones
-   */
+  * @brief Imprime los mejores candidatos junto a sus evaluaciones
+  */
   void print_best () {
     std::cout << "Mejores candidatos y sus puntuaciones \n";
 

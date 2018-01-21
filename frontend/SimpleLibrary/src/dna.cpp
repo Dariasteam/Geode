@@ -1,16 +1,25 @@
 #include "dna.h"
 
+#include <iostream>
+
 dna::~dna() {
   if (sequence != nullptr)
-    free (sequence);
+    delete[] sequence;
+  //free (sequence);
 }
 
-void dna::operator=(const dna &aux) {  
-  input_neurons = aux.input_neurons;
-  output_neurons = aux.output_neurons;
+void dna::operator=(const dna &aux) {
+  if (this != &aux) {
+    input_neurons = aux.input_neurons;
+    output_neurons = aux.output_neurons;
+    byte_sz = aux.byte_sz;
 
-  sequence = (char*)malloc(aux.byte_sz);
-  memcpy(sequence, aux.sequence, aux.byte_sz);
+    /*
+     *    if (sequence != nullptr)
+     *      delete[] sequence;
+     */
 
-  byte_sz = aux.byte_sz;
+    sequence = new char[aux.byte_sz];
+    memcpy(sequence, aux.sequence, aux.byte_sz);
+  }
 }
