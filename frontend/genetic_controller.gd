@@ -17,7 +17,7 @@ var neural_poblation
 var agents_death = 0
 var scores = []
 var agents_alive = []
-var poblation_size = 50
+var population_size = 50
 var n_neurons = 14
 
 var raw_matrixes = []
@@ -117,8 +117,8 @@ func _ready():
 	aux_agent.queue_free()
 	
 func start_simulation ():
-	statistic_plotter.clear()	
-	score_tree.set_n_agents(poblation_size)
+	statistic_plotter.clear()
+	score_tree.set_n_agents(population_size)
 	
 	simulating = true
 	genetic_connector.generate_initial_poblation(n_neurons, inputs, outputs)
@@ -175,7 +175,7 @@ func view_net_at(i):
 func set_genetic_parameters(p_s, c_s):
 	print (p_s, " ", c_s)
 	genetic_connector.set_genetic_parameters(p_s, c_s)
-	poblation_size = p_s
+	population_size = p_s
 	
 # ordena en base a el primer elemento del array, se usa para ordenar los arrays de
 # [puntuaciones, redes neuronales]

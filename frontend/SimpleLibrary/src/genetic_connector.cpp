@@ -13,6 +13,7 @@
 using namespace godot;
 
 dna cross (const dna& A, const dna& B) {
+
   unsigned a_size;
   unsigned b_size;
 
@@ -32,28 +33,7 @@ dna cross (const dna& A, const dna& B) {
 }
 
 double evaluate (const dna& DNA) {
-  workable_nn w (DNA);
 
-  std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
-  std::vector<double> output;
-  std::vector<double> input_a = { 1, 1, 1, 1};
-  std::vector<double> input_b = {-1,-1,-1,-1};
-
-  double v1 = 0;
-  double v2 = 0;
-
-  w.calculate(input_a, output);
-  for (auto& e : output)
-    v1 += e;
-
-  w.calculate(input_b, output);
-  for (auto& e : output)
-    v2 += e;
-
-  if ((v1 > 0 && v2 > 0) || (v1 < 0 && v2 < 0))
-    return fabs(fabs(v1) - v2) ;
-  else
-    return fabs(v1) + fabs(v2) ;
 }
 
 void mutate (dna& DNA) {

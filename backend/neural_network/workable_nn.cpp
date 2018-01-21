@@ -60,17 +60,19 @@ void workable_nn::copy_mem (char* seq, unsigned& index, const void* mem, size_t 
 }
 
 dna workable_nn::to_dna() {
-  unsigned n_bytes = (std::pow(cost_matrix.size(), 2)  * (sizeof(TYPE) + sizeof(bool))) +
+  unsigned matrix_size = cost_matrix.size();
+
+  unsigned n_bytes = (matrix_size * matrix_size * (sizeof(TYPE) + sizeof(bool))) +
                       sizeof(unsigned);
 
-  char* sequence = (char*)malloc(n_bytes);
+  char* sequence = new char[n_bytes];
   unsigned index = 0;
 
   unsigned c = cost_matrix.size();
   copy_mem(sequence, index, &c, sizeof(c));
 
-  for (unsigned i = 0; i < cost_matrix.size(); i++) {
-    for (unsigned j = 0; j < cost_matrix.size(); j++) {
+  for (unsigned i = 0; i < matrix_size; i++) {
+    for (unsigned j = 0; j < matrix_size; j++) {
       bool b = graph_matrix[i][j];
       copy_mem(sequence, index, &b, sizeof(bool));
       copy_mem(sequence, index, &cost_matrix[i][j], sizeof(TYPE));
@@ -184,10 +186,10 @@ void workable_nn::calculate(std::vector<double> &inputs, std::vector<double> &ou
 
 void workable_nn::print() const {
   for (auto& line : cost_matrix) {
-      for (auto& element : line)
-        printf("%5d", element);
-      std::cout << std::endl;
-    }
+    for (auto& element : line)
+      printf("%5d", element);
+    std::cout << std::endl;
+  }
 
   std::cout << "\n" << std::endl;
   std::cout << "Inputs" << std::endl;

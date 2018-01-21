@@ -10,7 +10,7 @@
 #include "neural_network/workable_nn.h"
 #include "genetic_algorithm/geneticalgorithm.h"
 
-#define N 20
+#define N 22
 
 /* Generador de números aleatorios para el grafo
  * */
@@ -62,7 +62,7 @@ double evaluate_q (const dna& DNA, std::vector<double> input) {
   return v;
 }
 
-dna cross (const dna& A, const dna& B) {
+dna cross (const dna& A, const dna& B) {  
   unsigned a_size;
   unsigned b_size;
 
@@ -72,7 +72,8 @@ dna cross (const dna& A, const dna& B) {
   unsigned final_size = (a_size / 2) + (b_size / 2);
   std::cout << a_size << " " << b_size << std::endl;
 
-  char* sequence = (char*)malloc((A.byte_sz / 2) + (B.byte_sz / 2));
+  char* sequence = new char[(A.byte_sz / 2) + (B.byte_sz / 2)];
+  //char* sequence = (char*)malloc((A.byte_sz / 2) + (B.byte_sz / 2));
 
   memcpy(sequence, A.sequence, (A.byte_sz / 2));
   memcpy(sequence + (A.byte_sz / 2), B.sequence + (B.byte_sz / 2), (B.byte_sz / 2));
@@ -84,10 +85,9 @@ dna cross (const dna& A, const dna& B) {
 double evaluate (const dna& DNA) {
   workable_nn w (DNA);
 
-  std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
   std::vector<double> output;
-  std::vector<double> input_a = { 1, 1, 1, 1};
-  std::vector<double> input_b = {-1,-1,-1,-1};
+  std::vector<double> input_a = { 1, 1, 1};
+  std::vector<double> input_b = {-1,-1,-1};
 
   double v1 = 0;
   double v2 = 0;
@@ -106,10 +106,10 @@ double evaluate (const dna& DNA) {
     return fabs(v1) + fabs(v2);
 }
 
-void mutate (dna& DNA) {
+void mutate (dna& DNA, unsigned mutation_rate) {
   unsigned first_index = DNA.byte_sz;
   for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
-    if (rand() % 50 < 1) {
+    if (rand() % mutation_rate < 1) {
       DNA.sequence[i] ^= 1;
       i+=sizeof(bool);
       DNA.sequence[i] ^= 1;
@@ -125,25 +125,6 @@ void mutate (dna& DNA) {
   }
 }
 
-void evaluate_current (dna DNA) {
-  evaluate_q(DNA, { 1, 1, 1, 1});
-  evaluate_q(DNA, {-1,-1,-1,-1});
-  evaluate_q(DNA, {-1, 1, 1,-1});
-  evaluate_q(DNA, { 1,-1,-1, 1});
-  evaluate_q(DNA, { 1,.1,.1, 1});
-  evaluate_q(DNA, {.1,.1,.1,.1});
-
-  // Evaluar qué peso está resultando más determinante
-
-  evaluate_q(DNA, { 1,.1,.1,.1});
-  evaluate_q(DNA, {.1, 1,.1,.1});
-  evaluate_q(DNA, {.1,.1, 1,.1});
-  evaluate_q(DNA, {.1,.1,.1, 1});
-
-  workable_nn w (DNA);
-  w.print();
-}
-
 int main(int argc, char **argv) {
   srand(time(nullptr));
 
@@ -153,31 +134,20 @@ int main(int argc, char **argv) {
   random_values_generator(v1);
   random_values_generator(v2);
 
-  workable_nn parent_1 (v1, 4, 1);
-  workable_nn parent_2 (v2, 4, 1);
+  workable_nn parent_1 (v1, 3, 1);
+  workable_nn parent_2 (v2, 3, 1);
 
   dna serialized_nn_1 = parent_1.to_dna();
   dna serialized_nn_2 = parent_2.to_dna();
 
-  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 15, 3);
+  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 50, 15, 10);
+  genetic.set_poblation_parameters(16,10,10);
   std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
   genetic.set_initial_poblation(initial_candidates); 
 
-  char input = 'a';
-  while (input != 'q') {
-    genetic.step();
-    /*
-    genetic.print_best();    
-    std::cout << "'e' para ver el estado actual\n" <<
-                 "'q' para salir\n" <<
-                 "[Enter] para continuar" << std::endl;
-    scanf("%c", &input);
-    if (input == 'e') {
-      evaluate_current (genetic.get_best_candidates()[0]);
-      scanf("%c", &input);
-    }
-    */
+  while (true) {
+    genetic.step();  
+    std::cout << "Next step" << std::endl;
   }
-  std::cout << "He terminado todos los pasos" << std::endl;    
   return 0;
 }

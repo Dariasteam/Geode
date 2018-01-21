@@ -56,9 +56,14 @@ struct dna {
     sequence (nullptr)
   {}
 
-  dna (const dna& DNA) {
-    operator =(DNA);
-  }
+  dna (const dna& DNA) :
+    input_neurons (DNA.input_neurons),
+    output_neurons (DNA.output_neurons),
+    byte_sz (DNA.byte_sz)
+    {
+      sequence = new char[DNA.byte_sz];
+      memcpy(sequence, DNA.sequence, DNA.byte_sz);
+    }
 
   dna (char* s, unsigned b, unsigned i, unsigned o) :
     sequence (s),
