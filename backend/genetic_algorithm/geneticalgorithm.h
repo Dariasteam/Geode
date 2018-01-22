@@ -24,8 +24,8 @@ template <class T>
  */
 class GeneticAlgorithm {
 private:
-  std::vector <T> population;        // población generada en cada iteración
-  std::vector <T> best_candidates;  // mejores candidatos de una generación
+  std::vector <T> population;       // population generated on each simualtion
+  std::vector <T> best_candidates;  // best candidates in a simulation
 
   std::function<T(T&, T&)> op_cross;
   std::function<void(T&, unsigned)> op_mutate;
@@ -33,11 +33,11 @@ private:
 
   unsigned mutation_rate;
 
-  unsigned population_size;         // tamaño de las poblaciones generadas
-  unsigned candidates_size;         // cantidad de individuos seleccionados
-  unsigned ratio_cand_pobl;         // cantidad de copias de cada candidato
+  unsigned population_size;
+  unsigned candidates_size;
+  unsigned ratio_cand_pobl;      // number of copies generated of each candidate
 
-  // Genera toda la población de forma concurrente
+  // Concurrently generates the population
   void generate_next_population () {
     population.clear();
     population.resize(population_size);
@@ -68,9 +68,9 @@ private:
     }
   }
 
-  // muta toda la población de forma concurrente
-  // Los dos mejores candidatos se vuelven a introducir sin mutaciones
-  // para no perder los avances
+  // Concurrently mutates all population
+  // Last best 2 candiadtes are also pushed without mutations to guarantee
+  // actual optimal solutions are not lost
   void mutate_poblation () {
     std::vector<std::future<void>> promises (population_size - 2);
 
@@ -89,7 +89,7 @@ private:
     population[population_size - 1] = best_candidates[1];
   }
 
-  // evalúa toda la población y la ordena en base a la función de fitness
+  // Evaluates all population and orders it based on the fitness function
   void evaluate_poblation () {
     auto comparator = [&](const T& A, const T& B) {
       return op_evaluate (A) > op_evaluate (B);
@@ -97,7 +97,7 @@ private:
     std::sort (population.begin(), population.end(), comparator);
   }
 
-  // copia los mejores elementos de la población al vector de candidatos
+  // Copies best individuals of the current population to the candidates vector
   void generate_next_candidates () {
     best_candidates.resize(0);
     std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));
@@ -135,7 +135,14 @@ public:
         ratio_cand_pobl = std::round(double(population_size) / candidates_size);
       }
 
-  void set_poblation_parameters (unsigned population_s, unsigned candidates_s,
+      /**
+      * @brief Adjust parameters of the simulation any time
+      *
+      * @param population_s p_population_s: population size
+      * @param candidates_s p_candidates_s: candidates size
+      * @param mutation_r p_mutation_r: mutation rate
+      */
+      void set_poblation_parameters (unsigned population_s, unsigned candidates_s,
                                  unsigned mutation_r) {
     mutation_rate = mutation_r;
     if (population_s > candidates_s) {
@@ -146,10 +153,11 @@ public:
   }
 
   /**
-   * @brief Avanza un paso en la simulación. El proceso a seguir es:
-   * Generar nueva población → mutarla → evaluarla
-   * @return
-   */
+  * @brief Simulates a complete generation. (Create population, mutate it, evaluate it, generate new one)
+  *
+  *
+  * @return currently always true
+  */
   bool step () {
     generate_next_population();
     mutate_poblation();
@@ -159,10 +167,11 @@ public:
   }
 
   /**
-   * @brief Avanza medio paso en la simulación (genera población y la muta)
-   * Posteriormente se debe llamar a #set_external_evaluations para realizar
-   * las dos últimas fases
-   */
+  * @brief Makes the simulation advance half step by generatin a new population
+  * and mutates it. #set_external_evaluations should be used to complete the
+  * iteration.
+  *
+  */
   void semi_step () {
     generate_next_population();
     mutate_poblation();
@@ -173,10 +182,12 @@ public:
   }
 
   /**
-   * @brief Establece una puntuación externa a cada elemento de la población y
-   * extrae los mejores candidatos.
-   * @param evaluations vector de puntuaciones
-   */
+  * @brief Sets a external evaluation for each individiual. Completes the second
+  * half of the iteration, initiated by #semi_step.
+  *
+  * @param evaluations p_evaluations: Should have the same size as the population.
+  * Each i element contains the score of the i individual from population.
+  */
   void set_external_evaluations (std::vector<double> evaluations) {
     std::vector<std::pair<T, double>> aux (population_size);
     for (unsigned i = 0; i < population_size; i++)
@@ -198,27 +209,29 @@ public:
 
 
   /**
-   * @brief Establece la población inicial de la simulación. En caso de ser de un
-   * tamaño diferente al especificado en #GeneticAlgorithm se generan / rechazan
-   * individuos hasta hacerlo coincidir.
-   * @param i_poblation Población inicial
-   */
-  void set_initial_poblation (std::vector<T>& i_poblation) {
-    int diff_size = i_poblation.size() - candidates_size;
+  * @brief Sets the initial population of the simulation. Automatically adjust
+  * the size to accomplish with the one seted in #GeneticAlgorithm or
+  * #set_poblation_parameters by copy / delete elements.
+  *
+  * @param i_population: population
+  */
+  void set_initial_poblation (std::vector<T>& i_population) {
+    int diff_size = i_population.size() - candidates_size;
     if (diff_size > 0) {    // hay más candidatos de los que se requiere
-      std::copy(i_poblation.begin(), i_poblation.end() - diff_size, std::back_inserter(best_candidates));
+      std::copy(i_population.begin(), i_population.end() - diff_size, std::back_inserter(best_candidates));
     } else {                // hay menos o igual candidatos de los que se requiere
-      best_candidates = i_poblation;
+      best_candidates = i_population;
       while (best_candidates.size() < candidates_size) // introducir candidatos aleatorios
-        best_candidates.emplace_back(i_poblation[std::rand() % i_poblation.size()]);
+        best_candidates.emplace_back(i_population[std::rand() % i_population.size()]);
     }
   }
 
+
   /**
-   * @brief Imprime los mejores candidatos junto a sus evaluaciones
-   */
+  * @brief Print the best candidates and its score
+  */
   void print_best () {
-    std::cout << "Mejores candidatos y sus puntuaciones \n";
+    std::cout << "Best candidates and score \n";
 
     for (auto& candidate : best_candidates) {
       std::cout << op_evaluate(candidate) << "\n";
