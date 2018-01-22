@@ -6,9 +6,9 @@
 #include <iostream>
 #include <functional>
 
-#include "dna.h"
-#include "geneticalgorithm.h"
-#include "workable_nn.h"
+#include "../../../backend/neural_network/dna.h"
+#include "../../../backend/genetic_algorithm/geneticalgorithm.h"
+#include "../../../backend/neural_network/workable_nn.h"
 
 using namespace godot;
 

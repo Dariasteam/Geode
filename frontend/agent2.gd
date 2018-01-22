@@ -30,13 +30,13 @@ func _physics_process(delta):
 
 	if ($Weapons/weapon.is_colliding()):
 		var collider = $Weapons/weapon.get_collider()
-		if (collider != null):
+		if (collider != null and collider != $RigidBody2D):
 			collider.get_parent().die_eated()
 			eat()
 
 	# Recoger todos los valores de los sensores
 	for item in $Raycast.get_children():
-		if (item.is_colliding()):
+		if (item.is_colliding() and item.get_collider() != $RigidBody2D):
 			var distance = item.get_collision_point().distance_to(item.global_position)
 
 			var mid_distance = item.cast_to.length() / 2

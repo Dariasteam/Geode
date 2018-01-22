@@ -32,6 +32,7 @@ max_lines_visible = -1
 
 position = Vector2( 430.497, 221.542 )
 script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 agent_scene = ExtResource( 2 )
 
 [node name="ScorePanel" type="Tree" parent="." index="2"]
@@ -334,7 +335,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 min_value = 4.0
-max_value = 100.0
+max_value = 500.0
 step = 1.0
 page = 0.0
 value = 50.0

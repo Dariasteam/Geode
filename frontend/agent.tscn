@@ -3,7 +3,7 @@
 [ext_resource path="res://agent.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 
-[node name="Controller" type="Node2D" index="0"]
+[node name="Controller" type="Node2D"]
 
 position = Vector2( 293.583, 285.483 )
 rotation = 3.14159
@@ -20,19 +20,12 @@ rotation = 3.14159
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
-[node name="Timer" type="Timer" parent="." index="1"]
-
-process_mode = 1
-wait_time = 0.01
-one_shot = true
-autostart = false
-
-[node name="RigidBody2D" type="RigidBody2D" parent="." index="2" groups=[
+[node name="RigidBody2D" type="RigidBody2D" parent="." index="1" groups=[
 "agent",
 ]]
 
-position = Vector2( -0.896179, 2.18491 )
-input_pickable = true
+position = Vector2( -0.89621, 2.18488 )
+input_pickable = false
 collision_layer = 0
 collision_mask = 1
 mode = 0
@@ -50,14 +43,22 @@ linear_velocity = Vector2( 0, 0 )
 linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = -1.0
-_sections_unfolded = [ "Collision", "Pickable" ]
+_sections_unfolded = [ "Collision", "Pickable", "Transform" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D" index="0"]
 
 visible = false
+scale = Vector2( 2, 2 )
 build_mode = 0
 polygon = PoolVector2Array( 22.688, 25.1927, 16.6802, 29.181, -14.8197, 29.1191, -20.8109, 24.6074, -20.7, -31.8925, -17.6941, -34.8866, 18.3058, -34.816, 22.798, -30.8071 )
-_sections_unfolded = [ "Transform", "Visibility" ]
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+
+[node name="Timer" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 0.01
+one_shot = true
+autostart = false
 
 [node name="Raycast" type="Node2D" parent="." index="3"]
 
@@ -109,8 +110,8 @@ cast_to = Vector2( 0, 30 )
 collision_mask = 2
 _sections_unfolded = [ "Transform", "Visibility", "Z" ]
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-
 [connection signal="body_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_entered"]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 

@@ -59,8 +59,7 @@ _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="AgentInstancer" parent="Node2D" index="1"]
 
-position = Vector2( -41.837, 431.405 )
-_sections_unfolded = [ "Transform" ]
+position = Vector2( -37.8726, 441.618 )
 
 [node name="ScorePanel" parent="Node2D" index="2"]
 
@@ -107,6 +106,7 @@ _sections_unfolded = [ "BBCode", "Hint", "Rect" ]
 
 [node name="Buttons" parent="Node2D" index="7"]
 
+editor/display_folded = true
 margin_left = 378.0
 margin_top = 1020.0
 margin_right = 418.0

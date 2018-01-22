@@ -55,6 +55,22 @@ public:
   workable_nn () {}
   workable_nn (std::vector<std::vector<std::pair<bool, TYPE>>> cost_matrix, unsigned input,
                                                                               unsigned ouput);
+
+  workable_nn (unsigned n_neurons, unsigned input, unsigned output) {
+
+      cost_matrix.resize(n_neurons);
+      graph_matrix.resize(n_neurons);
+
+      for (unsigned i = 0; i < n_neurons; i++) {
+        cost_matrix[i].resize(n_neurons);
+        graph_matrix[i].resize(n_neurons);
+        for (unsigned j = 0; j < n_neurons; j++) {
+          graph_matrix[i][j] = rand() % 1;
+          cost_matrix[i][j] = 1 + rand() % 10000;
+        }
+      }
+    }
+
   workable_nn (const workable_nn& aux);  
 
   /**
