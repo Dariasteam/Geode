@@ -6,7 +6,7 @@ symbol_prefix="godot_"
 
 [entry]
 
-X11.64="res://SimpleLibrary/lib/libgenetic.so"
+X11.64="res://GeneticNeuralNetworkLibrary/lib/libgenetic.so"
 
 [dependencies]
 

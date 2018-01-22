@@ -3,7 +3,7 @@
 [ext_resource path="res://controller.tscn" type="PackedScene" id=1]
 [ext_resource path="res://terrain.png" type="Texture" id=2]
 
-[node name="Map" type="Node2D"]
+[node name="Map" type="Node2D" index="0"]
 
 position = Vector2( 171.837, 19.5954 )
 _sections_unfolded = [ "Transform" ]
