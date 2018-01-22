@@ -61,10 +61,10 @@ private:
     // conpensates the odd cases
     unsigned rest = population_size % candidates_size;
 
-    if (rest > 0) {    
+    if (rest > 0) {
       unsigned index = candidates_size * ratio_cand_pobl;
       for (unsigned i = 0; i < rest; i++)
-        population[index + i] = best_candidates[i];      
+        population[index + i] = best_candidates[i];
     }
   }
 
@@ -127,9 +127,9 @@ public:
         op_mutate (operator_mutate),
         op_evaluate (operator_evaluator),
 
+        mutation_rate (mutation_r),
         population_size (population_s),
-        candidates_size (candidates_s),
-        mutation_rate (mutation_r)
+        candidates_size (candidates_s)
       {
         std::srand(time(nullptr));
         ratio_cand_pobl = std::round(double(population_size) / candidates_size);

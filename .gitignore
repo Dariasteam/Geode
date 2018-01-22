@@ -4,4 +4,6 @@ backend/Makefile
 example
 .qmake.stash
 *.o
-
+*~
+*.kdev4
+backend/neural_test

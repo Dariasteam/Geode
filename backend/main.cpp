@@ -12,8 +12,6 @@
 
 #define N 22
 
-/* Generador de números aleatorios para el grafo
- * */
 std::pair<bool, TYPE> random (unsigned prob) {
   if (std::rand() % 100 < prob)
     return {true, 100 - std::rand() % 200};
@@ -24,6 +22,15 @@ std::pair<bool, TYPE> random (unsigned prob) {
 /* Iterador genérico para aplicar a toda una fila una operación excepto
  * al elemento index. Desde begin hasta end
  * */
+
+/**
+ * @brief iterate_avoiding_index Generic iterator that aplies the same operation
+ * to all elements in a collection except the element at index. From begin to end.
+ * @param func Operation to apply
+ * @param begin
+ * @param index element for which operation won't be applied
+ * @param end
+ */
 void iterate_avoiding_index (std::function<void(unsigned)> func, unsigned begin,
                              unsigned index, unsigned end) {
   for (unsigned k = begin; k < index; k++)
@@ -32,8 +39,10 @@ void iterate_avoiding_index (std::function<void(unsigned)> func, unsigned begin,
     func(k);
 }
 
-/* Inicializa una matríz de costes
- * */
+/**
+ * @brief random_values_generator Initialize a graph/cost matrix
+ * @param cost matrix to be initialized
+ */
 void random_values_generator (std::vector<std::vector<std::pair<bool, TYPE>>>& cost) {
   cost.resize(N);
   for (unsigned i = 0; i < N; i++) {
@@ -45,23 +54,13 @@ void random_values_generator (std::vector<std::vector<std::pair<bool, TYPE>>>& c
   }
 }
 
-double evaluate_q (const dna& DNA, std::vector<double> input) {
-  workable_nn w (DNA);
-
-  std::vector<std::vector<TYPE>> matrix = w.get_cost_matrix();
-  std::vector<double> output;
-
-  w.calculate(input, output);
-  double v = 0;
-
-  for (auto& e : output) {
-    v += e;
-  }
-
-  std::cout << v << " \n";
-  return v;
-}
-
+/**
+ * @brief cross Cross operator for the genetic algorithm. Cuts both father
+ * and mother by half to create the son.
+ * @param A father
+ * @param B mother
+ * @return son
+ */
 dna cross (const dna& A, const dna& B) {  
   unsigned a_size;
   unsigned b_size;
@@ -72,8 +71,7 @@ dna cross (const dna& A, const dna& B) {
   unsigned final_size = (a_size / 2) + (b_size / 2);
   std::cout << a_size << " " << b_size << std::endl;
 
-  char* sequence = new char[(A.byte_sz / 2) + (B.byte_sz / 2)];
-  //char* sequence = (char*)malloc((A.byte_sz / 2) + (B.byte_sz / 2));
+  char* sequence = new char[(A.byte_sz / 2) + (B.byte_sz / 2)];  
 
   memcpy(sequence, A.sequence, (A.byte_sz / 2));
   memcpy(sequence + (A.byte_sz / 2), B.sequence + (B.byte_sz / 2), (B.byte_sz / 2));
@@ -82,6 +80,12 @@ dna cross (const dna& A, const dna& B) {
   return {sequence, A.byte_sz, A.input_neurons, A.output_neurons};
 }
 
+/**
+ * @brief evaluate_q Evaluator for the genetic algorithm. Fitness function is
+ * the dsitance between the output values when the inputs are 1,1,1 and -1,-1,-1.
+ * @param DNA dna to create the neural network.
+ * @return fitness values.
+ */
 double evaluate (const dna& DNA) {
   workable_nn w (DNA);
 
@@ -106,6 +110,11 @@ double evaluate (const dna& DNA) {
     return fabs(v1) + fabs(v2);
 }
 
+/**
+ * @brief mutate Mutate operator for the genetic algorithm.
+ * @param DNA dna to be mutated.
+ * @param mutation_rate probability of changing a bit between [100,1]
+ */
 void mutate (dna& DNA, unsigned mutation_rate) {
   unsigned first_index = DNA.byte_sz;
   for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {

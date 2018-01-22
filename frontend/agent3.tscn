@@ -1,116 +1,516 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://agent.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[sub_resource type="CubeMesh" id=1]
 
-[node name="Controller" type="Node2D" index="0"]
+size = Vector3( 2, 2, 2 )
+subdivide_width = 0
+subdivide_height = 0
+subdivide_depth = 0
 
-position = Vector2( 293.583, 285.483 )
-rotation = 3.14159
-scale = Vector2( 2, 2 )
-script = ExtResource( 1 )
+[sub_resource type="BoxShape" id=2]
+
+extents = Vector3( 1, 1, 1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Body" type="MeshInstance" parent="." index="0"]
+
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
 _sections_unfolded = [ "Transform" ]
-inputs = 3
-outputs = 2
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="StaticBody" type="StaticBody" parent="Body" index="0"]
 
-position = Vector2( 0, -2 )
-rotation = 3.14159
-texture = ExtResource( 2 )
-_sections_unfolded = [ "Material", "Transform", "Visibility" ]
-
-[node name="Timer" type="Timer" parent="." index="1"]
-
-process_mode = 1
-wait_time = 0.01
-one_shot = true
-autostart = false
-
-[node name="RigidBody2D" type="RigidBody2D" parent="." index="2" groups=[
-"agent",
-]]
-
-position = Vector2( -0.896179, 2.18491 )
-input_pickable = true
-collision_layer = 0
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
 collision_mask = 1
-mode = 0
-mass = 1.02041e-05
 friction = 1.0
 bounce = 0.0
-gravity_scale = 0.0
-custom_integrator = false
-continuous_cd = 0
-contacts_reported = 1
-contact_monitor = true
-sleeping = false
-can_sleep = true
-linear_velocity = Vector2( 0, 0 )
-linear_damp = -1.0
-angular_velocity = 0.0
-angular_damp = -1.0
-_sections_unfolded = [ "Collision", "Pickable" ]
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D" index="0"]
+[node name="CollisionShape" type="CollisionShape" parent="Body/StaticBody" index="0"]
 
-visible = false
-build_mode = 0
-polygon = PoolVector2Array( 22.688, 25.1927, 16.6802, 29.181, -14.8197, 29.1191, -20.8109, 24.6074, -20.7, -31.8925, -17.6941, -34.8866, 18.3058, -34.816, 22.798, -30.8071 )
-_sections_unfolded = [ "Transform", "Visibility" ]
+shape = SubResource( 2 )
+disabled = false
 
-[node name="Raycast" type="Node2D" parent="." index="3"]
+[node name="Leg1" type="Spatial" parent="." index="1"]
 
-[node name="ray_a" type="RayCast2D" parent="Raycast" index="0"]
+editor/display_folded = true
 
-modulate = Color( 0, 1, 1, 1 )
-position = Vector2( 17.3371, 27.7389 )
-rotation = -0.698132
-scale = Vector2( 2, 1 )
-enabled = true
-exclude_parent = true
-cast_to = Vector2( 0, 50 )
+[node name="Shoulder" type="HingeJoint" parent="Leg1" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.958773, 0, 0.514015 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
+
+[node name="First" type="MeshInstance" parent="Leg1/Shoulder" index="0"]
+
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg1/Shoulder/First" index="0"]
+
+editor/display_folded = true
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
 collision_mask = 1
-_sections_unfolded = [ "Transform", "Visibility", "Z" ]
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="ray_b" type="RayCast2D" parent="Raycast" index="1"]
+[node name="CollisionShape" type="CollisionShape" parent="Leg1/Shoulder/First/StaticBody" index="0"]
 
-position = Vector2( 0, 32 )
-scale = Vector2( 2, 1 )
-enabled = true
-exclude_parent = true
-cast_to = Vector2( 0, 50 )
+shape = SubResource( 2 )
+disabled = false
+
+[node name="Arm" type="HingeJoint" parent="Leg1/Shoulder/First" index="1"]
+
+transform = Transform( 0.0167162, 0, 2.49994, 0, 10, 0, -9.99978, 0, 0.0668647, 1.35922, 0, 0.830126 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
+
+[node name="First" type="MeshInstance" parent="Leg1/Shoulder/First/Arm" index="0"]
+
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg1/Shoulder/First/Arm/First" index="0"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
 collision_mask = 1
-_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="ray_c" type="RayCast2D" parent="Raycast" index="2"]
+[node name="CollisionShape" type="CollisionShape" parent="Leg1/Shoulder/First/Arm/First/StaticBody" index="0"]
 
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( -17, 27 )
-rotation = 0.698132
-scale = Vector2( 2, 1 )
-enabled = true
-exclude_parent = true
-cast_to = Vector2( 0, 50 )
+shape = SubResource( 2 )
+disabled = false
+
+[node name="Leg3" type="Spatial" parent="." index="2"]
+
+editor/display_folded = true
+transform = Transform( -0.999998, 0, 0.00208154, 0, 1, 0, -0.00208154, 0, -0.999998, 0.015325, 0, 0.00184818 )
+
+[node name="Shoulder" type="HingeJoint" parent="Leg3" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.958773, 0, 0.514015 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
+
+[node name="First" type="MeshInstance" parent="Leg3/Shoulder" index="0"]
+
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg3/Shoulder/First" index="0"]
+
+editor/display_folded = true
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
 collision_mask = 1
-_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="Weapons" type="Node2D" parent="." index="4"]
+[node name="CollisionShape" type="CollisionShape" parent="Leg3/Shoulder/First/StaticBody" index="0"]
 
-visible = false
+shape = SubResource( 2 )
+disabled = false
 
-[node name="weapon" type="RayCast2D" parent="Weapons" index="0"]
+[node name="Arm" type="HingeJoint" parent="Leg3/Shoulder/First" index="1"]
 
-visible = false
-position = Vector2( 0, 60 )
-enabled = false
-exclude_parent = true
-cast_to = Vector2( 0, 30 )
-collision_mask = 2
-_sections_unfolded = [ "Transform", "Visibility", "Z" ]
+transform = Transform( 0.0167162, 0, 2.49994, 0, 10, 0, -9.99978, 0, 0.0668647, 1.35922, 0, 0.830126 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[node name="First" type="MeshInstance" parent="Leg3/Shoulder/First/Arm" index="0"]
 
-[connection signal="body_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_entered"]
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg3/Shoulder/First/Arm/First" index="0"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Leg3/Shoulder/First/Arm/First/StaticBody" index="0"]
+
+shape = SubResource( 2 )
+disabled = false
+
+[node name="Leg2" type="Spatial" parent="." index="3"]
+
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77578, 0, 0 )
+
+[node name="Shoulder" type="HingeJoint" parent="Leg2" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.958773, 0, 0.514015 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
+
+[node name="First" type="MeshInstance" parent="Leg2/Shoulder" index="0"]
+
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg2/Shoulder/First" index="0"]
+
+editor/display_folded = true
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Leg2/Shoulder/First/StaticBody" index="0"]
+
+shape = SubResource( 2 )
+disabled = false
+
+[node name="Arm" type="HingeJoint" parent="Leg2/Shoulder/First" index="1"]
+
+transform = Transform( 0.0167162, 0, 2.49994, 0, 10, 0, -9.99978, 0, 0.0668647, 1.35922, 0, 0.830126 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
+
+[node name="First" type="MeshInstance" parent="Leg2/Shoulder/First/Arm" index="0"]
+
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg2/Shoulder/First/Arm/First" index="0"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Leg2/Shoulder/First/Arm/First/StaticBody" index="0"]
+
+shape = SubResource( 2 )
+disabled = false
+
+[node name="Leg4" type="Spatial" parent="." index="4"]
+
+editor/display_folded = true
+transform = Transform( -0.999998, 0, 0.00208154, 0, 1, 0, -0.00208154, 0, -0.999998, -1.76045, 0, -0.00184818 )
+
+[node name="Shoulder" type="HingeJoint" parent="Leg4" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.958773, 0, 0.514015 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
+
+[node name="First" type="MeshInstance" parent="Leg4/Shoulder" index="0"]
+
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg4/Shoulder/First" index="0"]
+
+editor/display_folded = true
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Leg4/Shoulder/First/StaticBody" index="0"]
+
+shape = SubResource( 2 )
+disabled = false
+
+[node name="Arm" type="HingeJoint" parent="Leg4/Shoulder/First" index="1"]
+
+transform = Transform( 0.0167162, 0, 2.49994, 0, 10, 0, -9.99978, 0, 0.0668647, 1.35922, 0, 0.830126 )
+nodes/node_a = NodePath("")
+nodes/node_b = NodePath("")
+solver/priority = 1
+collision/exclude_nodes = true
+params/bias = 0.3
+angular_limit/enable = false
+angular_limit/upper = 90.0
+angular_limit/lower = -90.0
+angular_limit/bias = 0.3
+angular_limit/softness = 0.9
+angular_limit/relaxation = 1.0
+motor/enable = false
+motor/target_velocity = 1.0
+motor/max_impulse = 1.0
+_sections_unfolded = [ "motor" ]
+
+[node name="First" type="MeshInstance" parent="Leg4/Shoulder/First/Arm" index="0"]
+
+transform = Transform( 0.00267459, 0, -0.0999978, 0, 0.1, 0, 0.399991, 0, 0.000668647, 0.0793754, 0, 0.362869 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="Leg4/Shoulder/First/Arm/First" index="0"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Leg4/Shoulder/First/Arm/First/StaticBody" index="0"]
+
+shape = SubResource( 2 )
+disabled = false
+
+[node name="DirectionalLight" type="DirectionalLight" parent="." index="5"]
+
+transform = Transform( 0.746988, 0, 0.664837, -0.49524, 0.667172, 0.556434, -0.443561, -0.744904, 0.49837, 0, 0, 0 )
+layers = 1
+light_color = Color( 1, 1, 1, 1 )
+light_energy = 1.0
+light_indirect_energy = 1.0
+light_negative = false
+light_specular = 0.5
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.1
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.1
+directional_shadow_split_2 = 0.2
+directional_shadow_split_3 = 0.5
+directional_shadow_blend_splits = false
+directional_shadow_normal_bias = 0.8
+directional_shadow_bias_split_scale = 0.25
+directional_shadow_depth_range = 0
+directional_shadow_max_distance = 200.0
 
 

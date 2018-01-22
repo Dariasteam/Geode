@@ -22,8 +22,6 @@ workable_nn::workable_nn(std::vector<std::vector<std::pair<bool, TYPE> > > cost,
   }
 }
 
-/* Construye una red a partir de una adn
- * */
 workable_nn::workable_nn (const dna& DNA)  :
   input_neurons (DNA.input_neurons),
   output_neurons (DNA.output_neurons)

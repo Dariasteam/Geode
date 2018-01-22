@@ -2,31 +2,32 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/terrain.png-84a626877af7de08ecf24965bda52835.stex"
+path.s3tc="res://.import/terrain.png-84a626877af7de08ecf24965bda52835.s3tc.stex"
+path.etc2="res://.import/terrain.png-84a626877af7de08ecf24965bda52835.etc2.stex"
 
 [deps]
 
 source_file="res://terrain.png"
 source_md5="639c7b3d55d3af46b33a754ad5f9bc51"
 
-dest_files=[ "res://.import/terrain.png-84a626877af7de08ecf24965bda52835.stex" ]
-dest_md5="bbfcaa585777ad8be3848ddf089c2efd"
+dest_files=[ "res://.import/terrain.png-84a626877af7de08ecf24965bda52835.s3tc.stex", "res://.import/terrain.png-84a626877af7de08ecf24965bda52835.etc2.stex" ]
+dest_md5="fc235f85ee1dc857044eae2c43e43ddd"
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
-compress/normal_map=0
+compress/normal_map=2
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
-flags/srgb=2
-process/fix_alpha_border=true
+flags/srgb=1
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
