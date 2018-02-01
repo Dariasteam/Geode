@@ -46,7 +46,11 @@ concurrent_neural_network::concurrent_neural_network(
 
 concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
                                                      unsigned input,
-                                                     unsigned output) {
+                                                     unsigned output) :
+  n_inputs (input),
+  n_outputs (output)
+
+  {
   cost_matrix.resize(n_neurons);
   graph_matrix.resize(n_neurons);
 
@@ -55,7 +59,7 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
     graph_matrix[i].resize(n_neurons);
     for (unsigned j = 0; j < n_neurons; j++) {
       graph_matrix[i][j] = rand() % 1;
-      cost_matrix[i][j] = 1 + rand() % 10000;
+      cost_matrix[i][j] = 1000 - rand() % 2000;
     }
   }
 }
@@ -89,11 +93,11 @@ void concurrent_neural_network::build_from_matrixes() {
 
   // regular neurons
   for (unsigned i = 0; i < size - n_outputs; i++)
-    neurons[i] = new neuron();  
+    neurons[i] = new neuron();
 
   // output neurons (can check no inputs)
   for (unsigned i = size - n_outputs; i < size; i++)
-    neurons[i] = new output_neuron();  
+    neurons[i] = new output_neuron();
 
   // Generate the net
   for (unsigned i = 0; i < size; i++) {
@@ -136,10 +140,10 @@ void concurrent_neural_network::build_from_matrixes() {
 concurrent_neural_network::concurrent_neural_network (const dna& DNA)  :
   n_inputs (DNA.input_neurons),
   n_outputs (DNA.output_neurons)
-{  
+{
 
   if (n_outputs > 30)
-    std::cout << "asd" << std::endl;
+    std::cout << "Error máximo supremo" << std::endl;
 
   unsigned index = 0;
   const char* seq = DNA.sequence;
@@ -159,10 +163,10 @@ concurrent_neural_network::concurrent_neural_network (const dna& DNA)  :
       graph_matrix[i][j] = b;
       get_mem(&cost_matrix[i][j], index, seq, sizeof(TYPE));
     }
-  }  
+  }
 
-  optimize();  
-  build_from_matrixes();    
+  optimize();
+  build_from_matrixes();
 }
 
 void concurrent_neural_network::get_mem (void* mem, unsigned& index, const char* seq, size_t size) {
@@ -177,10 +181,10 @@ void concurrent_neural_network::copy_mem (char* seq, unsigned& index, const void
 
 
 dna concurrent_neural_network::to_dna() {
-  unsigned matrix_size = cost_matrix.size();  
+  unsigned matrix_size = cost_matrix.size();
 
   unsigned n_bytes = (matrix_size * matrix_size * (sizeof(TYPE) + sizeof(bool))) +
-                      sizeof(unsigned);  
+                      sizeof(unsigned);
 
   char* sequence = new char[n_bytes];
   unsigned index = 0;

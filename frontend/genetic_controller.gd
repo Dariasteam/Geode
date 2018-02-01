@@ -54,12 +54,8 @@ func generate_poblation(raw_poblation):
 
 # Instancia agentes y comienza una simulación con ellos
 func start_single_simulation():	
-	print ("asd")
-	var raw_poblation = genetic_connector.get_poblation()
-	print ("b")
+	var raw_poblation = genetic_connector.get_poblation() # TODO
 	neural_poblation = generate_poblation(raw_poblation)
-	
-	print ("asd")
 	
 	scores.resize(neural_poblation.size())	
 		
@@ -71,7 +67,7 @@ func start_single_simulation():
 		aux_agent.set_neural_network(neural_poblation[i], i, agent_lifetime)
 		aux_agent.connect("dead",self,"agent_inform_death")
 		agents_alive.push_back(aux_agent)
-		add_child(aux_agent)	
+		add_child(aux_agent)
 		
 	neural_poblation.clear()
 	
@@ -122,12 +118,14 @@ func _ready():
 	
 func start_simulation ():	
 	statistic_plotter.clear()	
+	
 	score_tree.set_n_agents(population_size)	
 	
 	simulating = true	
-	genetic_connector.generate_initial_poblation(n_neurons, inputs, outputs)	
-	genetic_connector.semi_step();	# cruza y muta
 	
+	genetic_connector.generate_initial_poblation(n_neurons, inputs, outputs)
+	print (n_neurons)
+	genetic_connector.semi_step();	# cruza y muta		
 	
 	var text = str("Generation: ", "%2d" % 0, "\nBest score: ", "%2.3f" % 0, "\nSince generation: ", "%2d" %0)		
 	text_label.set_text(text)	

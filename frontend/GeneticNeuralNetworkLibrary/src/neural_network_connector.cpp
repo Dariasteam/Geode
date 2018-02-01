@@ -30,9 +30,8 @@ private:
         vec[i][j] = std::make_pair<bool, TYPE> (row_graph[j], row_cost[j]);
       }
     }
-
     return vec;
-                                                                }
+}
 
 public:
 

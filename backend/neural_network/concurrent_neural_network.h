@@ -40,7 +40,7 @@
  * @brief Representa una red neuronal en formato matriz de costes.
  */
 class concurrent_neural_network {
-private:  
+private:
   /* Matriz de costes que representa para cada elemento ij el peso de un
    * axón que conecte la neurona i con la j o en el caso de i = j el umbral de la neurona. */
   std::vector<std::vector<TYPE>> cost_matrix;
@@ -169,7 +169,7 @@ private:
     for (unsigned k = index + 1; k < end; k++)
       func(k);
   }
-public:  
+public:
   explicit concurrent_neural_network (const std::vector<std::vector<std::pair<bool, TYPE>>>& cost,
                              unsigned inputs, unsigned ouputs);
 

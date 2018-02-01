@@ -95,7 +95,7 @@ public:
   GeneticConnector() :
   genetic (cross, mutate, evaluate, 50, 10, 5)
   {
-    Godot::print("Algoritmo genético construido");
+    Godot::print("Genetic algorithm built");
   }
 
   void semi_step (void) {
@@ -119,7 +119,7 @@ public:
   }
 
   void generate_initial_population (unsigned n_neurons, unsigned n_inputs,
-                                   unsigned n_outputs) {
+                                    unsigned n_outputs) {
     concurrent_neural_network parent_1 (n_neurons, n_inputs, n_outputs);
     concurrent_neural_network parent_2 (n_neurons, n_inputs, n_outputs);
 

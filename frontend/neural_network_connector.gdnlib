@@ -6,7 +6,7 @@ symbol_prefix="godot_"
 
 [entry]
 
-X11.64="res://GeneticNeuralNetworkLibrary/lib/lbneural.so"
+X11.64="res://GeneticNeuralNetworkLibrary/lib/libneural.so"
 
 [dependencies]
 
