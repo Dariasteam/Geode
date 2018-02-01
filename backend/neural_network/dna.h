@@ -52,7 +52,7 @@ struct dna {
    */
   unsigned output_neurons;
 
-  dna () :
+  explicit dna () :
     sequence (nullptr)
   {}
 
@@ -66,11 +66,13 @@ struct dna {
     }
 
   dna (char* s, unsigned b, unsigned i, unsigned o) :
-    sequence (s),
     byte_sz (b),
     input_neurons (i),
     output_neurons (o)
-  {}
+  {
+    sequence = new char[b];
+    memcpy(sequence, s, b);
+  }
 
   ~dna ();
   void operator= (const dna& aux);

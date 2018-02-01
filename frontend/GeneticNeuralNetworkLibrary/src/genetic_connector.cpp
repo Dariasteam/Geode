@@ -8,7 +8,7 @@
 
 #include "../../../backend/neural_network/dna.h"
 #include "../../../backend/genetic_algorithm/geneticalgorithm.h"
-#include "../../../backend/neural_network/workable_nn.h"
+#include "../../../backend/neural_network/concurrent_neural_network.h"
 
 using namespace godot;
 
@@ -37,21 +37,24 @@ double evaluate (const dna& DNA) {
 }
 
 void mutate (dna& DNA, unsigned mutation_rate) {
-  unsigned first_index = DNA.byte_sz;
-  for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
+  unsigned first_index = sizeof(unsigned);
+  while (first_index < DNA.byte_sz) {
+    // MUTATE GRAPH MATRIX
     if (rand() % 100 < mutation_rate) {
-      DNA.sequence[i] ^= 1;
-      i+=sizeof(bool);
-      DNA.sequence[i] ^= 1;
+      DNA.sequence[first_index] ^= 1;
+    }
+    first_index+=sizeof(bool);
+
+    // MUTATE COST MATRIX
+    if (rand() % 100 < mutation_rate) {
       for (unsigned j = 0; j < sizeof(TYPE); j++) {
         for (unsigned k = 0; k < 8; k++) {
-          if (rand() % 8 < 1)
-            DNA.sequence[i+k] ^= 1 << k;
+          if (rand() % 2 < 1)
+            DNA.sequence[first_index] ^= 1 << k;
         }
       }
-    } else {
-      i+=sizeof(bool);
     }
+    first_index+=sizeof(TYPE);
   }
 }
 
@@ -99,10 +102,10 @@ public:
     genetic.semi_step();
   }
 
-  void set_genetic_parameters (unsigned poblation_size, unsigned candidates_size,
+  void set_genetic_parameters (unsigned population_size, unsigned candidates_size,
                                unsigned mutation_rate
   ) {
-    genetic.set_poblation_parameters (poblation_size, candidates_size, mutation_rate);
+    genetic.set_population_parameters (population_size, candidates_size, mutation_rate);
   }
 
   void set_evaluations (Array a_evaluations) {
@@ -115,45 +118,45 @@ public:
     genetic.set_external_evaluations(evaluations);
   }
 
-  void generate_initial_poblation (unsigned n_neurons, unsigned n_inputs,
+  void generate_initial_population (unsigned n_neurons, unsigned n_inputs,
                                    unsigned n_outputs) {
-    workable_nn parent_1 (n_neurons, n_inputs, n_outputs);
-    workable_nn parent_2 (n_neurons, n_inputs, n_outputs);
+    concurrent_neural_network parent_1 (n_neurons, n_inputs, n_outputs);
+    concurrent_neural_network parent_2 (n_neurons, n_inputs, n_outputs);
 
     dna serialized_nn_1 = parent_1.to_dna();
     dna serialized_nn_2 = parent_2.to_dna();
 
     std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
-    genetic.set_initial_poblation(initial_candidates);
-    Godot::print ("Población inicial generada");
+    genetic.set_initial_population(initial_candidates);
   }
 
-  Array get_poblation () {
-    Array a_poblation;
-    std::vector<dna> poblation = genetic.get_poblation();
+  Array get_population () {
+    Array a_population;
+    std::vector<dna> population = genetic.get_population();
 
-    unsigned size = poblation.size();
+    unsigned size = population.size();
 
     // generar individuos en forma de red neuronal
     for (unsigned i = 0; i < size; i++) {
       Array a_cost;
       Array a_graph;
-      workable_nn aux_nn (poblation[i]);
+
+      concurrent_neural_network aux_nn (population[i]);
 
       auto v1 = aux_nn.get_cost_matrix ();
       auto v2 = aux_nn.get_graph_matrix ();
 
-      a_poblation.push_back(matrix_graph_to_array (v2));
-      a_poblation.push_back(matrix_cost_to_array (v1));
+      a_population.push_back(matrix_graph_to_array (v2));
+      a_population.push_back(matrix_cost_to_array (v1));
     }
-    return a_poblation;
+    return a_population;
   }
 
   static void _register_methods() {
     register_method("semi_step",  &GeneticConnector::semi_step);
-    register_method("get_poblation",  &GeneticConnector::get_poblation);
+    register_method("get_poblation",  &GeneticConnector::get_population);
     register_method("set_evaluations", &GeneticConnector::set_evaluations);
-    register_method("generate_initial_poblation",&GeneticConnector::generate_initial_poblation);
+    register_method("generate_initial_poblation",&GeneticConnector::generate_initial_population);
     register_method("set_genetic_parameters",&GeneticConnector::set_genetic_parameters);
 
     /**

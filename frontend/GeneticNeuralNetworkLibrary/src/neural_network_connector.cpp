@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "../../../backend/neural_network/dna.h"
-#include "../../../backend/neural_network/workable_nn.h"
+#include "../../../backend/neural_network/concurrent_neural_network.h"
 
 using namespace godot;
 
@@ -15,7 +15,7 @@ class NeuralNetworkConnector : public GodotScript<Reference> {
   GODOT_CLASS(NeuralNetworkConnector);
 private:
 
-  workable_nn neural_network;
+  concurrent_neural_network* neural_network;
 
   // Genera el array de la forma adecuada para la red neuronal
   std::vector<std::vector<std::pair<bool, TYPE>>> merge_arrays (Array& a_graph,
@@ -36,14 +36,12 @@ private:
 
 public:
 
-  NeuralNetworkConnector() {
-    //Godot::print("Red neuronal construida");
-  }
+  NeuralNetworkConnector() {}
 
   // Establece el contenido inicial de la red neuronal
   void set_content (Array a_graph, Array a_cost, unsigned inputs, unsigned outputs) {
     auto vec = merge_arrays (a_graph, a_cost);
-    neural_network = workable_nn (vec, inputs, outputs);
+    neural_network = new concurrent_neural_network (vec, inputs, outputs);
   }
 
   // Devuelve la salida de la red neuronal para la entrada dada
@@ -56,7 +54,7 @@ public:
     for (unsigned i = 0; i < i_size; i++)
       inputs[i] = a_inputs[i];
 
-    neural_network.calculate (inputs, outputs);
+    neural_network->calculate (inputs, outputs);
 
     Array a_outputs;
     unsigned o_size = outputs.size();

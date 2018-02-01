@@ -106,7 +106,6 @@ _sections_unfolded = [ "BBCode", "Hint", "Rect" ]
 
 [node name="Buttons" parent="Node2D" index="7"]
 
-editor/display_folded = true
 margin_left = 378.0
 margin_top = 1020.0
 margin_right = 418.0

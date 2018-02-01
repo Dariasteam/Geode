@@ -38,8 +38,8 @@ private:
   unsigned ratio_cand_pobl;      // number of copies generated of each candidate
 
   // Concurrently generates the population
-  void generate_next_population () {
-    population.clear();
+  void generate_next_population () {        
+    //population.clear();
     population.resize(population_size);
 
     std::vector<std::future<void>> promises (candidates_size);
@@ -63,15 +63,16 @@ private:
 
     if (rest > 0) {
       unsigned index = candidates_size * ratio_cand_pobl;
+
       for (unsigned i = 0; i < rest; i++)
         population[index + i] = best_candidates[i];
     }
   }
 
   // Concurrently mutates all population
-  // Last best 2 candiadtes are also pushed without mutations to guarantee
+  // Last best 2 candidates are also pushed without mutations to guarantee
   // actual optimal solutions are not lost
-  void mutate_poblation () {
+  void mutate_population () {
     std::vector<std::future<void>> promises (population_size - 2);
 
     // función a aplicar sobre cada elemento
@@ -90,16 +91,16 @@ private:
   }
 
   // Evaluates all population and orders it based on the fitness function
-  void evaluate_poblation () {
+  void evaluate_population () {
     auto comparator = [&](const T& A, const T& B) {
       return op_evaluate (A) > op_evaluate (B);
     };
-    std::sort (population.begin(), population.end(), comparator);
+    //std::sort (population.begin(), population.end(), std::ref(comparator));
   }
 
-  // Copies best individuals of the current population to the candidates vector
+  // Copy best individuals of the current population to the candidates vector
   void generate_next_candidates () {
-    best_candidates.resize(0);
+    best_candidates.clear();
     std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));
   }
 
@@ -135,15 +136,15 @@ public:
         ratio_cand_pobl = std::round(double(population_size) / candidates_size);
       }
 
-      /**
-      * @brief Adjust parameters of the simulation any time
-      *
-      * @param population_s p_population_s: population size
-      * @param candidates_s p_candidates_s: candidates size
-      * @param mutation_r p_mutation_r: mutation rate
-      */
-      void set_poblation_parameters (unsigned population_s, unsigned candidates_s,
-                                 unsigned mutation_r) {
+  /**
+  * @brief Adjust parameters of the simulation any time
+  *
+  * @param population_s p_population_s: population size
+  * @param candidates_s p_candidates_s: candidates size
+  * @param mutation_r p_mutation_r: mutation rate
+  */
+  void set_population_parameters (unsigned population_s, unsigned candidates_s,
+                                  unsigned mutation_r) {
     mutation_rate = mutation_r;
     if (population_s > candidates_s) {
       population_size = population_s;
@@ -160,24 +161,24 @@ public:
   */
   bool step () {
     generate_next_population();
-    mutate_poblation();
-    evaluate_poblation();
+    mutate_population();
+    evaluate_population();
     generate_next_candidates();
     return true;
   }
 
   /**
   * @brief Makes the simulation advance half step by generatin a new population
-  * and mutates it. #set_external_evaluations should be used to complete the
+  * and mutate it. #set_external_evaluations should be used to complete the
   * iteration.
   *
   */
   void semi_step () {
     generate_next_population();
-    mutate_poblation();
+    mutate_population();
   }
 
-  std::vector<T> get_poblation () {
+  std::vector<T> get_population () {
     return population;
   }
 
@@ -215,14 +216,17 @@ public:
   *
   * @param i_population: population
   */
-  void set_initial_poblation (std::vector<T>& i_population) {
+  void set_initial_population (const std::vector<T>& i_population) {
     int diff_size = i_population.size() - candidates_size;
-    if (diff_size > 0) {    // hay más candidatos de los que se requiere
-      std::copy(i_population.begin(), i_population.end() - diff_size, std::back_inserter(best_candidates));
-    } else {                // hay menos o igual candidatos de los que se requiere
+    if (diff_size > 0) {    // hay más candidatos de los que se requiere      
       best_candidates = i_population;
-      while (best_candidates.size() < candidates_size) // introducir candidatos aleatorios
-        best_candidates.emplace_back(i_population[std::rand() % i_population.size()]);
+      best_candidates.resize(candidates_size);
+    } else {                // hay menos o igual candidatos de los que se requiere            
+      best_candidates = i_population;
+      unsigned size = i_population.size();
+      best_candidates.resize(candidates_size);
+      for (unsigned i = size - 1; i < candidates_size; i++)
+        best_candidates[i] = i_population[std::rand() % i_population.size()];
     }
   }
 

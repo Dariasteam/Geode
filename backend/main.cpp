@@ -6,15 +6,16 @@
 #include <random>
 #include <climits>
 #include <functional>
+#include <fstream>
 
-#include "neural_network/workable_nn.h"
+#include "neural_network/concurrent_neural_network.h"
 #include "genetic_algorithm/geneticalgorithm.h"
 
 #define N 22
 
 std::pair<bool, TYPE> random (unsigned prob) {
   if (std::rand() % 100 < prob)
-    return {true, 100 - std::rand() % 200};
+    return {true, std::numeric_limits<TYPE>::max() - std::rand() % std::numeric_limits<TYPE>::max()};
   else
     return {false, 0};
 }
@@ -25,7 +26,7 @@ std::pair<bool, TYPE> random (unsigned prob) {
 
 /**
  * @brief iterate_avoiding_index Generic iterator that aplies the same operation
- * to all elements in a collection except the element at index. From begin to end.
+ * to all elements in a collection except to the element at index. From begin to end.
  * @param func Operation to apply
  * @param begin
  * @param index element for which operation won't be applied
@@ -61,7 +62,7 @@ void random_values_generator (std::vector<std::vector<std::pair<bool, TYPE>>>& c
  * @param B mother
  * @return son
  */
-dna cross (const dna& A, const dna& B) {  
+dna cross (const dna& A, const dna& B) {
   unsigned a_size;
   unsigned b_size;
 
@@ -71,7 +72,7 @@ dna cross (const dna& A, const dna& B) {
   unsigned final_size = (a_size / 2) + (b_size / 2);
   std::cout << a_size << " " << b_size << std::endl;
 
-  char* sequence = new char[(A.byte_sz / 2) + (B.byte_sz / 2)];  
+  char* sequence = new char[(A.byte_sz / 2) + (B.byte_sz / 2)];
 
   memcpy(sequence, A.sequence, (A.byte_sz / 2));
   memcpy(sequence + (A.byte_sz / 2), B.sequence + (B.byte_sz / 2), (B.byte_sz / 2));
@@ -86,8 +87,8 @@ dna cross (const dna& A, const dna& B) {
  * @param DNA dna to create the neural network.
  * @return fitness values.
  */
-double evaluate (const dna& DNA) {
-  workable_nn w (DNA);
+double evaluate (const dna& DNA) {  
+  concurrent_neural_network w (DNA);
 
   std::vector<double> output;
   std::vector<double> input_a = { 1, 1, 1};
@@ -102,7 +103,7 @@ double evaluate (const dna& DNA) {
 
   w.calculate(input_b, output);
   for (auto& e : output)
-    v2 += e;      
+    v2 += e;
 
   if ((v1 > 0 && v2 > 0) || (v1 < 0 && v2 < 0))
     return fabs(fabs(v1) - v2);
@@ -116,20 +117,59 @@ double evaluate (const dna& DNA) {
  * @param mutation_rate probability of changing a bit between [100,1]
  */
 void mutate (dna& DNA, unsigned mutation_rate) {
-  unsigned first_index = DNA.byte_sz;
-  for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
+  unsigned first_index = sizeof(unsigned);
+  while (first_index < DNA.byte_sz) {
+    // MUTATE GRAPH MATRIX
     if (rand() % 100 < mutation_rate) {
-      DNA.sequence[i] ^= 1;
-      i+=sizeof(bool);
-      DNA.sequence[i] ^= 1;
+      DNA.sequence[first_index] ^= 1;
+    }
+    first_index+=sizeof(bool);
+
+    // MUTATE COST MATRIX
+    if (rand() % 100 < mutation_rate) {
       for (unsigned j = 0; j < sizeof(TYPE); j++) {
         for (unsigned k = 0; k < 8; k++) {
-          if (rand() % 8 < 1)
-            DNA.sequence[i+k] ^= 1 << k;
+          if (rand() % 2 < 1)
+            DNA.sequence[first_index] ^= 1 << k;
         }
       }
-    } else {
-      i+=sizeof(bool);
+    }
+    first_index+=sizeof(TYPE);
+  }
+}
+
+void read_net_from_file (std::string filename,
+                         std::vector<std::vector<std::pair<bool, TYPE>>>& graph) {
+  std::ifstream file;
+
+  graph.resize(0);
+
+  unsigned size;
+
+  file.open(filename);
+  if (file.is_open()) {
+    file >> size;
+    graph.resize(size);
+
+    // READ GRAPH
+
+    for (unsigned i = 0; i < size; i++) {
+      graph[i].resize(size);
+      for (unsigned j = 0; j < size; j++) {
+        bool aux;
+        file >> aux;
+        graph[i][j].first = aux;
+      }
+    }
+
+    // READ COSTS
+
+    for (unsigned i = 0; i < size; i++) {
+      for (unsigned j = 0; j < size; j++) {
+        double aux;
+        file >> aux;
+        graph[i][j].second = aux;
+      }
     }
   }
 }
@@ -143,20 +183,22 @@ int main(int argc, char **argv) {
   random_values_generator(v1);
   random_values_generator(v2);
 
-  workable_nn parent_1 (v1, 3, 1);
-  workable_nn parent_2 (v2, 3, 1);
+  concurrent_neural_network parent_1 (v1, 3, 1);
+  concurrent_neural_network parent_2 (v2, 3, 1);
 
   dna serialized_nn_1 = parent_1.to_dna();
   dna serialized_nn_2 = parent_2.to_dna();
 
-  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 50, 15, 10);
-  genetic.set_poblation_parameters(16,10,10);
+  GeneticAlgorithm<dna> genetic (cross, mutate, evaluate, 50, 10, 10);
+  //genetic.set_population_parameters(16,10,10);
   std::vector<dna> initial_candidates = {serialized_nn_1, serialized_nn_2};
-  genetic.set_initial_poblation(initial_candidates); 
+  genetic.set_initial_population(initial_candidates);
 
+  unsigned i = 0;
   while (true) {
-    genetic.step();  
-    std::cout << "Next step" << std::endl;
+    genetic.step();
+    std::cout << "Next step" << i << std::endl;
+    i++;
   }
   return 0;
 }

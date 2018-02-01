@@ -16,54 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NEURON_H
-#define NEURON_H
+#ifndef FEEDBACK_BUS_H
+#define FEEDBACK_BUS_H
 
-#include <vector>
-#include <cmath>
-
+#include "neuron.h"
 #include "axon.h"
 
 /**
- * @brief Perceptron like neuron
+ * @todo write docs
+ */
+/**
+ * @brief Similar to #neuron, it allow cycles (feedback) between neurons by capturing de feedback
+ * data and propagate it after regular forward data propagation have ended.
  *
  */
-class neuron {
-protected:
-  double value;
-  double threshold;
-
-  unsigned n_inputs;
-
+class feedback_bus {
+private:
+  unsigned size;
   std::vector<axon*> inputs;
   std::vector<axon*> outputs;
+  neuron* destiny;
 public:
-  neuron () : n_inputs(0) {}
-
-  void set_threshold (double t) { threshold = t; }
-
-  void add_input (axon* input);
-  void add_output (axon* output);
-
-  void calculate_value ();
-  virtual void propagate_value ();
-
-  double get_value () const { return value; }
+  feedback_bus (neuron* des) : size(0), destiny (des) {}
+  void add_connection (neuron* origin, double weight);
+  void propagate_value ();
 };
 
-/**
- * @brief Neuron that check if have any input axon before trying to calculate
- * its output. If have none it outputs 0.
- *
- */
-class output_neuron : public neuron {
-public:
-  /**
-   * @brief Check if have any input axon before trying to calculate
-   * its output. If have none outputs 0.
-   *
-   */
-  void propagate_value() override;
-};
 
-#endif // NEURON_H
+#endif // FEEDBACK_BUS_H
