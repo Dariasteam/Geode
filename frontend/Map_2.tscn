@@ -59,7 +59,8 @@ _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="AgentInstancer" parent="Node2D" index="1"]
 
-position = Vector2( -37.8726, 441.618 )
+position = Vector2( -44.0244, 445.72 )
+rotation = -0.00449121
 
 [node name="ScorePanel" parent="Node2D" index="2"]
 

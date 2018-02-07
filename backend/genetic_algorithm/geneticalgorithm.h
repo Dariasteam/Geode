@@ -38,18 +38,17 @@ private:
   unsigned ratio_cand_pobl;      // number of copies generated of each candidate
 
   // Concurrently generates the population
-  void generate_next_population () {        
-    //population.clear();
+  void generate_next_population () {
+    population.clear();
     population.resize(population_size);
 
     std::vector<std::future<void>> promises (candidates_size);
 
     ratio_cand_pobl = std::floor(double(population_size) / candidates_size);
 
-    // función a aplicar sobre cada elemento
     auto async_function = ([&](unsigned index) {
       for (unsigned j = 0; j < ratio_cand_pobl; j++)
-        population[(index * ratio_cand_pobl) + j] = best_candidates[index];
+        population[(index * ratio_cand_pobl) + j] = op_cross(best_candidates[index], best_candidates[rand() % candidates_size]);
     });
 
     for (unsigned i = 0; i < candidates_size; i++)
@@ -76,9 +75,9 @@ private:
     std::vector<std::future<void>> promises (population_size - 2);
 
     // función a aplicar sobre cada elemento
-    auto async_function = ([&](unsigned index){
+    auto async_function = ([&](unsigned index) {
       op_mutate(population[index], mutation_rate);
-    });
+    });    
 
     for (unsigned i = 0; i < population_size - 2; i++)
       promises[i] = std::async(async_function, i);
@@ -90,18 +89,48 @@ private:
     population[population_size - 1] = best_candidates[1];
   }
 
+  void sort_population (std::vector<double>& evaluations) {
+    for (unsigned i = 0; i < population_size; i++) {
+      double best = evaluations[i];
+      unsigned best_index = i;
+      for (unsigned j = i + 1; j < population_size; j++) {
+        if (evaluations[j] > best) {
+          best_index = j;
+          best = evaluations[j];
+        }
+      }
+      if (best_index != i) {
+        // exchange individuals
+        auto aux = population[i];
+        population[i] = population[best_index];
+        population[best_index] = aux;
+
+        // exchange scores
+        auto aux2 = evaluations[i];
+        evaluations[i] = evaluations[best_index];
+        evaluations[best_index] = aux2;
+      }
+    }
+
+    double old_value = evaluations[0];
+    double value;
+  }
+
   // Evaluates all population and orders it based on the fitness function
   void evaluate_population () {
-    auto comparator = [&](const T& A, const T& B) {
-      return op_evaluate (A) > op_evaluate (B);
-    };
-    //std::sort (population.begin(), population.end(), std::ref(comparator));
+    std::vector<double> evaluations (population_size);
+
+    for (unsigned i = 0; i < population_size; i++)
+      evaluations[i] = op_evaluate(population[i]);
+
+    sort_population (evaluations);
   }
 
   // Copy best individuals of the current population to the candidates vector
   void generate_next_candidates () {
     best_candidates.clear();
-    std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));
+    std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));    
+    // TODO Cross them!!!
   }
 
 public:
@@ -190,11 +219,12 @@ public:
   * Each i element contains the score of the i individual from population.
   */
   void set_external_evaluations (std::vector<double> evaluations) {
+    /*
     std::vector<std::pair<T, double>> aux (population_size);
     for (unsigned i = 0; i < population_size; i++)
       aux[i] = {population[i], evaluations[i]};
 
-    auto comparator = [](std::pair<T, double>& A, std::pair<T, double>& B) {
+    auto comparator = [&](const std::pair<T, double>& A, const std::pair<T, double>& B) {
       return A.second > B.second;
     };
     std::sort (aux.begin(), aux.end(), comparator);
@@ -204,10 +234,11 @@ public:
 
     for (unsigned i = 0; i < population_size; i++)
       population[i] = aux[i].first;
+    */
 
+    sort_population (evaluations);
     generate_next_candidates();
   }
-
 
   /**
   * @brief Sets the initial population of the simulation. Automatically adjust
@@ -218,10 +249,10 @@ public:
   */
   void set_initial_population (const std::vector<T>& i_population) {
     int diff_size = i_population.size() - candidates_size;
-    if (diff_size > 0) {    // hay más candidatos de los que se requiere      
+    if (diff_size > 0) {    // hay más candidatos de los que se requiere
       best_candidates = i_population;
       best_candidates.resize(candidates_size);
-    } else {                // hay menos o igual candidatos de los que se requiere            
+    } else {                // hay menos o igual candidatos de los que se requiere
       best_candidates = i_population;
       unsigned size = i_population.size();
       best_candidates.resize(candidates_size);
@@ -229,7 +260,6 @@ public:
         best_candidates[i] = i_population[std::rand() % i_population.size()];
     }
   }
-
 
   /**
   * @brief Print the best candidates and its score

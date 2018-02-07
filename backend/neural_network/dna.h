@@ -2,6 +2,7 @@
 #define DNA_H
 
 #include <memory>
+#include <iostream>
 
 #include <stdlib.h>
 #include <string.h>
@@ -55,6 +56,7 @@ struct dna {
   explicit dna () :
     sequence (nullptr)
   {}
+
 
   dna (const dna& DNA) :
     input_neurons (DNA.input_neurons),

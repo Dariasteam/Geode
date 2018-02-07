@@ -2,9 +2,9 @@
 
 #include <iostream>
 
-dna::~dna() {    
+dna::~dna() {
   if (sequence != nullptr)
-    delete[] sequence;  
+    delete[] sequence;
 }
 
 void dna::operator=(const dna &aux) {

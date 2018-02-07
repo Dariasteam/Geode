@@ -28,6 +28,7 @@
 #include <future>
 #include <map>
 #include <stack>
+#include <random>
 
 #include "dna.h"
 #include "neuron.h"
@@ -35,6 +36,7 @@
 
 #define TYPE short
 #define E 2.71828182845
+
 
 /**
  * @brief Representa una red neuronal en formato matriz de costes.
@@ -108,7 +110,7 @@ private:
     }
 
     original = aux;
-  }
+  }  
 
   /**
    * @brief Delete neurons with no predecesors (excluding inputs and outputs)
@@ -155,7 +157,7 @@ private:
   void copy_mem (char* seq, unsigned& index, const void* mem, size_t size);
 
   double saturate (double v) const {
-    v = v / std::numeric_limits<short>::max() ;
+    v = v / std::numeric_limits<TYPE>::max() ;
     return v;
   }
 

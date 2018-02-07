@@ -24,9 +24,9 @@ private:
   double value;
   double weight;
 public:
-  axon (double w) : weight (w) {}
-  void set_value (double v) { value = v; }
-  double get_value () const { return value * weight; }
+  axon (double w) : weight (w), value(0) {}
+  void set_value (double v) { value = v * weight; }
+  double get_value () const { return value; }
 };
 
 

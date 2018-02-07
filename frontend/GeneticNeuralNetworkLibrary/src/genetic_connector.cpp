@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <functional>
+#include <random>
 
 #include "../../../backend/neural_network/dna.h"
 #include "../../../backend/genetic_algorithm/geneticalgorithm.h"
@@ -13,7 +14,6 @@
 using namespace godot;
 
 dna cross (const dna& A, const dna& B) {
-
   unsigned a_size;
   unsigned b_size;
 
@@ -37,24 +37,22 @@ double evaluate (const dna& DNA) {
 }
 
 void mutate (dna& DNA, unsigned mutation_rate) {
-  unsigned first_index = sizeof(unsigned);
-  while (first_index < DNA.byte_sz) {
-    // MUTATE GRAPH MATRIX
-    if (rand() % 100 < mutation_rate) {
-      DNA.sequence[first_index] ^= 1;
-    }
-    first_index+=sizeof(bool);
+  unsigned first_index = DNA.byte_sz;
+  for (unsigned i = sizeof(unsigned); i < first_index; i+=sizeof(TYPE)) {
+    if ((rand() % (99 - mutation_rate)) < 1) {
 
-    // MUTATE COST MATRIX
-    if (rand() % 100 < mutation_rate) {
+      DNA.sequence[i] ^= 1;
+      i+=sizeof(bool);
       for (unsigned j = 0; j < sizeof(TYPE); j++) {
         for (unsigned k = 0; k < 8; k++) {
-          if (rand() % 2 < 1)
-            DNA.sequence[first_index] ^= 1 << k;
+          if (rand() % 8 < 1)
+            DNA.sequence[i+j] ^= 1 << k;
         }
       }
+
+    } else {
+      i+=sizeof(bool);
     }
-    first_index+=sizeof(TYPE);
   }
 }
 

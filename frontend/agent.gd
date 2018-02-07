@@ -18,9 +18,9 @@ func set_neural_network(nn, i, life_time):
 	index = i
 	$Timer.set_wait_time(life_time)
 	$Timer.start()	
-	set_physics_process(true)
+	set_process(true)
 
-func _physics_process(delta):
+func _process(delta):
 	var pos = $RigidBody2D.global_position
 	
 	var inputs = []
@@ -64,7 +64,7 @@ func _physics_process(delta):
 	spin += outputs[0]	
 	
 	rotate(outputs[0])
-	move_local_y(outputs[1] * 100) 
+	move_local_y(outputs[1] * 10) 
 	score += outputs[1]
 	
 func _ready():
@@ -77,7 +77,7 @@ func _ready():
 func die(time):
 	if (alive):
 		alive = false
-		set_physics_process(false)
+		set_process(false)
 		$Timer.stop()
 		$Sprite.modulate = Color(255, 0, 0)
 		$RigidBody2D.queue_free()

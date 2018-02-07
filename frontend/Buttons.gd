@@ -27,6 +27,7 @@ func _on_ButtonPlayStop_pressed():
 
 func _on_SpinBoxMutationRate_value_changed(value):
 	mutation_rate = value
+	update_genetic_parameters()
 
 func _on_SpinBoxLifeTime_value_changed(value):	
 	controller.set_time(value)
@@ -40,15 +41,16 @@ func _on_ButtonSaveAgent_pressed():
 func _on_ButtonLoadAgent_button_down():
 	controller.load()
 
-
 func _on_SpinBoxPoblationSize_value_changed( value ):
 	if (value < $GridContainer/SpinBoxCandidatesSize.value):
 		$GridContainer/SpinBoxPoblationSize.set_value(value + 2)
-	emit_signal("udpdate_genetic_parameters", $GridContainer/SpinBoxPoblationSize.value, $GridContainer/SpinBoxCandidatesSize.value)
+	update_genetic_parameters()
 
+func update_genetic_parameters():
+	emit_signal("udpdate_genetic_parameters", $GridContainer/SpinBoxPoblationSize.value, $GridContainer/SpinBoxCandidatesSize.value, mutation_rate)
 
 func _on_SpinBoxCandidatesSize_value_changed( value ):
 	if (value > $GridContainer/SpinBoxPoblationSize.value):
 		$GridContainer/SpinBoxCandidatesSize.set_value(value - 2)
-	emit_signal("udpdate_genetic_parameters", $GridContainer/SpinBoxPoblationSize.value, $GridContainer/SpinBoxCandidatesSize.value)
+	update_genetic_parameters()
 

@@ -65,7 +65,7 @@ autostart = false
 [node name="ray_a" type="RayCast2D" parent="Raycast" index="0"]
 
 modulate = Color( 0, 1, 1, 1 )
-position = Vector2( 17.3371, 27.7389 )
+position = Vector2( 20.695, 29.3448 )
 rotation = -0.698132
 scale = Vector2( 2, 1 )
 enabled = true
@@ -87,7 +87,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 [node name="ray_c" type="RayCast2D" parent="Raycast" index="2"]
 
 modulate = Color( 1, 0, 0, 1 )
-position = Vector2( -17, 27 )
+position = Vector2( -20.7959, 29.1899 )
 rotation = 0.698132
 scale = Vector2( 2, 1 )
 enabled = true

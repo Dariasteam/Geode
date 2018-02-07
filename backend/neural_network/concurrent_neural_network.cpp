@@ -50,7 +50,15 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
   n_inputs (input),
   n_outputs (output)
 
-  {
+{
+  std::random_device rd;
+  std::mt19937 rng(rd());
+
+  TYPE min = std::numeric_limits<TYPE>::min() / 10;
+  TYPE max = std::numeric_limits<TYPE>::max() / 10;
+
+  std::uniform_int_distribution<TYPE> uni(min, max);
+
   cost_matrix.resize(n_neurons);
   graph_matrix.resize(n_neurons);
 
@@ -58,10 +66,39 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
     cost_matrix[i].resize(n_neurons);
     graph_matrix[i].resize(n_neurons);
     for (unsigned j = 0; j < n_neurons; j++) {
-      graph_matrix[i][j] = rand() % 1;
-      cost_matrix[i][j] = 1000 - rand() % 2000;
+      graph_matrix[i][j] = (rand() % 25 < 1);
+      cost_matrix[i][j] = uni(rng);
     }
   }
+  optimize();
+  build_from_matrixes();
+}
+
+concurrent_neural_network::concurrent_neural_network (const dna& DNA)  :
+  n_inputs (DNA.input_neurons),
+  n_outputs (DNA.output_neurons)
+{
+  unsigned index = 0;
+
+  unsigned size;
+  get_mem(&size, index, DNA.sequence, sizeof(size));
+
+  cost_matrix.resize(size);
+  graph_matrix.resize(size);
+
+  for (unsigned i = 0; i < size; i++) {
+    cost_matrix[i].resize(size);
+    graph_matrix[i].resize(size);
+    for (unsigned j = 0; j < size; j++) {
+      bool b;
+      get_mem(&b, index, DNA.sequence, sizeof(b));
+      graph_matrix[i][j] = b;
+      get_mem(&cost_matrix[i][j], index, DNA.sequence, sizeof(TYPE));
+    }
+  }
+
+  optimize();
+  build_from_matrixes();
 }
 
 void concurrent_neural_network::optimize() {
@@ -72,12 +109,12 @@ void concurrent_neural_network::optimize() {
   //  OPTIMIZE THE NET  -----------------------------------------------------
 
   do {
-      counter++;
-      old_size = graph_matrix.size();
-      delete_unreachable_nodes();
-      delete_deathend_nodes();
-      new_size = graph_matrix.size();
-    } while (old_size != new_size);
+    counter++;
+    old_size = graph_matrix.size();
+    delete_unreachable_nodes();
+    delete_deathend_nodes();
+    new_size = graph_matrix.size();
+  } while (old_size != new_size);
 
   // CALCULATE CONCURRENT STEPS -------------------------------------------
 
@@ -111,7 +148,8 @@ void concurrent_neural_network::build_from_matrixes() {
         neurons[i]->add_output(aux);
         neurons[j]->add_input(aux);
       }
-    }
+    }    
+
     // lower triangle (feedbacker)
     for (unsigned j = 0; j < i; j++) {
       if (graph_matrix[i][j]) {
@@ -135,38 +173,6 @@ void concurrent_neural_network::build_from_matrixes() {
     neurons[size - n_outputs + i]->add_output(aux);
     output_axons[i] = aux;
   }
-}
-
-concurrent_neural_network::concurrent_neural_network (const dna& DNA)  :
-  n_inputs (DNA.input_neurons),
-  n_outputs (DNA.output_neurons)
-{
-
-  if (n_outputs > 30)
-    std::cout << "Error máximo supremo" << std::endl;
-
-  unsigned index = 0;
-  const char* seq = DNA.sequence;
-
-  unsigned size;
-  get_mem(&size, index, seq, sizeof(size));
-
-  cost_matrix.resize(size);
-  graph_matrix.resize(size);
-
-  for (unsigned i = 0; i < size; i++) {
-    cost_matrix[i].resize(size);
-    graph_matrix[i].resize(size);
-    for (unsigned j = 0; j < size; j++) {
-      bool b;
-      get_mem(&b, index, seq, sizeof(b));
-      graph_matrix[i][j] = b;
-      get_mem(&cost_matrix[i][j], index, seq, sizeof(TYPE));
-    }
-  }
-
-  optimize();
-  build_from_matrixes();
 }
 
 void concurrent_neural_network::get_mem (void* mem, unsigned& index, const char* seq, size_t size) {
@@ -223,35 +229,128 @@ void concurrent_neural_network::operator=(const concurrent_neural_network &aux) 
 bool concurrent_neural_network::calculate(std::vector<double> &input_values,
                                           std::vector<double> &output_values) {
 
+  /*
+  unsigned size = cost_matrix.size();
+
+    // Matriz auxiliar para comprobar cuándo puede calcularse la siguiente neurona
+    std::vector<std::vector<bool>> used_elements (size);
+    for (auto& row : used_elements)
+      row.resize (size);
+
+    // Matriz auxiliar para resultados intermedios
+    std::vector<std::vector<double>> results (size);
+    for (auto& row : results)
+      row.resize (size);
+
+    // Inicializar las neuronas de entrada
+    for (unsigned i = 0; i < n_inputs; i++) {
+        results[i][i] = input_values[i];
+        used_elements[i][i] = true;
+
+        double value = input_values[i];
+
+        // Calcular los axones derivados de las neuronas de entrada
+        iterate_avoiding_index([&](unsigned index) -> void {
+          if (graph_matrix[i][index]) {
+            results[i][index] = value * saturate(cost_matrix[i][index]);
+            used_elements[i][index] = true;
+          }
+        }, 0, i, size);
+      }
+
+    // Propagar valores por las siguientes neuronas disponibles
+    while (true) {
+        int selected_neuron = -1;
+        // Seleccionar la siguiente neurona cuyos predecesores estén calculados
+        double value (0);
+        unsigned ac (0);
+
+        for (unsigned i = n_inputs; i < size; i++) {
+          value = 0;
+          ac = 0;
+          if (!used_elements[i][i]) {
+            selected_neuron = i;
+            for (unsigned j = 0; j < i; j++) {
+              if (graph_matrix[j][i]) {
+                if (used_elements[j][i]) {
+                  // El axón de entrada está disponible
+                  value += results[j][i];
+                  ac++;
+                } else if (cost_matrix[j][i] != 0) {
+                  // El axón de entrada aún no ha sido calculado
+                  value = 0;
+                  selected_neuron = -1;
+                  break;
+                }
+              }
+            }
+            // Tenemos una neurona con todos sus predecesores calculados
+            if (selected_neuron != -1)
+              break;
+          }
+        }
+
+        // No hay más neuronas calculables
+        if (selected_neuron == -1)
+          break;
+
+        value = (value != 0) ? std::tanh(value / ac) : 0;
+
+        used_elements[selected_neuron][selected_neuron] = true;
+        results[selected_neuron][selected_neuron] = value;
+
+        // Calcular los axones derivados de la neurona calculada
+        iterate_avoiding_index([&](unsigned index) -> void {
+          if (graph_matrix[selected_neuron][index]) {
+            double aux = value * saturate(cost_matrix[selected_neuron][index]);
+            results[selected_neuron][index] = aux;
+            used_elements[selected_neuron][index] = true;
+          }
+        }, 0, selected_neuron, size);
+      }
+
+    // Recoger los valores de las neuronas de salida
+    output_values.resize(0);
+
+    for (unsigned i = cost_matrix.size() - n_outputs; i < cost_matrix.size(); i++)
+      output_values.push_back(std::tanh(results[i][i]));
+
+*/
+
+
+  // TODO
+
   propagate_feedback();
 
   // Check compatibility of the vectors
   unsigned i_size = input_values.size();
   unsigned o_size = n_outputs;
   if (i_size != n_inputs)
-    return false;
+    return false;  
+
+  std::vector<std::future<void>> promises (neurons.size());
+  auto calculate_neuron = [&](unsigned i) {      
+    neurons[i]->calculate_value();
+    neurons[i]->propagate_value();
+  };
 
   // Set the inputs
   for (unsigned i = 0; i < i_size; i++)
     input_axons[i]->set_value(input_values[i]);
 
-
-  std::vector<std::future<void>> promises (neurons.size());
-  auto calculate_neuron = [&](unsigned i) {
-    neurons[i]->calculate_value();
-    neurons[i]->propagate_value();
-  };
-
   // Calculate concurently
   unsigned last_neuron = 0;
-  for (unsigned concurrent_group : concurrent_steps) {
-    for (unsigned i = last_neuron; i <= concurrent_group; i++)
-      promises[i] = std::async(calculate_neuron, i);
+  unsigned first_neuron = 0;
+  unsigned size = concurrent_steps.size();
+  for (unsigned k = 1; k < size; k++) {
+    last_neuron = concurrent_steps[k];
+    for (unsigned i = first_neuron; i <= last_neuron; i++)
+      calculate_neuron(i);
+      //promises[i] = std::async(calculate_neuron, i);
 
-    for (unsigned i = last_neuron; i < concurrent_group; i++)
-      promises[i].get();
-
-    last_neuron = concurrent_group + 1;
+    //for (unsigned i = last_neuron; i < concurrent_group; i++)
+    //  promises[i].get();
+    first_neuron = last_neuron + 1;
   }
 
   // Retrieve the outputs
@@ -260,11 +359,20 @@ bool concurrent_neural_network::calculate(std::vector<double> &input_values,
     output_values[i] = output_axons[i]->get_value();
 
   return true;
+
 }
 
 void concurrent_neural_network::print() const {
-  for (auto& line : cost_matrix) {
-    for (auto& element : line)
+  for (const auto& line : graph_matrix) {
+    for (auto element : line)
+      printf("%5d", element);
+    std::cout << std::endl;
+  }
+
+  std::cout << "\n" << std::endl;
+
+  for (const auto& line : cost_matrix) {
+    for (const auto& element : line)
       printf("%5d", element);
     std::cout << std::endl;
   }
@@ -291,7 +399,6 @@ void concurrent_neural_network::add_feedbacker(unsigned int origin_neuron,
     feedbackers[destiny_neuron] = new feedback_bus(neurons[destiny_neuron]);
   feedbackers[destiny_neuron]->add_connection(neurons[origin_neuron], w);
 }
-
 
 void concurrent_neural_network::delete_unreachable_nodes() {
 
@@ -338,12 +445,11 @@ void concurrent_neural_network::delete_unreachable_nodes() {
   }
 }
 
-
 void concurrent_neural_network::delete_deathend_nodes() {
   unsigned size = graph_matrix.size();
 
   std::stack<unsigned> predecesors;
-  for (unsigned i = size - n_outputs - 1; i >= n_inputs; i--)
+  for (unsigned i = size - n_outputs - 1; i > n_inputs - 1; i--)
     predecesors.push(i);
 
   unsigned i;
@@ -405,7 +511,7 @@ std::vector<unsigned int> concurrent_neural_network::generate_concurrent_steps()
   for (unsigned i = 0; i < size; i++) {
     for (unsigned j = i + 1; j < size; j++) {
       if (graph_matrix[i][j]) {
-        if (visited_nodes[i] != 0) {
+        if (visited_nodes[i] > 0) {
           visited_nodes = aux_visited;
           solve.push_back(last_node);
         }
@@ -413,8 +519,9 @@ std::vector<unsigned int> concurrent_neural_network::generate_concurrent_steps()
         last_node = i;
       }
     }
-  }
+  }  
   solve.push_back(last_node);
   solve.push_back(size - 1);
+
   return solve;
 }

@@ -30,22 +30,22 @@ void neuron::add_output(axon* output){
 }
 
 void neuron::calculate_value(){
+  value = 0;
   for (axon* aux : inputs)
     value += aux->get_value();
+  value = std::tanh((value / n_inputs) + threshold);
 }
 
 void neuron::propagate_value() {
-  value = std::tanh((value / n_inputs) + threshold);
   for (axon* aux : outputs)
     aux->set_value(value);
-  value = 0;
 }
 
 // OUTPUT NEURON
 
-void output_neuron::propagate_value(){
+void output_neuron::calculate_value() {
+  value = 0;
+  for (axon* aux : inputs)
+    value += aux->get_value();
    value = (n_inputs == 0) ? 0 : std::tanh((value / n_inputs) + threshold);
-   for (axon* aux : outputs)
-     aux->set_value(value);
-   value = 0;
  }

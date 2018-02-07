@@ -20,12 +20,12 @@ func set_neural_network(nn, i, life_time):
 	index = i
 	$Timer.set_wait_time(life_time)
 	$Timer.start()
-	set_physics_process(true)
+	set_physics_physics_process(true)
 
 func _physics_process(delta):
 	time_alive += 1
 	var pos = $RigidBody2D.global_position
-
+	#set_physics_physics_process(false)
 	var inputs = []
 
 	if ($Weapons/weapon.is_colliding()):
@@ -79,7 +79,7 @@ func _ready():
 func die(time):
 	if (alive):
 		alive = false
-		set_physics_process(false)
+		set_physics_physics_process(false)
 		$Timer.stop()
 		$Sprite.modulate = Color(255, 0, 0)
 		$RigidBody2D.queue_free()

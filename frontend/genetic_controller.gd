@@ -75,6 +75,7 @@ func start_single_simulation():
 func prepare_next_single_simulation():	
 	
 	# establece las evaluaciones y selecciona a los mejores
+	print ("esto ocurre")
 	genetic_connector.set_evaluations(scores);
 	
 	# Informa al representador de puntuaciones
@@ -175,9 +176,10 @@ func view_net_at(i):
 	if (typeof(scores[(-i)-1]) == TYPE_ARRAY):
 		net_viewer.set_network([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]], inputs, outputs)
 		
-func set_genetic_parameters(p_s, c_s):
-	print (p_s, " ", c_s)
-	genetic_connector.set_genetic_parameters(p_s, c_s)
+# population_size / candiadtes_size / mutation_rate
+func set_genetic_parameters(p_s, c_s, m_r):
+	print (p_s, " ", c_s)	
+	genetic_connector.set_genetic_parameters(p_s, c_s, m_r)
 	population_size = p_s
 	
 # ordena en base a el primer elemento del array, se usa para ordenar los arrays de

@@ -45,8 +45,8 @@ public:
   void add_input (axon* input);
   void add_output (axon* output);
 
-  void calculate_value ();
-  virtual void propagate_value ();
+  virtual void calculate_value ();
+  void propagate_value ();
 
   double get_value () const { return value; }
 };
@@ -63,7 +63,7 @@ public:
    * its output. If have none outputs 0.
    *
    */
-  void propagate_value() override;
+  void calculate_value() override;
 };
 
 #endif // NEURON_H
