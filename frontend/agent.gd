@@ -59,7 +59,7 @@ func _process(delta):
 	var outputs = neural_network.evaluate(inputs)
 	
 	if (abs(spin) > 10):
-		die(-255)	
+		die(-255)
 			
 	spin += outputs[0]	
 	

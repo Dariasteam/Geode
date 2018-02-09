@@ -20,7 +20,7 @@ func set_neural_network(nn, i, life_time):
 	index = i
 	$Timer.set_wait_time(life_time)
 	$Timer.start()
-	set_physics_physics_process(true)
+	set_physics_process(true)
 
 func _physics_process(delta):
 	time_alive += 1
@@ -61,8 +61,8 @@ func _physics_process(delta):
 
 	var outputs = neural_network.evaluate(inputs)
 
-	#if (abs(spin) > 20):
-		#die(-255)
+	if (abs(spin) > 20):
+		die(-255)
 
 	spin += outputs[0]
 
@@ -79,12 +79,12 @@ func _ready():
 func die(time):
 	if (alive):
 		alive = false
-		set_physics_physics_process(false)
+		set_physics_process(false)
 		$Timer.stop()
 		$Sprite.modulate = Color(255, 0, 0)
 		$RigidBody2D.queue_free()
 		$Weapons/weapon.set_enabled(false)
-		emit_signal("dead", index, time_alive)
+		emit_signal("dead", index, 1000 - $Time_Alive.get_time_left())
 
 func _on_Timer_timeout():
 	die(0)

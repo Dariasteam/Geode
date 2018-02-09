@@ -33,11 +33,11 @@
 class feedback_bus {
 private:
   unsigned size;
-  std::vector<axon*> inputs;
-  std::vector<axon*> outputs;
-  neuron* destiny;
+  std::vector<axon*> input_axons;
+  std::vector<axon*> output_axons;
+  neuron* destiny_neuron;
 public:
-  feedback_bus (neuron* des) : size(0), destiny (des) {}
+  feedback_bus (neuron* des) : size(0), destiny_neuron (des) {}
   void add_connection (neuron* origin, double weight);
   void propagate_value ();
 };

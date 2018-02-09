@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="Map" type="Node2D" index="0"]
+[node name="Map" type="Node2D"]
 
 editor/display_folded = true
 position = Vector2( 171.837, 19.5954 )

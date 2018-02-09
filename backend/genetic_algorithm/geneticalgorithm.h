@@ -48,7 +48,7 @@ private:
 
     auto async_function = ([&](unsigned index) {
       for (unsigned j = 0; j < ratio_cand_pobl; j++)
-        population[(index * ratio_cand_pobl) + j] = op_cross(best_candidates[index], best_candidates[rand() % candidates_size]);
+        population[(index * ratio_cand_pobl) + j] = op_cross(best_candidates[index], best_candidates[rand() % (candidates_size - 5)]);
     });
 
     for (unsigned i = 0; i < candidates_size; i++)

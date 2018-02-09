@@ -66,7 +66,7 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
     cost_matrix[i].resize(n_neurons);
     graph_matrix[i].resize(n_neurons);
     for (unsigned j = 0; j < n_neurons; j++) {
-      graph_matrix[i][j] = (rand() % 25 < 1);
+      graph_matrix[i][j] = (rand() % 7 < 1);
       cost_matrix[i][j] = uni(rng);
     }
   }
@@ -227,100 +227,7 @@ void concurrent_neural_network::operator=(const concurrent_neural_network &aux) 
 }
 
 bool concurrent_neural_network::calculate(std::vector<double> &input_values,
-                                          std::vector<double> &output_values) {
-
-  /*
-  unsigned size = cost_matrix.size();
-
-    // Matriz auxiliar para comprobar cuándo puede calcularse la siguiente neurona
-    std::vector<std::vector<bool>> used_elements (size);
-    for (auto& row : used_elements)
-      row.resize (size);
-
-    // Matriz auxiliar para resultados intermedios
-    std::vector<std::vector<double>> results (size);
-    for (auto& row : results)
-      row.resize (size);
-
-    // Inicializar las neuronas de entrada
-    for (unsigned i = 0; i < n_inputs; i++) {
-        results[i][i] = input_values[i];
-        used_elements[i][i] = true;
-
-        double value = input_values[i];
-
-        // Calcular los axones derivados de las neuronas de entrada
-        iterate_avoiding_index([&](unsigned index) -> void {
-          if (graph_matrix[i][index]) {
-            results[i][index] = value * saturate(cost_matrix[i][index]);
-            used_elements[i][index] = true;
-          }
-        }, 0, i, size);
-      }
-
-    // Propagar valores por las siguientes neuronas disponibles
-    while (true) {
-        int selected_neuron = -1;
-        // Seleccionar la siguiente neurona cuyos predecesores estén calculados
-        double value (0);
-        unsigned ac (0);
-
-        for (unsigned i = n_inputs; i < size; i++) {
-          value = 0;
-          ac = 0;
-          if (!used_elements[i][i]) {
-            selected_neuron = i;
-            for (unsigned j = 0; j < i; j++) {
-              if (graph_matrix[j][i]) {
-                if (used_elements[j][i]) {
-                  // El axón de entrada está disponible
-                  value += results[j][i];
-                  ac++;
-                } else if (cost_matrix[j][i] != 0) {
-                  // El axón de entrada aún no ha sido calculado
-                  value = 0;
-                  selected_neuron = -1;
-                  break;
-                }
-              }
-            }
-            // Tenemos una neurona con todos sus predecesores calculados
-            if (selected_neuron != -1)
-              break;
-          }
-        }
-
-        // No hay más neuronas calculables
-        if (selected_neuron == -1)
-          break;
-
-        value = (value != 0) ? std::tanh(value / ac) : 0;
-
-        used_elements[selected_neuron][selected_neuron] = true;
-        results[selected_neuron][selected_neuron] = value;
-
-        // Calcular los axones derivados de la neurona calculada
-        iterate_avoiding_index([&](unsigned index) -> void {
-          if (graph_matrix[selected_neuron][index]) {
-            double aux = value * saturate(cost_matrix[selected_neuron][index]);
-            results[selected_neuron][index] = aux;
-            used_elements[selected_neuron][index] = true;
-          }
-        }, 0, selected_neuron, size);
-      }
-
-    // Recoger los valores de las neuronas de salida
-    output_values.resize(0);
-
-    for (unsigned i = cost_matrix.size() - n_outputs; i < cost_matrix.size(); i++)
-      output_values.push_back(std::tanh(results[i][i]));
-
-*/
-
-
-  // TODO
-
-  propagate_feedback();
+                                          std::vector<double> &output_values) {  
 
   // Check compatibility of the vectors
   unsigned i_size = input_values.size();
@@ -358,6 +265,8 @@ bool concurrent_neural_network::calculate(std::vector<double> &input_values,
   for (unsigned i = 0; i < o_size; i++)
     output_values[i] = output_axons[i]->get_value();
 
+  propagate_feedback();
+
   return true;
 
 }
@@ -388,7 +297,7 @@ void concurrent_neural_network::print() const {
 }
 
 void concurrent_neural_network::propagate_feedback() {
-  for (auto& feedbacker : feedbackers)
+  for (const auto& feedbacker : feedbackers)
     feedbacker.second->propagate_value();
 }
 

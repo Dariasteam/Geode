@@ -18,20 +18,20 @@
 
 #include "feedback_bus.h"
 
-void feedback_bus::add_connection(neuron* origin, double weight) {
+void feedback_bus::add_connection(neuron* origin_neuron, double weight) {
   size++;
 
   axon* aux1 = new axon(weight);
   axon* aux2 = new axon(1);
 
-  inputs.push_back(aux1);
-  origin->add_output(aux1);
+  input_axons.push_back(aux1);
+  origin_neuron->add_output(aux1);
 
-  outputs.push_back(aux2);
-  destiny->add_input(aux2);
+  output_axons.push_back(aux2);
+  destiny_neuron->add_input(aux2);
 }
 
 void feedback_bus::propagate_value(){
   for (unsigned i = 0; i < size; i++)
-    outputs[i]->set_value (inputs[i]->get_value());
+    output_axons[i]->set_value (input_axons[i]->get_value());
 }

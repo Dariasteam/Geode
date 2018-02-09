@@ -11,7 +11,7 @@
 #include "neural_network/concurrent_neural_network.h"
 #include "genetic_algorithm/geneticalgorithm.h"
 
-#define N 15
+#define N 100
 
 /**
  * @brief cross Cross operator for the genetic algorithm. Cuts both father
@@ -21,6 +21,7 @@
  * @return son
  */
 dna cross (const dna& A, const dna& B) {
+  return A;
   unsigned a_size;
   unsigned b_size;
 
@@ -147,16 +148,27 @@ int main(int argc, char **argv) {
   std::vector<dna> initial_candidates = {serialized_nn_1};
   genetic.set_initial_population(initial_candidates);
 
-  double last = 0;  
+  std::vector<std::vector<std::pair<bool, TYPE>>> vec;
+  read_net_from_file("testfile.dat", vec);
+
+
+  concurrent_neural_network w (vec, 1, 1);
+  double last = 0;
+  std::vector<double> input_a = {1};
+  std::vector<double> output;
+
   while (true) {
-    genetic.step();
-    double val = evaluate(genetic.get_best_candidates()[0]);
-    if (val < last)
-      std::cout << "Problema" << std::endl;    
-    if(std::isnan(val)) {
-      std::cout << "Problema 2" << std::endl;
-      concurrent_neural_network w (genetic.get_best_candidates()[0]);
-    //  w.print();
+    double val = 0;
+
+    w.calculate(input_a, output);
+    for (auto& e : output)
+      val += e;
+
+    if (val < last) {
+      std::cout << "Problema" << std::endl;
+      input_a = {1};
+    } else {
+      input_a = {0};
     }
     //std::cout << val << " vs " << last << std::endl;
 

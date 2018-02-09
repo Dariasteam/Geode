@@ -55,6 +55,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="Node2D" parent="." index="2" instance=ExtResource( 1 )]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="AgentInstancer" parent="Node2D" index="1"]
@@ -103,6 +104,7 @@ margin_right = -12.0
 margin_bottom = 705.0
 rect_scale = Vector2( 2, 2 )
 bbcode_text = "[color=lime]Best[/color]  [color=aqua]Mean[/color]  [color=red]Worst[/color]"
+text = "Best  Mean  Worst"
 _sections_unfolded = [ "BBCode", "Hint", "Rect" ]
 
 [node name="Buttons" parent="Node2D" index="7"]
@@ -145,6 +147,8 @@ drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = false
 smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
 drag_margin_left = 0.2
 drag_margin_top = 0.2
 drag_margin_right = 0.2
@@ -157,9 +161,10 @@ editor_draw_drag_margin = false
 
 position = Vector2( 858.163, 590.405 )
 scale = Vector2( 2.26954, 2.28064 )
-z = -1
+z_index = -1
+z_as_relative = false
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Z" ]
+_sections_unfolded = [ "Z", "Z Index" ]
 
 
 [editable path="Node2D"]
