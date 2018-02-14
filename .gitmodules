@@ -1,3 +1,6 @@
 [submodule "frontend/GeneticNeuralNetworkLibrary/cpp_bindings"]
 	path = frontend/GeneticNeuralNetworkLibrary/cpp_bindings
 	url = https://github.com/GodotNativeTools/cpp_bindings
+[submodule "frontend/GeneticNeuralNetworkLibrary/godot_headers"]
+	path = frontend/GeneticNeuralNetworkLibrary/godot_headers
+	url = https://github.com/GodotNativeTools/godot_headers
