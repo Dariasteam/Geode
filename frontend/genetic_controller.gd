@@ -1,12 +1,12 @@
 extends Node2D
 
 onready var genetic_connector = load("res://genetic_connector.gdns").new();
-onready var text_label = get_parent().get_node("Buttons/TextOverview")
-onready var statistic_plotter = get_parent().get_node("PlotPanel")
-onready var net_viewer  = get_parent().get_node("NeuralPanel")
-onready var score_tree  = get_parent().get_node("ScorePanel")
-onready var agent_name  = get_parent().get_node("Buttons/GridContainer/LineEditAgentName")
-onready var buttons  = get_parent().get_node("Buttons")
+onready var text_label = $Buttons/TextOverview
+onready var statistic_plotter = $PlotPanel
+onready var net_viewer  = $NeuralPanel
+onready var score_tree  = $ScorePanel
+onready var agent_name  = $Buttons/GridContainer/LineEditAgentName
+onready var buttons  = $Buttons
 
 export var agent_scene = preload("res://agent.tscn")
 
@@ -67,7 +67,7 @@ func start_single_simulation():
 		aux_agent.set_neural_network(neural_poblation[i], i, agent_lifetime)
 		aux_agent.connect("dead",self,"agent_inform_death")
 		agents_alive.push_back(aux_agent)
-		add_child(aux_agent)
+		$AgentInstancer.add_child(aux_agent)
 		
 	neural_poblation.clear()
 	
@@ -129,7 +129,7 @@ func start_simulation ():
 	genetic_connector.semi_step();	# cruza y muta		
 	
 	var text = str("Generation: ", "%2d" % 0, "\nBest score: ", "%2.3f" % 0, "\nSince generation: ", "%2d" %0)		
-	text_label.set_text(text)	
+	text_label.set_text(text) 
 	start_single_simulation()
 	
 func stop_simulation ():

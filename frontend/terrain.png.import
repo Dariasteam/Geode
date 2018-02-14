@@ -11,7 +11,7 @@ source_file="res://terrain.png"
 source_md5="639c7b3d55d3af46b33a754ad5f9bc51"
 
 dest_files=[ "res://.import/terrain.png-84a626877af7de08ecf24965bda52835.s3tc.stex", "res://.import/terrain.png-84a626877af7de08ecf24965bda52835.etc2.stex" ]
-dest_md5="fc235f85ee1dc857044eae2c43e43ddd"
+dest_md5="46441844582ad750ba1d71bc2a298e3a"
 
 [params]
 

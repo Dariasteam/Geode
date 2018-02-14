@@ -1,6 +1,6 @@
 extends Control
 
-onready var controller = get_parent().get_node("AgentInstancer")
+onready var controller = get_parent()
 
 onready var play_txt = "Start simulation"
 onready var stop_txt = "End simulation"

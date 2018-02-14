@@ -10,7 +10,9 @@
 [node name="Node2D" type="Node2D"]
 
 position = Vector2( 2.45544, 2.68323 )
-_sections_unfolded = [ "Transform" ]
+script = ExtResource( 1 )
+_sections_unfolded = [ "Material", "Transform" ]
+agent_scene = ExtResource( 2 )
 
 [node name="Time" type="Label" parent="." index="0"]
 
@@ -32,9 +34,7 @@ max_lines_visible = -1
 [node name="AgentInstancer" type="Node2D" parent="." index="1"]
 
 position = Vector2( 430.497, 221.542 )
-script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-agent_scene = ExtResource( 2 )
 
 [node name="ScorePanel" type="Tree" parent="." index="2"]
 
