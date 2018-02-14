@@ -3,9 +3,12 @@ backend/Makefile
 *.pro.user
 example
 .qmake.stash
+*.os
 *.o
 *.a
 *~
 *.kdev4
 backend/neural_test
 frontend/GeneticNeuralNetworkLibrary/lib
+frontend/GeneticNeuralNetworkLibrary/src/*.os
+frontend/GeneticNeuralNetworkLibrary/src/*.os
