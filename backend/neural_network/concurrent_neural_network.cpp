@@ -65,10 +65,11 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
   for (unsigned i = 0; i < n_neurons; i++) {
     cost_matrix[i].resize(n_neurons);
     graph_matrix[i].resize(n_neurons);
-    for (unsigned j = 0; j < n_neurons; j++) {
-      graph_matrix[i][j] = (rand() % 7 < 1);
+    iterate_avoiding_index([&](unsigned j){
+      graph_matrix[i][j] = (rand() % 4 < 1);
       cost_matrix[i][j] = uni(rng);
-    }
+    }, 0, i, n_neurons);
+    cost_matrix[i][i] = 0;
   }
   optimize();
   build_from_matrixes();
@@ -148,7 +149,7 @@ void concurrent_neural_network::build_from_matrixes() {
         neurons[i]->add_output(aux);
         neurons[j]->add_input(aux);
       }
-    }    
+    }
 
     // lower triangle (feedbacker)
     for (unsigned j = 0; j < i; j++) {
@@ -227,16 +228,16 @@ void concurrent_neural_network::operator=(const concurrent_neural_network &aux) 
 }
 
 bool concurrent_neural_network::calculate(std::vector<double> &input_values,
-                                          std::vector<double> &output_values) {  
+                                          std::vector<double> &output_values) {
 
   // Check compatibility of the vectors
   unsigned i_size = input_values.size();
   unsigned o_size = n_outputs;
   if (i_size != n_inputs)
-    return false;  
+    return false;
 
   std::vector<std::future<void>> promises (neurons.size());
-  auto calculate_neuron = [&](unsigned i) {      
+  auto calculate_neuron = [&](unsigned i) {
     neurons[i]->calculate_value();
     neurons[i]->propagate_value();
   };
@@ -428,7 +429,7 @@ std::vector<unsigned int> concurrent_neural_network::generate_concurrent_steps()
         last_node = i;
       }
     }
-  }  
+  }
   solve.push_back(last_node);
   solve.push_back(size - 1);
 

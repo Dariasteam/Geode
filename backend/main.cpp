@@ -151,26 +151,23 @@ int main(int argc, char **argv) {
   std::vector<std::vector<std::pair<bool, TYPE>>> vec;
   read_net_from_file("testfile.dat", vec);
 
-
   concurrent_neural_network w (vec, 1, 1);
+
   double last = 0;
   std::vector<double> input_a = {1};
   std::vector<double> output;
 
   while (true) {
     double val = 0;
-
     w.calculate(input_a, output);
     for (auto& e : output)
       val += e;
 
-    if (val < last) {
+    if (val < last)
       std::cout << "Problema" << std::endl;
-      input_a = {1};
-    } else {
-      input_a = {0};
-    }
-    //std::cout << val << " vs " << last << std::endl;
+    if (val > last)
+      std::cout << "Recupero" << std::endl;
+    std::cout << val << " vs " << last << std::endl;
 
     last = val;
   }

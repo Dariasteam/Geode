@@ -110,7 +110,7 @@ private:
     }
 
     original = aux;
-  }  
+  }
 
   /**
    * @brief Delete neurons with no predecesors (excluding inputs and outputs)
@@ -157,8 +157,13 @@ private:
   void copy_mem (char* seq, unsigned& index, const void* mem, size_t size);
 
   double saturate (double v) const {
-    v = v / std::numeric_limits<TYPE>::max() ;
-    return v;
+    v  /= std::numeric_limits<TYPE>::max();
+    if (v > 1)
+      return 1;
+    else if (v < -1)
+      return -1;
+    else
+      return v;
   }
 
   /* Iterador genérico para aplicar a toda una fila una operación excepto

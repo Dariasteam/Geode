@@ -48,7 +48,7 @@ private:
 
     auto async_function = ([&](unsigned index) {
       for (unsigned j = 0; j < ratio_cand_pobl; j++)
-        population[(index * ratio_cand_pobl) + j] = op_cross(best_candidates[index], best_candidates[rand() % (candidates_size - 5)]);
+        population[(index * ratio_cand_pobl) + j] = op_cross(best_candidates[index], best_candidates[rand() % (candidates_size)]);
     });
 
     for (unsigned i = 0; i < candidates_size; i++)
@@ -77,7 +77,7 @@ private:
     // función a aplicar sobre cada elemento
     auto async_function = ([&](unsigned index) {
       op_mutate(population[index], mutation_rate);
-    });    
+    });
 
     for (unsigned i = 0; i < population_size - 2; i++)
       promises[i] = std::async(async_function, i);
@@ -129,7 +129,7 @@ private:
   // Copy best individuals of the current population to the candidates vector
   void generate_next_candidates () {
     best_candidates.clear();
-    std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));    
+    std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));
     // TODO Cross them!!!
   }
 

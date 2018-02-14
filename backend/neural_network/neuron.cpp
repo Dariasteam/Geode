@@ -20,20 +20,22 @@
 
 // REGULAR NEURON
 
-void neuron::add_input(axon* input){
+void neuron::add_input(axon* input) {
   inputs.push_back(input);
   n_inputs++;
 }
 
-void neuron::add_output(axon* output){
+void neuron::add_output(axon* output) {
   outputs.push_back(output);
 }
 
-void neuron::calculate_value(){
+void neuron::calculate_value() {
   value = 0;
   for (axon* aux : inputs)
     value += aux->get_value();
-  value = std::tanh((value / n_inputs) + threshold);
+  value = std::tanh((value / n_inputs));
+  if (fabs(value) < fabs(threshold))
+    value = 0.0001;
 }
 
 void neuron::propagate_value() {
@@ -47,5 +49,7 @@ void output_neuron::calculate_value() {
   value = 0;
   for (axon* aux : inputs)
     value += aux->get_value();
-   value = (n_inputs == 0) ? 0 : std::tanh((value / n_inputs) + threshold);
+  value = (n_inputs == 0) ? 0 : std::tanh((value / n_inputs));
+  if (fabs(value) < fabs(threshold))
+    value = 0.0001;
  }

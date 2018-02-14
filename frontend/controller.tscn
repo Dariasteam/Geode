@@ -7,9 +7,9 @@
 [ext_resource path="res://nn_representation.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Buttons.gd" type="Script" id=6]
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D"]
 
-position = Vector2( 0, -0.999985 )
+position = Vector2( 2.45544, 2.68323 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Time" type="Label" parent="." index="0"]

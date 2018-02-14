@@ -4,6 +4,8 @@ backend/Makefile
 example
 .qmake.stash
 *.o
+*.a
 *~
 *.kdev4
 backend/neural_test
+frontend/GeneticNeuralNetworkLibrary/lib

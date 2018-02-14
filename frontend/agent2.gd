@@ -14,6 +14,9 @@ export(int) var outputs = 2
 
 var time_alive = 0
 
+var movement = 0
+
+
 # red neuronal, índice, tiempo de vida
 func set_neural_network(nn, i, life_time):
 	neural_network = nn
@@ -61,13 +64,11 @@ func _physics_process(delta):
 
 	var outputs = neural_network.evaluate(inputs)
 
-	if (abs(spin) > 20):
-		die(-255)
-
 	spin += outputs[0]
 
 	rotate(outputs[0])
 	move_local_y(outputs[1] * 100)
+	movement += abs(outputs[1] * 10)
 	#score += outputs[1]
 	#score 
 
@@ -84,7 +85,11 @@ func die(time):
 		$Sprite.modulate = Color(255, 0, 0)
 		$RigidBody2D.queue_free()
 		$Weapons/weapon.set_enabled(false)
-		emit_signal("dead", index, 1000 - $Time_Alive.get_time_left())
+		emit_signal("dead", index, 1000 - $Time_Alive.get_time_left() + movement)
+		#emit_signal("dead", index, score + movement)
+		$Raycast.queue_free()
+		$Weapons.queue_free()
+		$Sprite.queue_free()
 
 func _on_Timer_timeout():
 	die(0)
@@ -101,5 +106,5 @@ func eat():
 func die_eated():
 	die($Timer.wait_time - $Timer.get_time_left())
 
-func _on_RigidBody2D_body_entered(body):	
+func _on_RigidBody2D_body_entered(body):
 	die($Timer.wait_time - $Timer.get_time_left())
