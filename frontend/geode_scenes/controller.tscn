@@ -1,18 +1,17 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://genetic_controller.gd" type="Script" id=1]
-[ext_resource path="res://agent.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ScorePanel.gd" type="Script" id=3]
-[ext_resource path="res://plot.gd" type="Script" id=4]
-[ext_resource path="res://nn_representation.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Buttons.gd" type="Script" id=6]
+[ext_resource path="res://geode_scenes/genetic_controller.gd" type="Script" id=1]
+[ext_resource path="res://geode_scenes/ScorePanel.gd" type="Script" id=2]
+[ext_resource path="res://geode_scenes/plot_panel/plot.gd" type="Script" id=3]
+[ext_resource path="res://geode_scenes/neural_panel/nn_representation.tscn" type="PackedScene" id=4]
+[ext_resource path="res://geode_scenes/Buttons.gd" type="Script" id=5]
 
-[node name="Node2D" type="Node2D"]
+[node name="GeneticController" type="Node2D" index="0"]
 
 position = Vector2( 2.45544, 2.68323 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform" ]
-agent_scene = ExtResource( 2 )
+agent_scene = null
 
 [node name="Time" type="Label" parent="." index="0"]
 
@@ -61,7 +60,7 @@ hide_folding = false
 hide_root = false
 drop_mode_flags = 0
 select_mode = 0
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 _sections_unfolded = [ "Rect", "Visibility" ]
 
 [node name="PlotPanel" type="Panel" parent="." index="3"]
@@ -79,14 +78,14 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 _sections_unfolded = [ "Grow Direction", "Rect", "Visibility" ]
 colorBest = Color( 0.242188, 1, 0, 1 )
 colorMean = Color( 0, 0.625, 1, 1 )
 colorWorst = Color( 1, 0, 0, 1 )
 margin = 10
 
-[node name="NeuralPanel" parent="." index="4" instance=ExtResource( 5 )]
+[node name="NeuralPanel" parent="." index="4" instance=ExtResource( 4 )]
 
 modulate = Color( 1, 1, 1, 0.823216 )
 margin_left = 762.0
@@ -169,7 +168,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = ExtResource( 6 )
+script = ExtResource( 5 )
 
 [node name="TextOverview" type="Label" parent="Buttons" index="0"]
 

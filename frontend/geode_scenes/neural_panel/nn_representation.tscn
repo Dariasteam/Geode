@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://nn_representation.gd" type="Script" id=1]
+[ext_resource path="res://geode_scenes/neural_panel/nn_representation.gd" type="Script" id=1]
+
 
 [node name="Panel" type="Panel" index="0"]
 

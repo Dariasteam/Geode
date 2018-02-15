@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/feedbacker.png-ea2057b8de99cf650720de9467d7b28f.stex"
+path="res://.import/insect.png-c4290ce69c756457da0002e80c36ce5c.stex"
 
 [deps]
 
-source_file="res://feedbacker.png"
-source_md5="a4f783a72396728507e9c831607eacae"
+source_file="res://demo_insects/insect.png"
+source_md5="8a40cc2608cc73b9e166e0a7421703b4"
 
-dest_files=[ "res://.import/feedbacker.png-ea2057b8de99cf650720de9467d7b28f.stex" ]
-dest_md5="5542e854719b2a765e2dfd44eb80f8a2"
+dest_files=[ "res://.import/insect.png-c4290ce69c756457da0002e80c36ce5c.stex" ]
+dest_md5="9bd1c2302b92182e9cb086797bc25e84"
 
 [params]
 
@@ -18,7 +18,7 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false

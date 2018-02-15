@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var genetic_connector = load("res://genetic_connector.gdns").new();
+onready var genetic_connector = load("res://geode_scenes/genetic_connector.gdns").new()
 onready var text_label = $Buttons/TextOverview
 onready var statistic_plotter = $PlotPanel
 onready var net_viewer  = $NeuralPanel
@@ -8,7 +8,7 @@ onready var score_tree  = $ScorePanel
 onready var agent_name  = $Buttons/GridContainer/LineEditAgentName
 onready var buttons  = $Buttons
 
-export var agent_scene = preload("res://agent.tscn")
+export(PackedScene) var agent_scene 
 
 var inputs
 var outputs
@@ -47,7 +47,7 @@ func agent_inform_death(index, score):
 func generate_poblation(raw_poblation):
 	var neural_networks = []
 	for i in range(raw_poblation.size() / 2):
-		var aux = load("res://neural_network_connector.gdns").new();
+		var aux = load("res://geode_scenes/neural_network_connector.gdns").new()
 		aux.set_content (raw_poblation[i * 2], raw_poblation[i * 2 + 1], inputs, outputs)
 		neural_networks.push_back(aux)
 	return neural_networks
@@ -65,7 +65,7 @@ func start_single_simulation():
 		# Añade un agente y le envia su neural_network
 		var aux_agent = agent_scene.instance()
 		aux_agent.set_neural_network(neural_poblation[i], i, agent_lifetime)
-		aux_agent.connect("dead",self,"agent_inform_death")
+		aux_agent.connect("dead", self, "agent_inform_death")
 		agents_alive.push_back(aux_agent)
 		$AgentInstancer.add_child(aux_agent)
 		

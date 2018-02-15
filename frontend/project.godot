@@ -11,8 +11,8 @@ config_version=3
 [application]
 
 config/name="Geode"
-run/main_scene="res://Map_2.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://demo_car/car_simulation.tscn"
+config/icon="res://demo_car/car.png"
 
 [debug]
 

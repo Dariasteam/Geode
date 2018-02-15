@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://agent2.gd" type="Script" id=1]
-[ext_resource path="res://insect.png" type="Texture" id=2]
+[ext_resource path="res://demo_insects/agent_insect.gd" type="Script" id=1]
+[ext_resource path="res://demo_insects/insect.png" type="Texture" id=2]
 
 [node name="Controller" type="Node2D"]
 
@@ -14,7 +14,7 @@ outputs = 2
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-self_modulate = Color( 1, 0, 1, 1 )
+self_modulate = Color( 0.475137, 1, 0.694431, 1 )
 position = Vector2( 0, -2 )
 rotation = 3.14159
 texture = ExtResource( 2 )
@@ -40,7 +40,7 @@ autostart = true
 
 position = Vector2( -0.896179, 2.18491 )
 input_pickable = false
-collision_layer = 4
+collision_layer = 2
 collision_mask = 1
 mode = 0
 mass = 1.02041e-05
@@ -65,7 +65,7 @@ visible = false
 position = Vector2( -1.85305, -2.29649 )
 build_mode = 0
 polygon = PoolVector2Array( 7.15793, 28.3181, -1.52997, 28.4227, -6.13559, 19.9441, -12.2066, 13.3497, -9.17105, -8.2131, -2.36722, -32.916, 6.84409, -33.0207, 15.4272, -5.49152, 17.9394, 14.5012, 11.3449, 19.5255 )
-_sections_unfolded = [ "Transform", "Visibility" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
 [node name="Raycast" type="Node2D" parent="." index="4"]
 
@@ -78,7 +78,7 @@ z_as_relative = false
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 100 )
-collision_mask = 3
+collision_mask = 5
 _sections_unfolded = [ "Transform", "Visibility", "Z" ]
 
 [node name="ray_b" type="RayCast2D" parent="Raycast" index="1"]
@@ -89,7 +89,7 @@ z_as_relative = false
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 100 )
-collision_mask = 3
+collision_mask = 5
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 [node name="ray_c" type="RayCast2D" parent="Raycast" index="2"]
@@ -101,7 +101,7 @@ z_as_relative = false
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 100 )
-collision_mask = 3
+collision_mask = 5
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="ray_c2" type="RayCast2D" parent="Raycast" index="3"]
@@ -113,7 +113,7 @@ z_as_relative = false
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 20 )
-collision_mask = 3
+collision_mask = 5
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="ray_c3" type="RayCast2D" parent="Raycast" index="4"]
@@ -125,7 +125,7 @@ z_as_relative = false
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 20 )
-collision_mask = 3
+collision_mask = 5
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="ray_c4" type="RayCast2D" parent="Raycast" index="5"]
@@ -137,7 +137,7 @@ z_as_relative = false
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 20 )
-collision_mask = 3
+collision_mask = 5
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="ray_c5" type="RayCast2D" parent="Raycast" index="6"]
@@ -149,12 +149,10 @@ z_as_relative = false
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 20 )
-collision_mask = 3
+collision_mask = 5
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="Weapons" type="Node2D" parent="." index="5"]
-
-_sections_unfolded = [ "Transform" ]
 
 [node name="weapon" type="RayCast2D" parent="Weapons" index="0"]
 
@@ -163,7 +161,7 @@ position = Vector2( 0.0112, 30.4436 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 20 )
-collision_mask = 2
+collision_mask = 4
 _sections_unfolded = [ "Transform", "Visibility", "Z" ]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

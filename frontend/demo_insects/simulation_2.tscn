@@ -1,0 +1,150 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://geode_scenes/controller.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demo_insects/agent_insect_a.tscn" type="PackedScene" id=2]
+[ext_resource path="res://demo_insects/agent_insect_b.tscn" type="PackedScene" id=3]
+
+[node name="Map2" type="Node2D"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
+
+editor/display_folded = true
+scale = Vector2( 5, 5 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0"]
+
+position = Vector2( 0.119847, -16.5225 )
+scale = Vector2( 0.503789, 0.51908 )
+build_mode = 0
+polygon = PoolVector2Array( -3.94913, 10.7508, 2042.88, 22.6926, 2040, 1200, 0, 1200, 0, 20, -40, 20, -40, 1210, -40, 1240, 2100, 1240, 2100, -60, 0, -60 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GeneticControllerA" parent="." index="1" instance=ExtResource( 1 )]
+
+scale = Vector2( 5, 5 )
+agent_scene = ExtResource( 2 )
+
+[node name="Time" parent="GeneticControllerA" index="0"]
+
+margin_left = 756.0
+margin_top = 14.0
+margin_right = 796.0
+margin_bottom = 28.0
+
+[node name="AgentInstancer" parent="GeneticControllerA" index="1"]
+
+position = Vector2( 509.151, 305.814 )
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
+
+[node name="ScorePanel" parent="GeneticControllerA" index="2"]
+
+visible = false
+
+[node name="PlotPanel" parent="GeneticControllerA" index="3"]
+
+visible = false
+
+[node name="NeuralPanel" parent="GeneticControllerA" index="4"]
+
+visible = false
+
+[node name="NeuralPanelLabel" parent="GeneticControllerA" index="5"]
+
+visible = false
+
+[node name="PlotPanelLabel" parent="GeneticControllerA" index="6"]
+
+visible = false
+
+[node name="Buttons" parent="GeneticControllerA" index="7"]
+
+editor/display_folded = true
+margin_top = 43.0
+margin_bottom = 83.0
+
+[node name="GridContainer" parent="GeneticControllerA/Buttons" index="1"]
+
+_sections_unfolded = [ "Grow Direction", "Margin", "Rect", "Visibility" ]
+
+[node name="Camera2D" type="Camera2D" parent="." index="2"]
+
+position = Vector2( 2556.26, 1474.76 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 5, 5 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+[node name="GeneticControllerB" parent="." index="3" instance=ExtResource( 1 )]
+
+scale = Vector2( 5, 5 )
+agent_scene = ExtResource( 3 )
+
+[node name="Time" parent="GeneticControllerB" index="0"]
+
+margin_left = 774.0
+margin_top = 545.0
+margin_right = 814.0
+margin_bottom = 559.0
+
+[node name="AgentInstancer" parent="GeneticControllerB" index="1"]
+
+position = Vector2( 504.937, 288.96 )
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
+
+[node name="ScorePanel" parent="GeneticControllerB" index="2"]
+
+visible = false
+
+[node name="PlotPanel" parent="GeneticControllerB" index="3"]
+
+visible = false
+
+[node name="NeuralPanel" parent="GeneticControllerB" index="4"]
+
+visible = false
+
+[node name="NeuralPanelLabel" parent="GeneticControllerB" index="5"]
+
+visible = false
+
+[node name="PlotPanelLabel" parent="GeneticControllerB" index="6"]
+
+visible = false
+
+[node name="Buttons" parent="GeneticControllerB" index="7"]
+
+editor/display_folded = true
+margin_top = 548.0
+margin_bottom = 588.0
+
+
+[editable path="GeneticControllerA"]
+[editable path="GeneticControllerB"]

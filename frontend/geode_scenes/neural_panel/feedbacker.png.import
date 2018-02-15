@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/axon.png-2be9f7861197395fa1caad404bbd37cc.stex"
+path="res://.import/feedbacker.png-0c4f2cf1ea18f8217ba01fb2335700a2.stex"
 
 [deps]
 
-source_file="res://axon.png"
-source_md5="b76ec2d9ddb012ab61fcd4a6f1a5cba4"
+source_file="res://geode_scenes/neural_panel/feedbacker.png"
+source_md5="a4f783a72396728507e9c831607eacae"
 
-dest_files=[ "res://.import/axon.png-2be9f7861197395fa1caad404bbd37cc.stex" ]
-dest_md5="d9ed453bd9f5111578c8bbd69829df38"
+dest_files=[ "res://.import/feedbacker.png-0c4f2cf1ea18f8217ba01fb2335700a2.stex" ]
+dest_md5="5542e854719b2a765e2dfd44eb80f8a2"
 
 [params]
 

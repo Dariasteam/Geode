@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://controller.tscn" type="PackedScene" id=1]
-[ext_resource path="res://terrain.png" type="Texture" id=2]
+[ext_resource path="res://geode_scenes/controller.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demo_car/agent_car.tscn" type="PackedScene" id=2]
+[ext_resource path="res://demo_car/terrain.png" type="Texture" id=3]
 
 [node name="Map" type="Node2D" index="0"]
 
@@ -56,6 +57,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 [node name="Node2D" parent="." index="2" instance=ExtResource( 1 )]
 
 _sections_unfolded = [ "Material", "Transform", "Z" ]
+agent_scene = ExtResource( 2 )
 
 [node name="AgentInstancer" parent="Node2D" index="1"]
 
@@ -163,7 +165,7 @@ position = Vector2( 858.163, 590.405 )
 scale = Vector2( 2.26954, 2.28064 )
 z_index = -1
 z_as_relative = false
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Z", "Z Index" ]
 
 

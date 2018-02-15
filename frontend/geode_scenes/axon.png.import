@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/axon.png-ad73d0a236047a2e342af6da518f62d3.stex"
 
 [deps]
 
-source_file="res://icon.png"
-source_md5="60b48a95e047a1324978781ed03781bc"
+source_file="res://geode_scenes/axon.png"
+source_md5="b76ec2d9ddb012ab61fcd4a6f1a5cba4"
 
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
-dest_md5="e5d5ad648e3d3468943bd86c367532c6"
+dest_files=[ "res://.import/axon.png-ad73d0a236047a2e342af6da518f62d3.stex" ]
+dest_md5="d61f2d623f20ed7fb83e2df3b7ab5cb8"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/insect.png-d681f237ba90453be2d4ce55a6b27ed2.stex"
+path="res://.import/axon.png-fd207eb152d59d15f044da2ccc0d5499.stex"
 
 [deps]
 
-source_file="res://insect.png"
-source_md5="8a40cc2608cc73b9e166e0a7421703b4"
+source_file="res://geode_scenes/neural_panel/axon.png"
+source_md5="b76ec2d9ddb012ab61fcd4a6f1a5cba4"
 
-dest_files=[ "res://.import/insect.png-d681f237ba90453be2d4ce55a6b27ed2.stex" ]
-dest_md5="304b1e223ab3f9dbd1f0f890e1e128da"
+dest_files=[ "res://.import/axon.png-fd207eb152d59d15f044da2ccc0d5499.stex" ]
+dest_md5="d9ed453bd9f5111578c8bbd69829df38"
 
 [params]
 
@@ -18,8 +18,8 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=false
+flags/repeat=1
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
