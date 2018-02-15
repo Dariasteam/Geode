@@ -13,3 +13,4 @@ frontend/GeneticNeuralNetworkLibrary/lib
 frontend/GeneticNeuralNetworkLibrary/src/*.os
 frontend/GeneticNeuralNetworkLibrary/src/*.os
 frontend/.import
+*.dat
