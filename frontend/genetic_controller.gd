@@ -134,7 +134,7 @@ func start_simulation ():
 	
 func stop_simulation ():
 	simulating = false
-	for child in get_children():
+	for child in $AgentInstancer.get_children():
 		child.queue_free()
 	scores.clear()
 	agents_alive.clear()
@@ -177,7 +177,7 @@ func view_net_at(i):
 		net_viewer.set_network([raw_matrixes[i * 2], raw_matrixes[i * 2 + 1]], inputs, outputs)
 		
 # population_size / candiadtes_size / mutation_rate
-func set_genetic_parameters(p_s, c_s, m_r):
+func set_genetic_parameters(p_s, c_s, m_r):	
 	print (p_s, " ", c_s)	
 	genetic_connector.set_genetic_parameters(p_s, c_s, m_r)
 	population_size = p_s

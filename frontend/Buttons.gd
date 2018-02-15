@@ -4,8 +4,8 @@ onready var controller = get_parent()
 
 onready var play_txt = "Start simulation"
 onready var stop_txt = "End simulation"
-onready var continue_txt = "Continuar simulación"
-onready var pause_txt = "Pausar simulación"
+onready var continue_txt = "Continue simulation"
+onready var pause_txt = "Pause simulation"
 
 onready var simulating = false
 
@@ -31,12 +31,9 @@ func _on_SpinBoxMutationRate_value_changed(value):
 
 func _on_SpinBoxLifeTime_value_changed(value):	
 	controller.set_time(value)
-	
-
 
 func _on_ButtonSaveAgent_pressed():
 	controller.save()
-	pass # replace with function body
 
 func _on_ButtonLoadAgent_button_down():
 	controller.load()
@@ -46,7 +43,7 @@ func _on_SpinBoxPoblationSize_value_changed( value ):
 		$GridContainer/SpinBoxPoblationSize.set_value(value + 2)
 	update_genetic_parameters()
 
-func update_genetic_parameters():
+func update_genetic_parameters():	
 	emit_signal("udpdate_genetic_parameters", $GridContainer/SpinBoxPoblationSize.value, $GridContainer/SpinBoxCandidatesSize.value, mutation_rate)
 
 func _on_SpinBoxCandidatesSize_value_changed( value ):

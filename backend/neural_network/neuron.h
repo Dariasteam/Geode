@@ -40,7 +40,7 @@ protected:
 public:
   neuron () : n_inputs(0) {}
 
-  void set_threshold (double t) { threshold = t; }
+  void set_threshold (double t) { threshold = t - 0.2; }
 
   void add_input (axon* input);
   void add_output (axon* output);

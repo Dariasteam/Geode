@@ -459,6 +459,6 @@ _sections_unfolded = [ "Rect" ]
 
 [connection signal="value_changed" from="Buttons/GridContainer/SpinBoxCandidatesSize" to="Buttons" method="_on_SpinBoxCandidatesSize_value_changed"]
 
-[connection signal="value_changed" from="Buttons/GridContainer/SpinBoxNeuronSize" to="AgentInstancer" method="_on_SpinBoxNeuronSize_value_changed"]
+[connection signal="value_changed" from="Buttons/GridContainer/SpinBoxNeuronSize" to="." method="_on_SpinBoxNeuronSize_value_changed"]
 
 

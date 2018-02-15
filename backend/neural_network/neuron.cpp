@@ -34,7 +34,7 @@ void neuron::calculate_value() {
   for (axon* aux : inputs)
     value += aux->get_value();
   value = std::tanh((value / n_inputs));
-  if (fabs(value) < fabs(threshold))
+  if (value < threshold)
     value = 0.0001;
 }
 
@@ -50,6 +50,6 @@ void output_neuron::calculate_value() {
   for (axon* aux : inputs)
     value += aux->get_value();
   value = (n_inputs == 0) ? 0 : std::tanh((value / n_inputs));
-  if (fabs(value) < fabs(threshold))
+  if (value < threshold)
     value = 0.0001;
  }
