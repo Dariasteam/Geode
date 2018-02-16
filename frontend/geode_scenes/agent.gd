@@ -25,7 +25,7 @@ func _process(delta):
 	
 	var inputs = []
 	
-	if ($Weapons/weapon.is_colliding()):		
+	if ($Weapons/weapon.is_colliding()):
 		var collider = $Weapons/weapon.get_collider()
 		if (collider != null):
 			collider.get_parent().die_eated()
@@ -35,23 +35,23 @@ func _process(delta):
 	for item in $Raycast.get_children():
 		if (item.is_colliding()):
 			var distance = item.get_collision_point().distance_to(item.global_position)
-								
+
 			var mid_distance = item.cast_to.length() / 2
 			
 			var color_value = (distance - mid_distance) / mid_distance
 			item.set_modulate(Color(1 - color_value, 1 + color_value, 1 + color_value))
-								
-			if (distance > mid_distance):				
-				distance = (distance - mid_distance) / mid_distance * - 1				
-			else:				
+
+			if (distance > mid_distance):
+				distance = (distance - mid_distance) / mid_distance * - 1
+			else:
 				distance = (distance / mid_distance)
-											
+
 			var color_g = max(255 * -distance , 0.1)
-			var color_b = max(255 *  distance , 0.1)					
+			var color_b = max(255 *  distance , 0.1)
 			
 			inputs.push_back(max(distance, -1))
 			
-		else:		
+		else:
 			item.modulate = Color(0, 1, 1)
 			inputs.push_back(-1)
 			

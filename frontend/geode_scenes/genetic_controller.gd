@@ -162,7 +162,7 @@ func load():
 		print ("Agent loaded")
 	
 		net_viewer.set_network(content, 3, 2)
-		var aux_network = load("res://neural_network_connector.gdns").new();
+		var aux_network = load("res://geode_scenes/neural_network_connector.gdns").new()
 		aux_network.set_content (content[0], content[1], 3, 2)
 		var aux_agent = agent_scene.instance()
 		aux_agent.set_neural_network(aux_network, 0, agent_lifetime)

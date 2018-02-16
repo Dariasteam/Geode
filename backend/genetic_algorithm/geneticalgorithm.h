@@ -130,7 +130,6 @@ private:
   void generate_next_candidates () {
     best_candidates.clear();
     std::copy (population.begin(), population.begin() + candidates_size, std::back_inserter(best_candidates));
-    // TODO Cross them!!!
   }
 
 public:
@@ -219,23 +218,6 @@ public:
   * Each i element contains the score of the i individual from population.
   */
   void set_external_evaluations (std::vector<double> evaluations) {
-    /*
-    std::vector<std::pair<T, double>> aux (population_size);
-    for (unsigned i = 0; i < population_size; i++)
-      aux[i] = {population[i], evaluations[i]};
-
-    auto comparator = [&](const std::pair<T, double>& A, const std::pair<T, double>& B) {
-      return A.second > B.second;
-    };
-    std::sort (aux.begin(), aux.end(), comparator);
-
-    population.clear();
-    population.resize(population_size);
-
-    for (unsigned i = 0; i < population_size; i++)
-      population[i] = aux[i].first;
-    */
-
     sort_population (evaluations);
     generate_next_candidates();
   }

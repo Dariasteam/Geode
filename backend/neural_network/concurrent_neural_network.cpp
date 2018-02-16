@@ -66,10 +66,10 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
     cost_matrix[i].resize(n_neurons);
     graph_matrix[i].resize(n_neurons);
     iterate_avoiding_index([&](unsigned j){
-      graph_matrix[i][j] = (rand() % 4 < 1);
+      graph_matrix[i][j] = (rand() % (n_neurons / 2) < 1);
       cost_matrix[i][j] = uni(rng);
     }, 0, i, n_neurons);
-    cost_matrix[i][i] = 0;
+    cost_matrix[i][i] = -1;
   }
   optimize();
   build_from_matrixes();
