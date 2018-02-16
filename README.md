@@ -21,7 +21,7 @@ More saturation indicates high values and less values near to 0
 ## Repository structure
 The project is divided in two components: backend and frontend
 
-- Backend: Contains the c++ code for both genetic algorithm and arificial neural network. It's designed with easy reutilisation on mind, none of its components talks directly with Godot engine. Documentation can be found [here](https://si-ull.github.io/Proyecto/index.html).
+- Backend: Contains the c++ code for both genetic algorithm and arificial neural network. It's designed with easy reutilisation on mind, none of its components talks directly with Godot engine. Documentation can be found [here](https://dariasteam.github.io/Geode/).
 
 
 - Frontend: Contains the bindings between Godot -GDNative- and the backend, the scenes used to comunicate both and some example simulations.
