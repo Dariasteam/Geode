@@ -1,0 +1,69 @@
+\hypertarget{classneuron}{}\section{neuron Class Reference}
+\label{classneuron}\index{neuron@{neuron}}
+
+
+Perceptron like neuron.  
+
+
+
+
+{\ttfamily \#include $<$neuron.\+h$>$}
+
+Inheritance diagram for neuron\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classneuron}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classneuron_afda4f1ba2c739a1c03c407838d1c336a}\label{classneuron_afda4f1ba2c739a1c03c407838d1c336a}} 
+void {\bfseries set\+\_\+threshold} (double t)
+\item 
+\mbox{\Hypertarget{classneuron_a2a88d55500f17c28ae0c262fd5c627f2}\label{classneuron_a2a88d55500f17c28ae0c262fd5c627f2}} 
+void {\bfseries add\+\_\+input} (\mbox{\hyperlink{classaxon}{axon}} $\ast$input)
+\item 
+\mbox{\Hypertarget{classneuron_a5718f629f5bfe73a41f0e3d2f4b6abf0}\label{classneuron_a5718f629f5bfe73a41f0e3d2f4b6abf0}} 
+void {\bfseries add\+\_\+output} (\mbox{\hyperlink{classaxon}{axon}} $\ast$output)
+\item 
+\mbox{\Hypertarget{classneuron_a49f9bb4a8ef9fb8220c66d2ee4752760}\label{classneuron_a49f9bb4a8ef9fb8220c66d2ee4752760}} 
+virtual void {\bfseries calculate\+\_\+value} ()
+\item 
+\mbox{\Hypertarget{classneuron_a697f1ae7d0cb97e66b2382b1f01e47ea}\label{classneuron_a697f1ae7d0cb97e66b2382b1f01e47ea}} 
+void {\bfseries propagate\+\_\+value} ()
+\item 
+\mbox{\Hypertarget{classneuron_a1f560b8ccb0240439df55ac69758ff3d}\label{classneuron_a1f560b8ccb0240439df55ac69758ff3d}} 
+double {\bfseries get\+\_\+value} () const
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classneuron_a991ef728f717c5421dc1c7eeb239f9a7}\label{classneuron_a991ef728f717c5421dc1c7eeb239f9a7}} 
+double {\bfseries value}
+\item 
+\mbox{\Hypertarget{classneuron_ac730fc8c9d0c6f4d0a26ac9008c5b079}\label{classneuron_ac730fc8c9d0c6f4d0a26ac9008c5b079}} 
+double {\bfseries threshold}
+\item 
+\mbox{\Hypertarget{classneuron_afa18eb496b92d6f3492c585a52562b8a}\label{classneuron_afa18eb496b92d6f3492c585a52562b8a}} 
+unsigned {\bfseries n\+\_\+inputs}
+\item 
+\mbox{\Hypertarget{classneuron_afe6dd27464dcc663c48abfe98b4c3611}\label{classneuron_afe6dd27464dcc663c48abfe98b4c3611}} 
+std\+::vector$<$ \mbox{\hyperlink{classaxon}{axon}} $\ast$ $>$ {\bfseries inputs}
+\item 
+\mbox{\Hypertarget{classneuron_aca8ecff762063d557618a34d7f886390}\label{classneuron_aca8ecff762063d557618a34d7f886390}} 
+std\+::vector$<$ \mbox{\hyperlink{classaxon}{axon}} $\ast$ $>$ {\bfseries outputs}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Perceptron like neuron. 
+
+Definition at line 31 of file neuron.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+backend/neural\+\_\+network/neuron.\+h\item 
+backend/neural\+\_\+network/neuron.\+cpp\end{DoxyCompactItemize}

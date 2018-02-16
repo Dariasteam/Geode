@@ -1,0 +1,73 @@
+\hypertarget{structdna}{}\section{dna Struct Reference}
+\label{structdna}\index{dna@{dna}}
+
+
+Estructura que representa un genoma de red neuronal.  
+
+
+
+
+{\ttfamily \#include $<$dna.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structdna_a54a35c5c7c03a95a4b2d0e1c1513ddba}\label{structdna_a54a35c5c7c03a95a4b2d0e1c1513ddba}} 
+{\bfseries dna} (const \mbox{\hyperlink{structdna}{dna}} \&D\+NA)
+\item 
+\mbox{\Hypertarget{structdna_a1ba2ef3fbc06a7307edb8dfa6d01187b}\label{structdna_a1ba2ef3fbc06a7307edb8dfa6d01187b}} 
+{\bfseries dna} (char $\ast$s, unsigned b, unsigned i, unsigned o)
+\item 
+\mbox{\Hypertarget{structdna_a07c485849dfec41e9d5a8873aaa61296}\label{structdna_a07c485849dfec41e9d5a8873aaa61296}} 
+void {\bfseries operator=} (const \mbox{\hyperlink{structdna}{dna}} \&aux)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{structdna_aed2989af9e06a398429aca34de0d3b3f}{sequence}}
+\begin{DoxyCompactList}\small\item\em Secuencia {\itshape binaria} que contiene toda la información para generar la red neuronal. Codifica dos matrices de tamaño n x n donde n es el número de neuronas y las matrices corresponden a\+: \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structdna_a57e280bcf988165eb8692ecda1967230}\label{structdna_a57e280bcf988165eb8692ecda1967230}} 
+unsigned \mbox{\hyperlink{structdna_a57e280bcf988165eb8692ecda1967230}{byte\+\_\+sz}}
+\begin{DoxyCompactList}\small\item\em Tamaño en bytes de la cadena contenida en \mbox{\hyperlink{structdna_aed2989af9e06a398429aca34de0d3b3f}{sequence}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structdna_a8fbd61efb3a087665efb344333c724dc}\label{structdna_a8fbd61efb3a087665efb344333c724dc}} 
+unsigned \mbox{\hyperlink{structdna_a8fbd61efb3a087665efb344333c724dc}{input\+\_\+neurons}}
+\begin{DoxyCompactList}\small\item\em Número de neuronas de entrada, las neuronas desde 0 hasta \mbox{\hyperlink{structdna_a8fbd61efb3a087665efb344333c724dc}{input\+\_\+neurons}} se consideran neuronas de entrada. Primeras \mbox{\hyperlink{structdna_a8fbd61efb3a087665efb344333c724dc}{input\+\_\+neurons}} neuronas. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structdna_a8939224e5ff137b49f031dfb649b2068}\label{structdna_a8939224e5ff137b49f031dfb649b2068}} 
+unsigned \mbox{\hyperlink{structdna_a8939224e5ff137b49f031dfb649b2068}{output\+\_\+neurons}}
+\begin{DoxyCompactList}\small\item\em Número de neuronas de salida, las neuronas desde (n -\/ \mbox{\hyperlink{structdna_a8939224e5ff137b49f031dfb649b2068}{output\+\_\+neurons}}) hasta n se consideran neuronas de entrada. Últimas \mbox{\hyperlink{structdna_a8939224e5ff137b49f031dfb649b2068}{output\+\_\+neurons}} neuronas. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Estructura que representa un genoma de red neuronal. 
+
+Definition at line 13 of file dna.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structdna_aed2989af9e06a398429aca34de0d3b3f}\label{structdna_aed2989af9e06a398429aca34de0d3b3f}} 
+\index{dna@{dna}!sequence@{sequence}}
+\index{sequence@{sequence}!dna@{dna}}
+\subsubsection{\texorpdfstring{sequence}{sequence}}
+{\footnotesize\ttfamily char$\ast$ dna\+::sequence}
+
+
+
+Secuencia {\itshape binaria} que contiene toda la información para generar la red neuronal. Codifica dos matrices de tamaño n x n donde n es el número de neuronas y las matrices corresponden a\+: 
+
+Matriz a\+: matriz booleana, indica si existe un determinado axón que ij que conecta la neurona i con la neurona j. En el caso de i = j es indiferente el valor.
+
+Matriz b\+: matriz de costes, indica el peso del axón ij en caso de existir. En el caso de i = j el valor representa el umbral.
+
+La codificación es la siguiente, por orden de aparición de los elementos\+:
+
+n \+: número de neuronas. 4 bytes a00 \+: trivial, una neurona siempre conecta consigo misma b00 \+: valor del umbral de la neurona 0 a01 \+: existencia o no de un axón que conecte la neurona 0 con la 1 b01 \+: peso del axón que conecta la neurona 0 con la 1 ... ann \+: trivial, una neurona siempre conecta consigo misma bnn \+: valor del umbral de la neurona n 
+
+Definition at line 37 of file dna.\+h.
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+backend/neural\+\_\+network/dna.\+h\item 
+backend/neural\+\_\+network/dna.\+cpp\end{DoxyCompactItemize}

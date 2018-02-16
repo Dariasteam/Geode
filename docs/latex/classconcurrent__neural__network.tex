@@ -1,0 +1,142 @@
+\hypertarget{classconcurrent__neural__network}{}\section{concurrent\+\_\+neural\+\_\+network Class Reference}
+\label{classconcurrent__neural__network}\index{concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}}
+
+
+Representa una red neuronal en formato matriz de costes.  
+
+
+
+
+{\ttfamily \#include $<$concurrent\+\_\+neural\+\_\+network.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classconcurrent__neural__network_a3380e6a7b4575fd5131c5af31c8bbaf1}\label{classconcurrent__neural__network_a3380e6a7b4575fd5131c5af31c8bbaf1}} 
+{\bfseries concurrent\+\_\+neural\+\_\+network} (const std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ bool, T\+Y\+PE $>$$>$$>$ \&cost, unsigned inputs, unsigned ouputs)
+\item 
+\mbox{\hyperlink{classconcurrent__neural__network_ae6b889b695e5959b4265653235d54971}{concurrent\+\_\+neural\+\_\+network}} (unsigned n\+\_\+neurons, unsigned input, unsigned output)
+\begin{DoxyCompactList}\small\item\em Random values default constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classconcurrent__neural__network_ac3e8b9ff79be67ed0a102bc4b05bbb86}\label{classconcurrent__neural__network_ac3e8b9ff79be67ed0a102bc4b05bbb86}} 
+{\bfseries concurrent\+\_\+neural\+\_\+network} (const \mbox{\hyperlink{classconcurrent__neural__network}{concurrent\+\_\+neural\+\_\+network}} \&aux)
+\item 
+\mbox{\hyperlink{classconcurrent__neural__network_af59e6e4b876ebb11c7a41b42bed935de}{concurrent\+\_\+neural\+\_\+network}} (const \mbox{\hyperlink{structdna}{dna}} \&D\+NA)
+\begin{DoxyCompactList}\small\item\em Genera la red neuronal a partir de un adn válido, según la codificación contemplada en \mbox{\hyperlink{structdna}{dna}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structdna}{dna}} \mbox{\hyperlink{classconcurrent__neural__network_a1301ba2e3c5d21633df37d1ab6ae7bb8}{to\+\_\+dna}} ()
+\begin{DoxyCompactList}\small\item\em Genera un adn que codifique la información de la red neuronal contenida. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classconcurrent__neural__network_a6aceadc0feff8c47cec4423041096c97}\label{classconcurrent__neural__network_a6aceadc0feff8c47cec4423041096c97}} 
+void {\bfseries operator=} (const \mbox{\hyperlink{classconcurrent__neural__network}{concurrent\+\_\+neural\+\_\+network}} \&aux)
+\item 
+\mbox{\Hypertarget{classconcurrent__neural__network_a23841b7f99d68cde6242b1468e4e025d}\label{classconcurrent__neural__network_a23841b7f99d68cde6242b1468e4e025d}} 
+std\+::vector$<$ std\+::vector$<$ T\+Y\+PE $>$ $>$ {\bfseries get\+\_\+cost\+\_\+matrix} () const
+\item 
+\mbox{\Hypertarget{classconcurrent__neural__network_ae988d079e4f402c1b28b6634339cfaa7}\label{classconcurrent__neural__network_ae988d079e4f402c1b28b6634339cfaa7}} 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ {\bfseries get\+\_\+graph\+\_\+matrix} () const
+\item 
+bool \mbox{\hyperlink{classconcurrent__neural__network_ab3df0ad8df7bb93cc3caca1d0e28e79f}{calculate}} (std\+::vector$<$ double $>$ \&input\+\_\+values, std\+::vector$<$ double $>$ \&output\+\_\+values)
+\begin{DoxyCompactList}\small\item\em Calcula la respuesta de la red neuronal ante una entrada. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classconcurrent__neural__network_a0e1cdef29d52edde39808ce54bb309a9}\label{classconcurrent__neural__network_a0e1cdef29d52edde39808ce54bb309a9}} 
+void \mbox{\hyperlink{classconcurrent__neural__network_a0e1cdef29d52edde39808ce54bb309a9}{print}} () const
+\begin{DoxyCompactList}\small\item\em Imprime la red neuronal como matriz de costes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classconcurrent__neural__network_a91262b8a313f2bdf96472221197b7d12}\label{classconcurrent__neural__network_a91262b8a313f2bdf96472221197b7d12}} 
+unsigned {\bfseries c\+\_\+steps} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Representa una red neuronal en formato matriz de costes. 
+
+Definition at line 44 of file concurrent\+\_\+neural\+\_\+network.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classconcurrent__neural__network_ae6b889b695e5959b4265653235d54971}\label{classconcurrent__neural__network_ae6b889b695e5959b4265653235d54971}} 
+\index{concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}!concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}}
+\index{concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}!concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}}
+\subsubsection{\texorpdfstring{concurrent\+\_\+neural\+\_\+network()}{concurrent\_neural\_network()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily concurrent\+\_\+neural\+\_\+network\+::concurrent\+\_\+neural\+\_\+network (\begin{DoxyParamCaption}\item[{unsigned}]{n\+\_\+neurons,  }\item[{unsigned}]{input,  }\item[{unsigned}]{output }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Random values default constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+neurons} & p\+\_\+n\+\_\+neurons\+:... \\
+\hline
+{\em input} & p\+\_\+input\+:... \\
+\hline
+{\em output} & \$\{p\+\_\+output\+:...\} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 47 of file concurrent\+\_\+neural\+\_\+network.\+cpp.
+
+\mbox{\Hypertarget{classconcurrent__neural__network_af59e6e4b876ebb11c7a41b42bed935de}\label{classconcurrent__neural__network_af59e6e4b876ebb11c7a41b42bed935de}} 
+\index{concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}!concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}}
+\index{concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}!concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}}
+\subsubsection{\texorpdfstring{concurrent\+\_\+neural\+\_\+network()}{concurrent\_neural\_network()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily concurrent\+\_\+neural\+\_\+network\+::concurrent\+\_\+neural\+\_\+network (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structdna}{dna}} \&}]{D\+NA }\end{DoxyParamCaption})}
+
+
+
+Genera la red neuronal a partir de un adn válido, según la codificación contemplada en \mbox{\hyperlink{structdna}{dna}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dna} & adn empleado para la construcción \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 78 of file concurrent\+\_\+neural\+\_\+network.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classconcurrent__neural__network_ab3df0ad8df7bb93cc3caca1d0e28e79f}\label{classconcurrent__neural__network_ab3df0ad8df7bb93cc3caca1d0e28e79f}} 
+\index{concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}!calculate@{calculate}}
+\index{calculate@{calculate}!concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}}
+\subsubsection{\texorpdfstring{calculate()}{calculate()}}
+{\footnotesize\ttfamily bool concurrent\+\_\+neural\+\_\+network\+::calculate (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{input\+\_\+values,  }\item[{std\+::vector$<$ double $>$ \&}]{output\+\_\+values }\end{DoxyParamCaption})}
+
+
+
+Calcula la respuesta de la red neuronal ante una entrada. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em inputs} & Datos con los que se alimenta a las neuronas de entrada \\
+\hline
+{\em outputs} & Contendrá los resultados de las neuronas de salida tras la operación \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 230 of file concurrent\+\_\+neural\+\_\+network.\+cpp.
+
+\mbox{\Hypertarget{classconcurrent__neural__network_a1301ba2e3c5d21633df37d1ab6ae7bb8}\label{classconcurrent__neural__network_a1301ba2e3c5d21633df37d1ab6ae7bb8}} 
+\index{concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}!to\+\_\+dna@{to\+\_\+dna}}
+\index{to\+\_\+dna@{to\+\_\+dna}!concurrent\+\_\+neural\+\_\+network@{concurrent\+\_\+neural\+\_\+network}}
+\subsubsection{\texorpdfstring{to\+\_\+dna()}{to\_dna()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structdna}{dna}} concurrent\+\_\+neural\+\_\+network\+::to\+\_\+dna (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Genera un adn que codifique la información de la red neuronal contenida. 
+
+\begin{DoxyReturn}{Returns}
+dna Adn con la información de la red neuronal. 
+\end{DoxyReturn}
+
+
+Definition at line 190 of file concurrent\+\_\+neural\+\_\+network.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+backend/neural\+\_\+network/concurrent\+\_\+neural\+\_\+network.\+h\item 
+backend/neural\+\_\+network/concurrent\+\_\+neural\+\_\+network.\+cpp\end{DoxyCompactItemize}

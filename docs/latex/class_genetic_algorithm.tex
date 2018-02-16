@@ -1,0 +1,171 @@
+\hypertarget{class_genetic_algorithm}{}\section{Genetic\+Algorithm$<$ T $>$ Class Template Reference}
+\label{class_genetic_algorithm}\index{Genetic\+Algorithm$<$ T $>$@{Genetic\+Algorithm$<$ T $>$}}
+
+
+Framework parametrizado para el manejo de algoritmos genéticos. Este sistema trata de abstraer al programador de los procesos relacionados con el algoritmo realizando las operaciones de cruce, mutación y evaluación por él según sea conveniente.  
+
+
+
+
+{\ttfamily \#include $<$geneticalgorithm.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_genetic_algorithm_a6ca0bbf76e60cacdd77712971dded001}\label{class_genetic_algorithm_a6ca0bbf76e60cacdd77712971dded001}} 
+std\+::vector$<$ T $>$ {\bfseries get\+\_\+best\+\_\+candidates} ()
+\item 
+\mbox{\hyperlink{class_genetic_algorithm_a9fda0f2f53ba15c4dc932d37eab9aff7}{Genetic\+Algorithm}} (std\+::function$<$ T(T \&, T \&)$>$ operator\+\_\+cross, std\+::function$<$ void(T \&, unsigned)$>$ operator\+\_\+mutate, std\+::function$<$ double(const T \&)$>$ operator\+\_\+evaluator, unsigned population\+\_\+s, unsigned candidates\+\_\+s, unsigned mutation\+\_\+r)
+\begin{DoxyCompactList}\small\item\em Constructor del algoritmo genético. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_genetic_algorithm_a9e3afa46dbfb501b42e1905023b47432}{set\+\_\+population\+\_\+parameters}} (unsigned population\+\_\+s, unsigned candidates\+\_\+s, unsigned mutation\+\_\+r)
+\begin{DoxyCompactList}\small\item\em Adjust parameters of the simulation any time. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_genetic_algorithm_a5d4afa4cd644ae80b6001184f6b8728d}{step}} ()
+\begin{DoxyCompactList}\small\item\em Simulates a complete generation. (Create population, mutate it, evaluate it, generate new one) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_genetic_algorithm_ab52124a783d776e8ba658bf665e0be66}\label{class_genetic_algorithm_ab52124a783d776e8ba658bf665e0be66}} 
+void \mbox{\hyperlink{class_genetic_algorithm_ab52124a783d776e8ba658bf665e0be66}{semi\+\_\+step}} ()
+\begin{DoxyCompactList}\small\item\em Makes the simulation advance half step by generatin a new population and mutate it. \mbox{\hyperlink{class_genetic_algorithm_af1632165d5b43d91b290a8a257e0f0e7}{set\+\_\+external\+\_\+evaluations}} should be used to complete the iteration. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_genetic_algorithm_a3265574d1fe7cbe5975ca55ac15cb3d7}\label{class_genetic_algorithm_a3265574d1fe7cbe5975ca55ac15cb3d7}} 
+std\+::vector$<$ T $>$ {\bfseries get\+\_\+population} ()
+\item 
+void \mbox{\hyperlink{class_genetic_algorithm_af1632165d5b43d91b290a8a257e0f0e7}{set\+\_\+external\+\_\+evaluations}} (std\+::vector$<$ double $>$ evaluations)
+\begin{DoxyCompactList}\small\item\em Sets a external evaluation for each individiual. Completes the second half of the iteration, initiated by \mbox{\hyperlink{class_genetic_algorithm_ab52124a783d776e8ba658bf665e0be66}{semi\+\_\+step}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_genetic_algorithm_a5ed6d3f823943638e0c3688fdf788e1c}{set\+\_\+initial\+\_\+population}} (const std\+::vector$<$ T $>$ \&i\+\_\+population)
+\begin{DoxyCompactList}\small\item\em Sets the initial population of the simulation. Automatically adjust the size to accomplish with the one seted in \mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}} or \#set\+\_\+poblation\+\_\+parameters by copy / delete elements. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_genetic_algorithm_a062f45c41d1f652e2f1794a06e8ba161}\label{class_genetic_algorithm_a062f45c41d1f652e2f1794a06e8ba161}} 
+void \mbox{\hyperlink{class_genetic_algorithm_a062f45c41d1f652e2f1794a06e8ba161}{print\+\_\+best}} ()
+\begin{DoxyCompactList}\small\item\em Print the best candidates and its score. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class Genetic\+Algorithm$<$ T $>$}
+
+Framework parametrizado para el manejo de algoritmos genéticos. Este sistema trata de abstraer al programador de los procesos relacionados con el algoritmo realizando las operaciones de cruce, mutación y evaluación por él según sea conveniente. 
+
+El programador debe proporcionar no obstante 3 funciones que definan estos operadores para los individuos de tipo \#T con los que se emplearán.
+
+La generación de población y su mutación se realiza de forma concurrente, asignándole un hilo a cada individuo. 
+
+Definition at line 25 of file geneticalgorithm.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_genetic_algorithm_a9fda0f2f53ba15c4dc932d37eab9aff7}\label{class_genetic_algorithm_a9fda0f2f53ba15c4dc932d37eab9aff7}} 
+\index{Genetic\+Algorithm@{Genetic\+Algorithm}!Genetic\+Algorithm@{Genetic\+Algorithm}}
+\index{Genetic\+Algorithm@{Genetic\+Algorithm}!Genetic\+Algorithm@{Genetic\+Algorithm}}
+\subsubsection{\texorpdfstring{Genetic\+Algorithm()}{GeneticAlgorithm()}}
+{\footnotesize\ttfamily template$<$class T$>$ \\
+\mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}}$<$ T $>$\+::\mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}} (\begin{DoxyParamCaption}\item[{std\+::function$<$ T(T \&, T \&)$>$}]{operator\+\_\+cross,  }\item[{std\+::function$<$ void(T \&, unsigned)$>$}]{operator\+\_\+mutate,  }\item[{std\+::function$<$ double(const T \&)$>$}]{operator\+\_\+evaluator,  }\item[{unsigned}]{population\+\_\+s,  }\item[{unsigned}]{candidates\+\_\+s,  }\item[{unsigned}]{mutation\+\_\+r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Constructor del algoritmo genético. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em operator\+\_\+cross} & Función lambda que expecifica de qué manera han de cruzarse los genomas de individuos \#T \\
+\hline
+{\em operator\+\_\+mutate} & Función lambda que expecifica de qué manera han de mutarse los genomas de individuos \#T \\
+\hline
+{\em operator\+\_\+evalautor} & Función lambda que expecifica de qué manera han de compararse (función fitness) los genomas de individuos \#T \\
+\hline
+{\em population\+\_\+s} & Tamaño de la población generada en cada iteración por medio de cruces \\
+\hline
+{\em candidates\+\_\+s} & Tamaño de la muestra seleccionada por la función evaluadora. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 146 of file geneticalgorithm.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_genetic_algorithm_af1632165d5b43d91b290a8a257e0f0e7}\label{class_genetic_algorithm_af1632165d5b43d91b290a8a257e0f0e7}} 
+\index{Genetic\+Algorithm@{Genetic\+Algorithm}!set\+\_\+external\+\_\+evaluations@{set\+\_\+external\+\_\+evaluations}}
+\index{set\+\_\+external\+\_\+evaluations@{set\+\_\+external\+\_\+evaluations}!Genetic\+Algorithm@{Genetic\+Algorithm}}
+\subsubsection{\texorpdfstring{set\+\_\+external\+\_\+evaluations()}{set\_external\_evaluations()}}
+{\footnotesize\ttfamily template$<$class T$>$ \\
+void \mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}}$<$ T $>$\+::set\+\_\+external\+\_\+evaluations (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{evaluations }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets a external evaluation for each individiual. Completes the second half of the iteration, initiated by \mbox{\hyperlink{class_genetic_algorithm_ab52124a783d776e8ba658bf665e0be66}{semi\+\_\+step}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em evaluations} & p\+\_\+evaluations\+: Should have the same size as the population. Each i element contains the score of the i individual from population. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 220 of file geneticalgorithm.\+h.
+
+\mbox{\Hypertarget{class_genetic_algorithm_a5ed6d3f823943638e0c3688fdf788e1c}\label{class_genetic_algorithm_a5ed6d3f823943638e0c3688fdf788e1c}} 
+\index{Genetic\+Algorithm@{Genetic\+Algorithm}!set\+\_\+initial\+\_\+population@{set\+\_\+initial\+\_\+population}}
+\index{set\+\_\+initial\+\_\+population@{set\+\_\+initial\+\_\+population}!Genetic\+Algorithm@{Genetic\+Algorithm}}
+\subsubsection{\texorpdfstring{set\+\_\+initial\+\_\+population()}{set\_initial\_population()}}
+{\footnotesize\ttfamily template$<$class T$>$ \\
+void \mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}}$<$ T $>$\+::set\+\_\+initial\+\_\+population (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ T $>$ \&}]{i\+\_\+population }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the initial population of the simulation. Automatically adjust the size to accomplish with the one seted in \mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}} or \#set\+\_\+poblation\+\_\+parameters by copy / delete elements. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i\+\_\+population} & population \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 232 of file geneticalgorithm.\+h.
+
+\mbox{\Hypertarget{class_genetic_algorithm_a9e3afa46dbfb501b42e1905023b47432}\label{class_genetic_algorithm_a9e3afa46dbfb501b42e1905023b47432}} 
+\index{Genetic\+Algorithm@{Genetic\+Algorithm}!set\+\_\+population\+\_\+parameters@{set\+\_\+population\+\_\+parameters}}
+\index{set\+\_\+population\+\_\+parameters@{set\+\_\+population\+\_\+parameters}!Genetic\+Algorithm@{Genetic\+Algorithm}}
+\subsubsection{\texorpdfstring{set\+\_\+population\+\_\+parameters()}{set\_population\_parameters()}}
+{\footnotesize\ttfamily template$<$class T$>$ \\
+void \mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}}$<$ T $>$\+::set\+\_\+population\+\_\+parameters (\begin{DoxyParamCaption}\item[{unsigned}]{population\+\_\+s,  }\item[{unsigned}]{candidates\+\_\+s,  }\item[{unsigned}]{mutation\+\_\+r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adjust parameters of the simulation any time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em population\+\_\+s} & p\+\_\+population\+\_\+s\+: population size \\
+\hline
+{\em candidates\+\_\+s} & p\+\_\+candidates\+\_\+s\+: candidates size \\
+\hline
+{\em mutation\+\_\+r} & p\+\_\+mutation\+\_\+r\+: mutation rate \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 174 of file geneticalgorithm.\+h.
+
+\mbox{\Hypertarget{class_genetic_algorithm_a5d4afa4cd644ae80b6001184f6b8728d}\label{class_genetic_algorithm_a5d4afa4cd644ae80b6001184f6b8728d}} 
+\index{Genetic\+Algorithm@{Genetic\+Algorithm}!step@{step}}
+\index{step@{step}!Genetic\+Algorithm@{Genetic\+Algorithm}}
+\subsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily template$<$class T$>$ \\
+bool \mbox{\hyperlink{class_genetic_algorithm}{Genetic\+Algorithm}}$<$ T $>$\+::step (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Simulates a complete generation. (Create population, mutate it, evaluate it, generate new one) 
+
+\begin{DoxyReturn}{Returns}
+currently always true 
+\end{DoxyReturn}
+
+
+Definition at line 190 of file geneticalgorithm.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+backend/genetic\+\_\+algorithm/geneticalgorithm.\+h\end{DoxyCompactItemize}
