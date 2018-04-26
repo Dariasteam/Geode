@@ -54,7 +54,7 @@ func generate_poblation(raw_poblation):
 
 # Instancia agentes y comienza una simulación con ellos
 func start_single_simulation():	
-	var raw_poblation = genetic_connector.get_poblation() # TODO
+	var raw_poblation = genetic_connector.get_poblation() # TODO	
 	neural_poblation = generate_poblation(raw_poblation)
 	
 	scores.resize(neural_poblation.size())	
@@ -74,8 +74,7 @@ func start_single_simulation():
 # Emplea el algoritmo genétco para preparar la siguiente simulacion
 func prepare_next_single_simulation():	
 	
-	# establece las evaluaciones y selecciona a los mejores
-	print ("esto ocurre")
+	# establece las evaluaciones y selecciona a los mejores	
 	genetic_connector.set_evaluations(scores);
 	
 	# Informa al representador de puntuaciones

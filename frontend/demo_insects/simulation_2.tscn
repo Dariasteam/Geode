@@ -4,7 +4,7 @@
 [ext_resource path="res://demo_insects/agent_insect_a.tscn" type="PackedScene" id=2]
 [ext_resource path="res://demo_insects/agent_insect_b.tscn" type="PackedScene" id=3]
 
-[node name="Map2" type="Node2D"]
+[node name="Map2" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -31,7 +31,9 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="GeneticControllerA" parent="." index="1" instance=ExtResource( 1 )]
 
+editor/display_folded = true
 scale = Vector2( 5, 5 )
+_sections_unfolded = [ "Material", "Transform", "Z Index" ]
 agent_scene = ExtResource( 2 )
 
 [node name="Time" parent="GeneticControllerA" index="0"]
@@ -74,7 +76,7 @@ margin_bottom = 83.0
 
 [node name="GridContainer" parent="GeneticControllerA/Buttons" index="1"]
 
-_sections_unfolded = [ "Grow Direction", "Margin", "Rect", "Visibility" ]
+_sections_unfolded = [ "Grow Direction", "Margin", "Rect", "Size Flags", "Visibility" ]
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
 
@@ -105,6 +107,7 @@ editor_draw_drag_margin = false
 [node name="GeneticControllerB" parent="." index="3" instance=ExtResource( 1 )]
 
 scale = Vector2( 5, 5 )
+_sections_unfolded = [ "Material", "Transform", "Z Index" ]
 agent_scene = ExtResource( 3 )
 
 [node name="Time" parent="GeneticControllerB" index="0"]

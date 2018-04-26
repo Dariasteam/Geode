@@ -54,8 +54,8 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
   std::random_device rd;
   std::mt19937 rng(rd());
 
-  TYPE min = std::numeric_limits<TYPE>::min() / 10;
-  TYPE max = std::numeric_limits<TYPE>::max() / 10;
+  TYPE min = -1000; //std::numeric_limits<TYPE>::min() / 1000;
+  TYPE max = 1000; //std::numeric_limits<TYPE>::max() / 1000;
 
   std::uniform_int_distribution<TYPE> uni(min, max);
 
@@ -66,7 +66,7 @@ concurrent_neural_network::concurrent_neural_network(unsigned n_neurons,
     cost_matrix[i].resize(n_neurons);
     graph_matrix[i].resize(n_neurons);
     iterate_avoiding_index([&](unsigned j){
-      graph_matrix[i][j] = (rand() % (n_neurons / 2) < 1);
+      graph_matrix[i][j] = (rand() % 8 < 1);
       cost_matrix[i][j] = uni(rng);
     }, 0, i, n_neurons);
     cost_matrix[i][i] = -1;

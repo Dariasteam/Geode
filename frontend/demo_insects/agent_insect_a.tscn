@@ -8,7 +8,7 @@
 position = Vector2( 293.583, 285.483 )
 rotation = 3.14159
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform", "Z", "Z Index" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z", "Z Index" ]
 inputs = 7
 outputs = 2
 
@@ -62,7 +62,8 @@ _sections_unfolded = [ "Collision", "Pickable", "Transform" ]
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D" index="0"]
 
 visible = false
-position = Vector2( -1.85305, -2.29649 )
+position = Vector2( -10.989, 3.66168 )
+scale = Vector2( 7, 7 )
 build_mode = 0
 polygon = PoolVector2Array( 7.15793, 28.3181, -1.52997, 28.4227, -6.13559, 19.9441, -12.2066, 13.3497, -9.17105, -8.2131, -2.36722, -32.916, 6.84409, -33.0207, 15.4272, -5.49152, 17.9394, 14.5012, 11.3449, 19.5255 )
 _sections_unfolded = [ "Transform", "Visibility" ]
@@ -164,7 +165,7 @@ enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 20 )
 collision_mask = 2
-_sections_unfolded = [ "Transform", "Visibility", "Z" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z", "Z Index" ]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
