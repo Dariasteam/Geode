@@ -33,7 +33,7 @@ func print_axis():
 	var v2b = Vector2(width, height)
 	draw_line(v1b, v2b, Color(255,255,255), 1)
 
-func draw_polygon(entry, color):
+func draw_shape(entry, color):
 	var element_w = width / entry.size()
 	for i in range(1, entry.size()):
 		var v1 = Vector2(margin + (i - 1) * element_w, calc_y_element(entry[i - 1]))
@@ -43,9 +43,9 @@ func draw_polygon(entry, color):
 func _draw():	
 	print_axis()
 		
-	draw_polygon(best_entries, colorBest)
-	draw_polygon(mean_entries, colorMean)
-	draw_polygon(worst_entries, colorWorst)
+	draw_shape(best_entries, colorBest)
+	draw_shape(mean_entries, colorMean)
+	draw_shape(worst_entries, colorWorst)
 	
 func _ready():	
 	add_entry([0, 0, 0])
