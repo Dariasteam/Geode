@@ -228,7 +228,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Star simulation"
+text = "Start simulation"
 flat = false
 align = 1
 
